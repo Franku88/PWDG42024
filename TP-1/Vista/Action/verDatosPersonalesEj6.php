@@ -3,7 +3,15 @@
     include "../../Utils/funciones.php";
 
     $datos = data_submitted();
-    $persona1 = new Persona($datos["nombre"], $datos["apellido"], $datos["edad"], $datos["direccion"], $datos["estudios"], $datos["sexo"], $datos["deportes"]);
+
+    //Verifica si se marcó algun deporte
+    if (isset($datos["deportes"])) { //Verifica que este definido el array
+        $deportes = $datos["deportes"];
+    } else {
+        $deportes = array();
+    }
+    
+    $persona1 = new Persona($datos["nombre"], $datos["apellido"], $datos["edad"], $datos["direccion"], $datos["estudios"], $datos["sexo"], $deportes);
     $presentacion = $persona1->presentarseEESD();
 ?>
 

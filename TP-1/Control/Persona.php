@@ -91,11 +91,15 @@ class Persona {
         $mensaje = $mensaje."Sexo: ".$this->getSexo().".\n";
         $mensaje = $mensaje. "Estudios alcanzados: ".$this->getEstudios().".\n";
         $mensaje = $mensaje. "Deportes que practico: \n";
-        foreach($this->getDeportes() as $deporte) {
-            $mensaje = $mensaje.$deporte.", ";
-        }
-        $mensaje = substr($mensaje, 0, -2);
-        $mensaje = $mensaje. ".\n";
+        if ($this->getDeportes() != []) {
+            foreach($this->getDeportes() as $deporte) {
+                $mensaje = $mensaje.$deporte.", ";
+            }
+            $mensaje = substr($mensaje, 0, -2);
+            $mensaje = $mensaje. ".\n";
+        } else {
+            $mensaje = $mensaje."ninguno.";
+        }        
         return $mensaje;
     }
 
