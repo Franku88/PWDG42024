@@ -30,8 +30,12 @@ class Archivo
     public function upload($arregloFiles)
     {
         $mensaje = "";
+        $extension = false;
+        if ($arregloFiles['archivo']["type"] == "application/pdf" || $arregloFiles['archivo']["type"] == "application/doc") {
+            $extension = true;
+        }
 
-        if ($arregloFiles['archivo']["error"] <= 0) {
+        if ($arregloFiles['archivo']["error"] <= 0 && $arregloFiles['archivo']["size"] <= 2097152 && $extension) {
             // Intentamos copiar el archivo al servidor.
             if (!copy($arregloFiles['archivo']['tmp_name'], $this->getDir() . $arregloFiles['archivo']['name'])) {
                 $mensaje = 0; //'ERROR: no se pudo cargar el archivo';
@@ -39,7 +43,7 @@ class Archivo
                 $mensaje = 1; //"El archivo " . $arregloFiles['archivo']["name"] . " se ha copiado con Éxito <br />";
             }
         } else {
-            $mensaje = -1; //"ERROR: no se pudo cargar el archivo. No se pudo acceder al archivo Temporal";
+            $mensaje = -1; //"ERROR: no se pudo cargar el archivo. Verifique que su archivo sea de la extensión correcta (*.doc o *.pdf) y no exceda el tamaño máximo permitido (2 MB). <br />";
         }
         return $mensaje;
     }

@@ -34,15 +34,17 @@ $respuesta = $obj->upload($datos);
             } elseif ($respuesta == 1) {
                 echo "El archivo " . $datos['archivo']["name"] . " se ha copiado con Éxito <br />";
             } elseif ($respuesta == -1) {
-                echo "ERROR: no se pudo cargar el archivo. No se pudo acceder al archivo Temporal <br />";
+                echo "ERROR: no se pudo cargar el archivo. Verifique que su archivo sea de la extensión correcta (*.doc o *.pdf) y no exceda el tamaño máximo permitido (2 MB). <br />";
             }
             ?>
         </div>
         <div>
             <?php
-            echo '<div class="btn-group-vertical m-2" role="group" aria-label="">
+            if ($respuesta == 1) {
+                echo '<div class="btn-group-vertical m-2" role="group" aria-label="">
                 <a name="volver" id="volver" class="btn btn-primary" href="' . '../../Modelo/archivos/' . $datos['archivo']['name'] . '" role="button">Descargue su archivo <span>' . $datos['archivo']["name"] . '</span> subido</a>
             </div>';
+            }
             ?>
         </div>
         <div class="btn-group-vertical m-2" role="group" aria-label="">
