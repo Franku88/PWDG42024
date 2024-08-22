@@ -44,17 +44,17 @@ $(document).ready(function () {
         $(".mt-4").hide();
     }
 
-    document.getElementById('imagen').addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        if (file) {
-            const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
-    
-            // Verifica si el archivo es de un tipo de imagen permitido
-            if (!validImageTypes.includes(file.type)) {
-                alert('Por favor, seleccione solo archivos de imagen (JPG, JPEG, PNG, GIF).');
-                event.target.value = ''; // Limpia el input para evitar el envío del archivo no válido
-            }
-        }
-    });
+    $('#imagen').on('change', function (event) {
+    const file = event.target.files[0];
+    if (file) {
+        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
+
+        // Verifica si el archivo es de un tipo de imagen permitido
+        if (!validImageTypes.includes(file.type)) {
+            alert('Por favor, seleccione solo archivos de imagen (JPG, JPEG, PNG, GIF).');
+            $(this).val(''); // Limpia el input para evitar el envío del archivo no válido
+         }
+     }
+   });
     
 });
