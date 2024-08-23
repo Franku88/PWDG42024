@@ -12,6 +12,12 @@
 </head>
 
 <body>
+  <nav aria-label="breadcrumb">
+        <ol class="breadcrumb m-2">
+            <li class="breadcrumb-item"><a href="../../../menu.html">Menú</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ejercicio 2</li>
+        </ol>
+  </nav>
   <form action="./Action/actionEJ2.php" method="post" enctype="multipart/form-data" id="form">
     <div class="m-3 w-25" id="formulario">
       <label for="" class="form-label">Seleccione un archivo para subir</label>

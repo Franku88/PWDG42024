@@ -34,6 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb m-2">
+            <li class="breadcrumb-item"><a href="../../../menu.html">Menú</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ejercicio 3</li>
+        </ol>
+    </nav>
     <div class="container mt-5 p-1">
         <h1 class="text-left mb-4 title-customized">CINEM@S</h1>
         <form id="peliculaForm" action="index.php" method="post" enctype="multipart/form-data" novalidate>
