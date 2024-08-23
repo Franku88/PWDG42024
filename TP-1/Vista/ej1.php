@@ -8,6 +8,12 @@
 </head>
 
 <body>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb m-2">
+            <li class="breadcrumb-item"><a href="../../menu.html">Menú</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ejercicio 1</li>
+        </ol>
+    </nav>
     <div>
         <h1 class="position-relative border p-4"> Ejercicio 1 </h1>
     </div>
