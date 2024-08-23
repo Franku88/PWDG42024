@@ -7,7 +7,14 @@ $datos = darDatosSubmitted();
 
 $obj = new Archivo();
 
-$respuesta = $obj->upload($datos);
+//validación si el archivo es de extensión .txt
+if ($datos['archivo']["type"] == "text/plain"){
+    $respuesta = $obj->upload($datos);
+} else {
+    $respuesta = -1;
+}
+
+
 
 ?>
 
@@ -74,7 +81,7 @@ $respuesta = $obj->upload($datos);
             </div>
         </div>
         <div class="btn-group-vertical m-2" role="group" aria-label="">
-            <a name="volver" id="volver" class="btn btn-primary" href="../EJ1.php" role="button">Regresar</a>
+            <a name="volver" id="volver" class="btn btn-primary" href="../EJ2.php" role="button">Regresar</a>
         </div>
     </div>
 </body>

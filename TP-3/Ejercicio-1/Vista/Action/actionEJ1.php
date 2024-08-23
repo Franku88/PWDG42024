@@ -7,7 +7,14 @@ $datos = darDatosSubmitted();
 
 $obj = new Archivo();
 
-$respuesta = $obj->upload($datos);
+//validación si el archivo es de extensión pdf o doc y mayor a 2MB
+if ($datos['archivo']["type"] == "application/pdf" || $datos['archivo']["type"] == "application/doc"){
+    if ($datos['archivo']["size"] <= 2097152){
+        $respuesta = $obj->upload($datos);
+    }
+} else {
+    $respuesta = -1;
+}
 
 ?>
 
