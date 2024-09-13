@@ -1,0 +1,12 @@
+.border-customized{
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(189, 189, 189);
+}
+
+.title-customized{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: rgb(30, 105, 148);
+    font-size: 25px;
+    font-weight: bold;
+}
