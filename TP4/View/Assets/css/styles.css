@@ -1,0 +1,155 @@
+/* #394273, #4D5944, #3E4736, #BFAD50, #8C8C8C*/
+label { /*Necesario pues se visualizan dentro del input (sin bootstrap se muestran fuera)*/
+    color: black;
+}
+
+input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed; 
+    border: 1px solid #ced4da;
+  }
+
+*::-webkit-scrollbar {
+    width: 0.6em;
+    height: 0.6em;
+}
+  
+*::-webkit-scrollbar-thumb {
+    background-color: #3e4637;
+    border-radius: 8px; /*Borde redondeado del scroll*/
+}
+  
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #808080;
+}
+
+*::-webkit-scrollbar-corner {
+    background-color: #31382a;
+}
+
+.contenedor-inactivo-steam {
+    border-top: 2px #737770 solid;
+    border-left: 2px #737770 solid;
+    border-bottom: 2px #31382a solid;
+    border-right:  2px #31382a solid;
+    background-color: #4c5844;
+    color: white;
+}
+
+.contenedor-activo-steam {
+    border-top: 2px #31382a solid;
+    border-left: 2px #31382a solid;
+    border-bottom: 2px #737770 solid;
+    border-right: 2px #737770 solid;
+    background-color: #3f4737;
+    color: white;
+}
+
+
+.border-steam-inactivo {
+    border-top: 2px #737770 solid;
+    border-left: 2px #737770 solid;
+    border-bottom: 2px #31382a solid;
+    border-right:  2px #31382a solid;
+}
+
+.border-steam-activo {
+    border-top: 2px #31382a solid;
+    border-left: 2px #31382a solid;
+    border-bottom: 2px #737770 solid;
+    border-right: 2px #737770 solid;
+}
+
+.btn-steam {
+    border-top: 2px #737770 solid;
+    border-left: 2px #737770 solid;
+    border-bottom: 2px #31382a solid;
+    border-right:  2px #31382a solid;
+    background-color: #4c5844;
+    color: white;
+}
+
+.btn-steam:hover {
+    border-top: 2px #31382a solid;
+    border-left: 2px #31382a solid;
+    border-bottom: 2px #737770 solid;
+    border-right: 2px #737770 solid;
+    background-color: #3f4737;
+    color: white;
+}
+
+.btn-steam2 {
+    border-top: 2px #737770 solid;
+    border-left: 2px #737770 solid;
+    border-bottom: 2px #31382a solid;
+    border-right:  2px #31382a solid;
+    background-color: #BFAD50;
+    color: white;
+}
+
+.btn-steam2:hover {
+    border-top: 2px #31382a solid;
+    border-left: 2px #31382a solid;
+    border-bottom: 2px #737770 solid;
+    border-right: 2px #737770 solid;
+    background-color: #8C8C8C;
+    color: white;
+}
+
+.btn-steam3 {
+    border-top: 2px #737770 solid;
+    border-left: 2px #737770 solid;
+    border-bottom: 2px #31382a solid;
+    border-right:  2px #31382a solid;
+    background-color: #8C8C8C;
+    color: white;
+}
+
+.btn-steam3:hover {
+    border-top: 2px #31382a solid;
+    border-left: 2px #31382a solid;
+    border-bottom: 2px #737770 solid;
+    border-right: 2px #737770 solid;
+    background-color: #394273;
+    color: white;
+}
+
+.btn-steam4 {
+    border-top: 2px #737770 solid;
+    border-left: 2px #737770 solid;
+    border-bottom: 2px #31382a solid;
+    border-right:  2px #31382a solid;
+    background-color: #394273;
+    color: white;
+}
+
+.btn-steam4:hover {
+    border-top: 2px #31382a solid;
+    border-left: 2px #31382a solid;
+    border-bottom: 2px #737770 solid;
+    border-right: 2px #737770 solid;
+    background-color: #8C8C8C;
+    color: white;
+}
+
+.bg-color-steam-lightgray {
+    background-color: #8C8C8C;
+}
+
+.bg-color-steam-lightgreen {
+    background-color: #4c5844;
+}
+
+.bg-color-steam-darkgreen {
+    background-color: #3f4737;
+}
+
+.table-rounded {
+    border-top: 2px #737770 solid;
+    border-left: 2px #737770 solid;
+    border-bottom: 2px #31382a solid;
+    border-right:  2px #31382a solid;
+    border-collapse: collapse;
+    border-radius: 1em; /* Redondea las esquinas de la tabla */
+    overflow: hidden; /* Asegura que el contenido no sobresalga de las esquinas redondeadas */
+}
