@@ -122,5 +122,10 @@ class ABMAuto{
         return $arreglo;
     }
 
+    public function generarVehiculo() {
+        $customFaker = new CustomFaker();
+        $vehiculo = $customFaker->vehiculo();
+        return $vehiculo;
+    }
 }
 ?>

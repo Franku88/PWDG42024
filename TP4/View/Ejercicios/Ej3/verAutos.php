@@ -1,5 +1,6 @@
 <?php
 include_once '../../../configuracion.php';
+// require_once '../../../vendor/autoload.php'; se trae el paquete de composer
 // include_once ROOT_PATH.'/Controller/ABMAuto.php'; Lo carga el autoloader.php
 // include_once ROOT_PATH.'/View/Assets/Helper.php'; Lo carga el autoloader.php
 

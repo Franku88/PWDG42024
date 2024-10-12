@@ -20,6 +20,14 @@ include_once '../../../configuracion.php';
             <h1 class="mb-0">Registrar Auto</h1>
         </div>
         <div class="modal-body p-4 pt-0">
+            <div class="d-flex justify-content-center mb-2">
+            <form  action="Action/accionAutoFalso.php" method="POST">
+                <div class="form-floating mb-2 text-center">
+                    <button class="btn btn-success text-center" type="submit">Generar datos falsos</button>
+                </div>
+            </form>
+            </div>
+
             <form id="formEj7" action="Action/accionNuevoAuto.php" method="POST">
                 
                 <div class="form-floating mx-1 mb-2">
