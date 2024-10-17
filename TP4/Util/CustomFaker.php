@@ -41,7 +41,7 @@ class CustomFaker {
         return $patente;
     }
     public function marca() {
-        $marcas = ['peugeot', 'renault', 'fiat', 'ford', 'chevrolet', 'volkswagen', 'toyota', 'honda', 'nissan', 'citroen'];
+        $marcas = ['Peugeot', 'Renault', 'Fiat', 'Ford', 'Chevrolet', 'Volkswagen', 'Toyota', 'Honda', 'Nissan', 'Citroen'];
         $marcaAleatoria = $marcas[array_rand($marcas)];  
         return $marcaAleatoria;
     }

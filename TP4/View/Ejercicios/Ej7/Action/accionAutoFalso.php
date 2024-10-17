@@ -1,6 +1,6 @@
 <?php
 include_once '../../../../configuracion.php';
-require_once '../../../../vendor/autoload.php'; // cargamos la libreria desde composer
+//require_once '../../../../vendor/autoload.php'; // cargamos la libreria desde composer
 // include_once ROOT_PATH.'/Util/funciones.php'; Lo carga el autoloader.php
 // include_once ROOT_PATH.'/Controller/ABMPersona.php'; Lo carga el autoloader.php 
 // include_once ROOT_PATH.'/Controller/ABMAuto.php'; Lo carga el autoloader.php

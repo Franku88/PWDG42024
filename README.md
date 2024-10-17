@@ -35,3 +35,9 @@ Para instalar el proyecto, seguir los siguientes pasos:
     ```bash
     composer install
     ```
+    
+4. Instalar las clases utilizadas con Composer:
+    ```bash
+    composer require fzaninotto/faker
+    composer require nesbot/carbon
+    ```

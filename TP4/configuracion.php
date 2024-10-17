@@ -15,5 +15,6 @@ $_SESSION["ROOT"] = ROOT_PATH; //$SESSION: Array (inicalmente vacio) que persist
 
 // Global includes
 include_once(ROOT_PATH.'/Util/autoloader.php'); //Funciones usadas en toda la sesion
+require_once 'vendor/autoload.php';
 
 ?>
