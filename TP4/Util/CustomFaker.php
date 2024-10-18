@@ -41,12 +41,12 @@ class CustomFaker {
         return $patente;
     }
     public function marca() {
-        $marcas = ['Peugeot', 'Renault', 'Fiat', 'Ford', 'Chevrolet', 'Volkswagen', 'Toyota', 'Honda', 'Nissan', 'Citroen'];
-        $marcaAleatoria = $marcas[array_rand($marcas)];  
-        return $marcaAleatoria;
+        $marcas = ['Peugeot', 'Renault', 'Fiat', 'Ford', 'Chevrolet', 'Volkswagen', 'Toyota', 'Honda', 'Nissan', 'Citroen'];        
+        $marcaAleatoria = $this->faker->randomElements($marcas, $count = 1); 
+        return $marcaAleatoria[0];
     }
     public function modelo() {
-        $number = rand(1940 , 2024); 
+        $number = $this->faker->numberBetween($min = 1940, $max = 2024);
         return $number;
     }
     
