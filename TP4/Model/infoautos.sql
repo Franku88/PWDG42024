@@ -16,7 +16,7 @@
 -- Estructura de tabla para la tabla `auto`
 -- 
 
-CREATE TABLE `auto` (
+CREATE TABLE `AUTO` (
   `Patente` varchar(10) character set utf8 collate utf8_unicode_ci NOT NULL,
   `Marca` varchar(50) character set utf8 collate utf8_unicode_ci NOT NULL,
   `Modelo` int(11) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE `auto` (
 -- Volcar la base de datos para la tabla `auto`
 -- 
 
-INSERT INTO `auto` (`Patente`, `Marca`, `Modelo`, `DniDuenio`) VALUES 
+INSERT INTO `AUTO` (`Patente`, `Marca`, `Modelo`, `DniDuenio`) VALUES 
 ('ADC 152', 'Fiat Uno', 98, '28326986'),
 ('POL 968', 'Renault 12', 77, '28326986'),
 ('KJU 952', 'Ford Fiesta', 2006, '25963874'),
@@ -42,7 +42,7 @@ INSERT INTO `auto` (`Patente`, `Marca`, `Modelo`, `DniDuenio`) VALUES
 -- Estructura de tabla para la tabla `persona`
 -- 
 
-CREATE TABLE `persona` (
+CREATE TABLE `PERSONA` (
   `NroDni` varchar(10) character set utf8 collate utf8_unicode_ci NOT NULL,
   `Apellido` varchar(50) character set utf8 collate utf8_unicode_ci NOT NULL,
   `Nombre` varchar(50) character set utf8 collate utf8_unicode_ci NOT NULL,
@@ -56,15 +56,15 @@ CREATE TABLE `persona` (
 -- Volcar la base de datos para la tabla `persona`
 -- 
 
-INSERT INTO `persona` (`NroDni`, `Apellido`, `Nombre`, `fechaNac`, `Telefono`, `Domicilio`) VALUES 
+INSERT INTO `PERSONA` (`NroDni`, `Apellido`, `Nombre`, `fechaNac`, `Telefono`, `Domicilio`) VALUES 
 ('28326986', 'Moya', 'Manuel', '1981-12-03', '299-9632587', 'Linares 44 piso 2 dpto 5'),
 ('25963874', 'Farias', 'Marta', '1975-06-21', '299-1559354', 'Roca 568'),
 ('30875962', 'Lopez', 'Eduardo', '1983-10-03', '299-6587741', 'Santa Fe 98'),
 ('22985265', 'Ramirez', 'Claudia', '1971-05-16', '299-9854155', 'Sarmiento 55');
 
 
-ALTER TABLE `auto` ADD KEY `idTipoVehiculo` (`DniDuenio`);
+ALTER TABLE `AUTO` ADD KEY `idTipoVehiculo` (`DniDuenio`);
 
-ALTER TABLE `auto`
-ADD CONSTRAINT `auto_ibfk_1` FOREIGN KEY (`DniDuenio`) REFERENCES `persona` (`NroDni`);
+ALTER TABLE `AUTO`
+ADD CONSTRAINT `auto_ibfk_1` FOREIGN KEY (`DniDuenio`) REFERENCES `PERSONA` (`NroDni`);
 
