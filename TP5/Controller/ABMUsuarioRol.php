@@ -93,7 +93,7 @@ class ABMUsuarioRol {
     /**
      * Busca un usuario-rol en la BD con atributos del arreglo ingresado
      * @param array $param
-     * @return array
+     * @return array ['idusuario', 'idrol']
      */
     public function buscar($param) {
         $where = " true ";

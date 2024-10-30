@@ -7,6 +7,7 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TP5/Controller/ABM
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TP5/Controller/ABMRol.php';
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TP5/Controller/ABMUsuarioRol.php';
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TP5/Model/BaseDatos.php';
+include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TP5/Controller/Session.php';
 
 // rol acepta como parametro una descripcion, pero el id se autogenera en la bd
 // $rol = new Rol("usuario");
@@ -175,4 +176,48 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TP5/Model/BaseDato
 //     echo "Se elimino el Usuario-Rol \n";
 // } else {
 //     echo "No se elimino el Usuario-Rol \n";
+// }
+
+// --------------------------------------------------------------------------------------------
+
+// // TEST DE SESSION ✅
+// $session = new Session();
+// $iniciando = $session->iniciar("Juan Modificado", "5678");
+
+
+// if ($iniciando) {
+//     echo "Se inicio la sesion \n";
+// } else {
+//     echo "No se inicio la sesion \n";
+// }
+
+// echo "---------------------------------- \n";
+
+// $validando = $session->validar();
+// if ($validando) {
+//     echo "La sesion es valida \n";
+// } else {
+//     echo "La sesion no es valida \n";
+// }
+
+// $usuarioLogged = $session->getUsuario();
+// if ($usuarioLogged) {
+//     echo "El usuario logeado es: " . $usuarioLogged->getUsNombre() . "\n";
+// } else {
+//     echo "No hay usuario logeado \n";
+// }
+
+// $rolUsuario = $session->getRol();
+
+// if ($rolUsuario) {
+//     echo "El rol del usuario logeado es: " . $rolUsuario . "\n";
+// } else {
+//     echo "No hay rol para el usuario logeado \n";
+// }
+
+// $cerrarSession = $session->cerrar();
+// if ($cerrarSession) {
+//     echo "Se cerro la sesion \n";
+// } else {
+//     echo "No se cerro la sesion \n";
 // }

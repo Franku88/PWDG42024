@@ -130,7 +130,4 @@ class ABMUsuario {
         return $arreglo;
     }
     
-
-
-    
 }
