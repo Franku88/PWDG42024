@@ -32,7 +32,7 @@ Class Rol {
     }
     // metodos CRUD
 
-    public function cargarDatos($idrol , $rolDescripcion) {
+    public function cargarDatos($idrol , $rolDescripcion = null) {
         $this->setRolDescripcion($rolDescripcion);
         $this->setId($idrol);
     }
@@ -67,7 +67,7 @@ Class Rol {
         $coleccion = [];
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "SELECT * FROM Persona";
+            $consulta = "SELECT * FROM rol";
             if ($condicion != "") {
                 $consulta = $consulta.' WHERE '.$condicion;
             }
