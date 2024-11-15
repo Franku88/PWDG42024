@@ -1,0 +1,44 @@
+Objetivo:
+
+El objetivo del trabajo es integrar los conceptos vistos en la materia. 
+Se espera que el alumno implemente una tienda On-Line que tendrá 2 vistas: una vista “pública” y otra “privada”. 
+En la implementación se solicita integrar con al menos 2 librerias presentadas en trabajos anteriores. 
+La elección de las librerías es libre y se puede repetir su uso entre los diferentes grupos. 
+
+-- Vista publica --
+se tiene acceso a la información de la tienda: dirección, medios de contacto, descripción y 
+toda aquella información que crea importante desplegar.
+Además se podrá acceder a la vista privada de la aplicación, a partir del ingreso de un usuario y contraseña válida.
+
+-- Vista privada --
+luego de concretar el proceso de autenticación y dependiendo los roles con el que cuenta
+el usuario que ingresa al sistema, se van a poder realizar diferentes operaciones. 
+Los roles iniciales son: cliente, depósito y administrador.
+
+Deposito: se encarga de la gestion de los productos (Armar el paquete y dejarlo listo)
+
+
+
+Ejemplos de librerías usadas:
+    -Generar un archivo para descargar la compre realizada. 
+    -Notificar usando correos las compras o los cambios en la compra.
+    -Generar código QR con links a zonas específicas de la aplicación. 
+    -Integrar con alguna billetera virtual.
+    -Usar ventanas modales para el carrito o el login.
+
+
+✅ La implementación de los script PHP correspondientes a las acciones de las interfaces NO deben implementar funcionalidad
+vinculada al proceso. Recuerde que los script tienen la  responsabilidad de  obtener los datos de la interfaz, crear el/los 
+objetos del control y retornar la respuesta a la interfaz.
+
+✅ El menú debe generarse automáticamente según los permisos configurados al rol del usuario.
+
+✅ Las páginas seguras deben controlar que el usuario está logueado y además tiene permiso de acceso.
+
+✅ La gestión del stock debe implementarse correctamente, quitando o devolviendo según corresponda.
+
+✅ Deben quedar registrados todos los cambios de estados de una compra.
+
+✅ Todas las interfaces deben ser implementadas con AJAX.
+
+✅ Implementar el envío de un correo electrónico al cliente cada vez que la compra tenga un cambio de estado.
