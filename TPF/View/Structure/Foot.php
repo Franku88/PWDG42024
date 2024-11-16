@@ -10,7 +10,6 @@
         </footer>
 
         <!-- Rutas de scripts a usar (ej. validaciones) -->
-        <script src="<?php echo BASE_URL; ?>/View/Assets/js/validacionesTP04.js"></script>
-
+        <script src="<?php echo BASE_URL; ?>/View/Assets/js/validacionesTPF.js"></script>
     </body>
 </html>
