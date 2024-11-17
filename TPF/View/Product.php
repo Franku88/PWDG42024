@@ -9,44 +9,18 @@ if (!empty($data)) {
     if (!empty($arrProductos)) {
         $producto = $arrProductos[0];
         $imagenesDiv = "";
-        $dirImagenes = '/View/Assets/Media/'. $producto['idproducto'].'/images';
-        $imgType = $dirImagenes . '/*.jpg';
+        $dirImagenes = '/View/Assets/Media/Product/' . $producto['idproducto'] . '/Preview';
+        $imgType = $dirImagenes . '/*.png';
         $scan = glob($imgType);
 
-        if ($scan == 0) {
+        if (!empty($scan)) {
             $imagenesDiv = "SIN IMÁGENES";
-        } else {
-            for ($i = 0; $i < $scan; $i++){
-                "<img src='".$dirImagenes."/img".$i."' alt='img".$i."'>";
+            for ($i = 0; $i < count($scan); $i++) {
+                $imagenesDiv = '<img src="' . $dirImagenes . '/img' . $i . '.png alt="img' . $i . "'>";
             }
+        } else {
+            $imagenesDiv = $dirImagenes.'/default.png';
         }
-
-        /*
-        <?php
-        $directorio = '/ruta/del/directorio';  // Especifica el directorio a buscar
-
-        // Obtener la lista de archivos y directorios
-        $archivos = scandir($directorio);
-
-        // Filtrar los archivos (excluyendo los directorios '.' y '..')
-        $archivos = array_filter($archivos, function($archivo) use ($directorio) {
-         return is_file($directorio . '/' . $archivo);  // Verifica si es un archivo
-        });
-
-        // Contar los archivos
-        echo "Número de archivos en el directorio: " . count($archivos);
-        ?>
-        <?php
-        $directorio = '/ruta/del/directorio';  // Especifica el directorio a buscar
-        $patron = $directorio . '/*.txt';  // Solo contar archivos .txt
-
-        // Obtener los archivos que coinciden con el patrón
-        $archivos = glob($patron);
-
-        // Contar los archivos
-        echo "Número de archivos .txt en el directorio: " . count($archivos);
-        ?>
-        */
         $resultado =
 
             "<main class='borde-inactivo-steam'>
