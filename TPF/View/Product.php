@@ -9,18 +9,29 @@ if (!empty($data)) {
     if (!empty($arrProductos)) {
         $producto = $arrProductos[0];
         $imagenesDiv = "";
-        $dirImagenes = '/View/Assets/Media/Product/' . $producto['idproducto'] . '/Preview';
-        $imgType = $dirImagenes . '/*.png';
-        $scan = glob($imgType);
+        $dirImagenes = '/View/Assets/Media/Product/' . $producto['idproducto'];
+        $dirImagenesDiv = $dirImagenes . '/Preview/*.png';
+        // glob escanea la dirección y devuelve un array con las imágenes en el directorio (no incluye subcarpetas)
+        $scanDiv = glob($dirImagenesDiv);
 
-        if (!empty($scan)) {
-            $imagenesDiv = "SIN IMÁGENES";
-            for ($i = 0; $i < count($scan); $i++) {
-                $imagenesDiv = '<img src="' . $dirImagenes . '/img' . $i . '.png alt="img' . $i . "'>";
+        if (!empty($scanDiv)) {
+            for ($i = 0; $i < count($scanDiv); $i++) {
+                $imagenesDiv = '<img src="' . $dirImagenes . '/Preview/img' . $i . '.png alt="imágen div ' . $i . '">';
             }
         } else {
-            $imagenesDiv = $dirImagenes.'/default.png';
+            $imagenesDiv = '<img src="' . $dirImagenes . '/Preview/default.png" alt="default">';
         }
+
+        $dirImagenesPortada = $dirImagenes . '/*.png';
+        $scanPortada = glob($dirImagenesPortada);
+
+        if (!empty($scanPortada)) {
+            $imagenPortada = '<img src="' . $dirImagenes . '/icon.png" alt="portada">';
+        } else {
+            $imagenPortada = '<img src="' . $dirImagenes . '/default.png" alt="default">';
+        }
+
+        // Código HTML
         $resultado =
 
             "<main class='borde-inactivo-steam'>
@@ -33,6 +44,7 @@ if (!empty($data)) {
                                 <div class='producto__portada__marco'>
                                     <img id='producto__portada'>
                                     <!-- PORTADA DEL PRODUCTO -->
+                                    " . $imagenPortada . "
                                 </div>
                             </div>
                             <div class='producto__descripcion'>
