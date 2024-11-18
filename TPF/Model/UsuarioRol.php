@@ -2,15 +2,14 @@
 
 include_once 'BaseDatos.php';
 
-class Usuario {
+class UsuarioRol {
     private $idusuario;
     private $idrol;
     private $mensajeOperacion;
     
-    public function __construct($idusuario = null, $idrol = null, $usdesabilitado = null) {
+    public function __construct($idusuario = null, $idrol = null) {
         $this->idusuario = $idusuario;
         $this->idrol = $idrol;
-        $this->usdesabilitado = $usdesabilitado;
     }
     // getters
     public function getIdusuario() {
