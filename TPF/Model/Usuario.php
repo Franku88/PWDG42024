@@ -10,7 +10,8 @@ class Usuario {
     private $usdesabilitado;
     private $mensajeOperacion;
     
-    public function __construct($usnombre = null, $uspass = null, $usmail = null, $usdesabilitado = null) {
+    public function __construct($idusuario = null, $usnombre = null, $uspass = null, $usmail = null, $usdesabilitado = null) {
+        $this->idusuario = $idusuario;
         $this->usnombre = $usnombre;
         $this->uspass = $uspass;
         $this->usmail = $usmail;
