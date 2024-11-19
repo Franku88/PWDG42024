@@ -1,15 +1,17 @@
-<?php 
+<?php
 include_once 'BaseDatos.php';
 
-class Menu {
+class Menu
+{
     private $idmenu;
     private $menombre;
     private $medescripcion;
     private $idpadre;
     private $medeshabilitado;
     private $mensajeOperacion;
-    
-    public function __construct($idmenu = null, $menombre = null, $medescripcion = null, $idpadre = null, $medeshabilitado = null) {
+
+    public function __construct($idmenu = null, $menombre = null, $medescripcion = null, $idpadre = null, $medeshabilitado = null)
+    {
         $this->idmenu = $idmenu;
         $this->menombre = $menombre;
         $this->medescripcion = $medescripcion;
@@ -17,45 +19,58 @@ class Menu {
         $this->medeshabilitado = $medeshabilitado;
     }
     // getters
-    public function getIdmenu() {
+    public function getIdmenu()
+    {
         return $this->idmenu;
     }
-    public function getMenombre() {
+    public function getMenombre()
+    {
         return $this->menombre;
     }
-    public function getMedescripcion() {
+    public function getMedescripcion()
+    {
         return $this->medescripcion;
     }
-    public function getIdpadre() {
+    public function getIdpadre()
+    {
         return $this->idpadre;
     }
-    public function getMedeshabilitado() {
+    public function getMedeshabilitado()
+    {
         return $this->medeshabilitado;
     }
-    public function getmensajeOperacion() {
+    public function getmensajeOperacion()
+    {
         return $this->mensajeOperacion;
     }
     // setters
-    public function setIdmenu($idmenu) {
+    public function setIdmenu($idmenu)
+    {
         $this->idmenu = $idmenu;
     }
-    public function setMenombre($menombre) {
+    public function setMenombre($menombre)
+    {
         $this->menombre = $menombre;
     }
-    public function setMedescripcion($medescripcion) {
+    public function setMedescripcion($medescripcion)
+    {
         $this->medescripcion = $medescripcion;
     }
-    public function setIdpadre($idpadre) {
+    public function setIdpadre($idpadre)
+    {
         $this->idpadre = $idpadre;
     }
-    public function setMedeshabilitado($medeshabilitado) {
+    public function setMedeshabilitado($medeshabilitado)
+    {
         $this->medeshabilitado = $medeshabilitado;
     }
-    public function setmensajeOperacion($mensajeOperacion){
+    public function setmensajeOperacion($mensajeOperacion)
+    {
         $this->mensajeOperacion = $mensajeOperacion;
     }
     // metodos CRUD
-    public function cargarDatos($idmenu, $menombre = null, $medescripcion = null, $idpadre = null, $medeshabilitado = null) {
+    public function cargarDatos($idmenu, $menombre = null, $medescripcion = null, $idpadre = null, $medeshabilitado = null)
+    {
         $this->setIdmenu($idmenu);
         $this->setMenombre($menombre);
         $this->setMedescripcion($medescripcion);
@@ -68,7 +83,8 @@ class Menu {
      * @param int $idmenu
      * @return boolean
      */
-    public function buscarDatos($idmenu) {
+    public function buscarDatos($idmenu)
+    {
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
@@ -82,19 +98,20 @@ class Menu {
         }
         return $resultado;
     }
-    
+
     /**
      * Retorna una coleccion de menus donde se cumpla $condicion
      * @param $condicion // WHERE de sql
      * @return array // menus que cumplieron la condicion
      */
-    public function listar($condicion = "") {
+    public function listar($condicion = "")
+    {
         $coleccion = [];
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
             $consulta = "SELECT * FROM menu";
             if ($condicion != "") {
-                $consulta = $consulta.' WHERE '.$condicion;
+                $consulta = $consulta . ' WHERE ' . $condicion;
             }
             $consulta .= " ORDER BY idmenu ";
             if ($bd->Ejecutar($consulta)) {
@@ -120,8 +137,10 @@ class Menu {
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "INSERT INTO menu(menombre, medescripcion, idpadre, medeshabilitado) 
-                VALUES ('".$this->getMenombre().", ".$this->getMedescripcion().", ".$this->getIdpadre().", ".$this->getMedeshabilitado()."')";
+    
+            $consulta = "INSERT INTO menu(menombre, medescripcion, idpadre) 
+                         VALUES ('" . $this->getMenombre() . "', '" . $this->getMedescripcion() . "', " . $this->getIdpadre() . ")";
+    
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -132,20 +151,23 @@ class Menu {
         }
         return $resultado;
     }
+    
 
     /**
      * Modificar los datos de un menu con los que tiene el objeto actual
      * @return boolean
      */
-    public function modificar() {
+    public function modificar()
+    {
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
-            $consulta = "UPDATE menu SET menombre = '".$this->getMenombre()."' 
-                AND medescripcion = '".$this->getMedescripcion()."' 
-                AND idpadre = '".$this->getIdpadre()."' 
-                AND medeshabilitado = '".$this->getMedeshabilitado()."'
-                WHERE idmenu = ".$this->getIdmenu();
+            $consulta = "UPDATE menu 
+                         SET menombre = '" . $this->getMenombre() . "',
+                         medescripcion = '" . $this->getMedescripcion() . "' ,
+                         idpadre = '" . $this->getIdpadre() . "' ,
+                         medeshabilitado = '" . $this->getMedeshabilitado() . "'
+                        WHERE idmenu = " . $this->getIdmenu();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -161,11 +183,12 @@ class Menu {
      * Eliminar un menu de la bd
      * @return boolean
      */
-    public function eliminar() {
+    public function eliminar()
+    {
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
-            $consulta = "DELETE FROM menu WHERE idmenu = '".$this->getIdmenu()."'";
+            $consulta = "DELETE FROM menu WHERE idmenu = '" . $this->getIdmenu() . "'";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -181,8 +204,8 @@ class Menu {
      * Retorna un string con los datos del menu
      * @return string
      */
-    public function __toString() {
-        return ("idmenu: ".$this->getIdmenu()." \n menombre: ".$this->getMenombre()." \n medescripcion: ".$this->getMedescripcion()." \n idpadre: ".$this->getIdpadre()." \n medeshabilitado: ".$this->getMedeshabilitado());        
+    public function __toString()
+    {
+        return ("idmenu: " . $this->getIdmenu() . " \n menombre: " . $this->getMenombre() . " \n medescripcion: " . $this->getMedescripcion() . " \n idpadre: " . $this->getIdpadre() . " \n medeshabilitado: " . $this->getMedeshabilitado());
     }
 }
-?>

@@ -6,8 +6,8 @@ include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/BaseDato
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Rol.php';
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABMRol.php';
 
-// test alta de rol ✅
-// $param = array('rodescripcion' => 'Cliente');
+//test alta de rol ✅
+// $param = array('rodescripcion' => 'Testing rol');
 //  $abmRol = new ABMRol();
 //  $alta = $abmRol->alta($param);
 
@@ -55,4 +55,13 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 //     echo "No se encontraron roles";
 // }
 
+// test modificacion de rol ✅
+// $abmrol = new ABMRol();
+// $param = array('idrol' => 1, 'rodescripcion' => 'Cliente');
+// $modificacion = $abmrol->modificacion( $param );
+// if ($modificacion) {
+//     echo "Modificación exitosa";
+// } else {
+//     echo "Error en la modificación";
+// }
 

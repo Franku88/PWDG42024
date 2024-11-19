@@ -7,7 +7,7 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Usuario.
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABMUsuario.php';
 
 // test alta de usuario ✅
-// $param = ['usnombre' => 'testing', 'uspass' => 'testing', 'usmail' => 'user@test.com'];
+// $param = ['usnombre' => 'testingV3', 'uspass' => 'testing', 'usmail' => 'user@test.com'];
 // $abmUsuario = new ABMUsuario();
 // $alta = $abmUsuario->alta($param);
 
@@ -58,25 +58,31 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 
 // test de modificacion de usuario ❌ (verificar el usdesabilitado en NULL y que el idUsuario exista)
 //Obtenemos el usuario recién creado para tener su ID
-$idUsuario = 3;
-$abmUsuario = new ABMUsuario();
+// $idUsuario = 3;
+// $abmUsuario = new ABMUsuario();
+
+
 // Paso 2: Modificar el usuario
-$modificacionData = [
-    'idusuario' => $idUsuario,
-    'usnombre' => 'Juan Modificado',
-    'uspass' => '5678',
-    'usmail' => 'juanmodificado@gmail.com',
-    'usdesabilitado' => null, // O establece un valor si necesitas
-];
-// Ejecutar la modificación
-$resultadoModificacion = $abmUsuario->modificacion($modificacionData);
-// Paso 3: Verificar los cambios
-$usuarioModificado = $abmUsuario->buscar(['idusuario' => $idUsuario]);
-if ($resultadoModificacion && !empty($usuarioModificado)) {
-    $usuarioModificado = $usuarioModificado[0]; // Tomamos el primer resultado
-    echo "Se modificó el usuario exitosamente.\n";
-    echo "Nuevo Nombre: " . $usuarioModificado->getUsNombre() . "\n";
-    echo "Nuevo Email: " . $usuarioModificado->getUsMail() . "\n";
-} else {
-    echo "No se pudo modificar el usuario.\n";
-}
+
+// paso 2.1: recuperar fecha actual
+// $fecha = date('Y-m-d H:i:s');
+
+// $modificacionData = [
+//     'idusuario' => $idUsuario,
+//     'usnombre' => 'Juan Modificado',
+//     'uspass' => '5678',
+//     'usmail' => 'juanmodificado@gmail.com',
+//     'usdeshabilitado' => $fecha
+// ];
+// // Ejecutar la modificación
+// $resultadoModificacion = $abmUsuario->modificacion($modificacionData);
+// // Paso 3: Verificar los cambios
+// $usuarioModificado = $abmUsuario->buscar(['idusuario' => $idUsuario]);
+// if ($resultadoModificacion && !empty($usuarioModificado)) {
+//     $usuarioModificado = $usuarioModificado[0]; // Tomamos el primer resultado
+//     echo "Se modificó el usuario exitosamente.\n";
+//     echo "Nuevo Nombre: " . $usuarioModificado->getUsNombre() . "\n";
+//     echo "Nuevo Email: " . $usuarioModificado->getUsMail() . "\n";
+// } else {
+//     echo "No se pudo modificar el usuario.\n";
+// }

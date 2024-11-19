@@ -123,7 +123,7 @@ class ABMUsuario {
                 $where = "usmail = '" . $param['usmail'] . "'"; 
             }
             if (isset($param['usdeshabilitado'])) {
-                $where = "usdeshabilitado = " . ($param['usdeshabilitado'] ? 1 : 0); // Usamos ternario para convertir booleano a entero
+                $where = "usdeshabilitado = " . ($param['usdeshabilitado'] ? 1 : 0); 
             }
         }
         $arreglo = (new Usuario())->listar($where);

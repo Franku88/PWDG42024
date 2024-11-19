@@ -7,15 +7,15 @@ class Usuario {
     private $usnombre;
     private $uspass;
     private $usmail;
-    private $usdesabilitado;
+    private $usdeshabilitado;
     private $mensajeOperacion;
     
-    public function __construct($idusuario = null, $usnombre = null, $uspass = null, $usmail = null, $usdesabilitado = null) {
+    public function __construct($idusuario = null, $usnombre = null, $uspass = null, $usmail = null, $usdeshabilitado = null) {
         $this->idusuario = $idusuario;
         $this->usnombre = $usnombre;
         $this->uspass = $uspass;
         $this->usmail = $usmail;
-        $this->usdesabilitado = $usdesabilitado;
+        $this->usdeshabilitado = $usdeshabilitado;
     }
     // getters
     public function getIdusuario() {
@@ -31,7 +31,7 @@ class Usuario {
         return $this->uspass;
     }
     public function getUsdesabilitado() {
-        return $this->usdesabilitado;
+        return $this->usdeshabilitado;
     }
     public function getmensajeOperacion() {
         return $this->mensajeOperacion;
@@ -49,19 +49,19 @@ class Usuario {
     public function setUsMail($usMail) {
         $this->usmail = $usMail;
     }
-    public function setUsdesabilitado($usdesabilitado) {
-        $this->usdesabilitado = $usdesabilitado;
+    public function setUsdesabilitado($usdeshabilitado) {
+        $this->usdeshabilitado = $usdeshabilitado;
     }
     public function setmensajeOperacion($mensajeOperacion){
         $this->mensajeOperacion=$mensajeOperacion;
     }
     // metodos CRUD
-    public function cargarDatos($idusuario, $usnombre = null , $uspass = null , $usmail = null , $usdesabilitado = null) {
+    public function cargarDatos($idusuario, $usnombre = null , $uspass = null , $usmail = null , $usdeshabilitado = null) {
         $this->setIdusuario($idusuario);
         $this->setUsNombre($usnombre);
         $this->setUsPass($uspass);
         $this->setUsMail($usmail);
-        $this->setUsdesabilitado($usdesabilitado);
+        $this->setUsdesabilitado($usdeshabilitado);
     }
 
     /**
@@ -76,7 +76,7 @@ class Usuario {
             $consulta = "SELECT * FROM usuario WHERE idusuario = $idusuario";
             if ($bd->Ejecutar($consulta)) {
                 if ($row = $bd->Registro()) {
-                    $this->cargarDatos($idusuario, $row['usnombre'], $row['uspass'], $row['usmail'], $row['usdesabilitado']);
+                    $this->cargarDatos($idusuario, $row['usnombre'], $row['uspass'], $row['usmail'], $row['usdeshabilitado']);
                     $resultado = true;
                 }
             }
@@ -103,7 +103,7 @@ class Usuario {
             if ($bd->Ejecutar($consulta)) {
                 while ($row = $bd->Registro()) {
                     $obj = new Usuario();
-                    $obj->cargarDatos($row['idusuario'], $row['usnombre'], $row['uspass'], $row['usmail'], $row['usdesabilitado']);
+                    $obj->cargarDatos($row['idusuario'], $row['usnombre'], $row['uspass'], $row['usmail'], $row['usdeshabilitado']);
                     array_push($coleccion, $obj);
                 }
             } else {
@@ -143,7 +143,12 @@ class Usuario {
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
-            $consulta = "UPDATE usuario SET usnombre = '".$this->getUsNombre()."', uspass = '".$this->getUsPass()."', usmail = '".$this->getUsMail()."' WHERE idusuario = ".$this->getIdusuario();
+            $consulta = "UPDATE usuario 
+                         SET usnombre = '".$this->getUsNombre()."', 
+                             uspass = '".$this->getUsPass()."', 
+                             usmail = '".$this->getUsMail()."', 
+                             usdeshabilitado = '".$this->getUsdesabilitado()."'
+                         WHERE idusuario = ".$this->getIdusuario();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -154,7 +159,7 @@ class Usuario {
         }
         return $resultado;
     }
-
+    
     /**
      * Eliminar un usuario de la bd
      * @return boolean
@@ -179,7 +184,7 @@ class Usuario {
      * @return string
      */
     public function __tostring() {
-        return ("idusuario: ".$this->getIdusuario()." \n usnombre: ".$this->getUsNombre()."\n uspass: ".$this->getUsPass()."\n usmail: ".$this->getUsMail()." \n usdesabilitado: ".$this->getUsdesabilitado());
+        return ("idusuario: ".$this->getIdusuario()." \n usnombre: ".$this->getUsNombre()."\n uspass: ".$this->getUsPass()."\n usmail: ".$this->getUsMail()." \n usdeshabilitado: ".$this->getUsdesabilitado());
     }
 
 }

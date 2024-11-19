@@ -94,7 +94,7 @@ Class Rol {
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "INSERT INTO rol(rodescripcion) VALUES ('".$this->getRolDescripcion()."')";
+            $consulta = "INSERT INTO rol(rodescripcion) VALUES ('".$this->getRoDescripcion()."')";
             if ($bd->Ejecutar($consulta)) {  
                 $resultado = true;
             } else {
@@ -114,7 +114,7 @@ Class Rol {
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "UPDATE rol SET rodescripcion = '".$this->getRolDescripcion()."' WHERE idrol = ".$this->getId();
+            $consulta = "UPDATE rol SET rodescripcion = '".$this->getRoDescripcion()."' WHERE idrol = ".$this->getId();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -151,7 +151,7 @@ Class Rol {
      * @return string
      */
     public function __tostring() {
-        return ("Id: ".$this->getId()."\nDescripcion: ".$this->getRolDescripcion());
+        return ("Id: ".$this->getId()."\nDescripcion: ".$this->getRoDescripcion());
     }
     
 }
