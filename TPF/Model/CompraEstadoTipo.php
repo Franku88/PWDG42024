@@ -90,6 +90,15 @@ Class CompraEstadoTipo  {
         $resp = false;
         $base = new BaseDatos();
         $sql = "INSERT INTO compraestadotipo (idcompraestadotipo, cetdescripcion, cetdetalle) VALUES (" . $this->getIdcompraestadotipo() . ", '" . $this->getCetdescripcion() . "', '" . $this->getCetdetalle() . "')";
+        if ($base->Iniciar()) {
+            if ($base->Ejecutar($sql)) {
+                $resp = true;
+            } else {
+                $this->setMensajeOperacion("CompraEstadoTipo->insertar:" . $base->getError());
+            }
+        } else {
+            $this->setMensajeOperacion("CompraEstadoTipo->insertar: " . $base->getError());
+        }
         
     }
 

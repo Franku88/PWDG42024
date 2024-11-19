@@ -4,7 +4,7 @@ include_once 'BaseDatos.php';
 
 class Rol
 {
-    private $id;
+    private $idrol;
     private $roDescripcion;
     private $mensajeOperacion;
 
@@ -13,9 +13,9 @@ class Rol
         $this->roDescripcion = $roDescripcion;
     }
     // getters 
-    public function getId()
+    public function getIdrol()
     {
-        return $this->id;
+        return $this->idrol;
     }
     public function getRoDescripcion()
     {
@@ -26,9 +26,9 @@ class Rol
         return $this->mensajeOperacion;
     }
     // setters
-    public function setId($id)
+    public function setIdrol($idrol)
     {
-        $this->id = $id;
+        $this->idrol = $idrol;
     }
     public function setRoDescripcion($rolDesc)
     {
@@ -43,7 +43,7 @@ class Rol
     public function cargarDatos($idrol, $rolDescripcion = null)
     {
         $this->setRoDescripcion($rolDescripcion);
-        $this->setId($idrol);
+        $this->setIdrol($idrol);
     }
 
 
@@ -73,7 +73,7 @@ class Rol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "SELECT * FROM rol WHERE idrol = " . $this->getId();
+        $sql = "SELECT * FROM rol WHERE idrol = " . $this->getIdrol();
 
         if ($base->Iniciar()) {
             $res = $base->Ejecutar($sql);
@@ -152,7 +152,7 @@ class Rol
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "UPDATE rol SET rodescripcion = '" . $this->getRoDescripcion() . "' WHERE idrol = " . $this->getId();
+            $consulta = "UPDATE rol SET rodescripcion = '" . $this->getRoDescripcion() . "' WHERE idrol = " . $this->getIdrol();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -173,7 +173,7 @@ class Rol
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
-            $consulta = "DELETE FROM rol WHERE idrol = " . $this->getId();
+            $consulta = "DELETE FROM rol WHERE idrol = " . $this->getIdrol();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -191,6 +191,6 @@ class Rol
      */
     public function __tostring()
     {
-        return ("Id: " . $this->getId() . "\nDescripcion: " . $this->getRoDescripcion());
+        return ("Idrol: " . $this->getIdrol() . "\nDescripcion: " . $this->getRoDescripcion());
     }
 }
