@@ -99,6 +99,29 @@ class Menu
         return $resultado;
     }
 
+
+    public function cargar(){
+        $resp = false;
+        $base = new BaseDatos();
+        $sql = "SELECT * FROM menu WHERE idmenu=" . $this->getIdmenu();
+        if ($base->Iniciar()) {
+            $res = $base->Ejecutar($sql);
+            if ($res > -1) {
+                if ($res > 0) {
+                    $row = $base->Registro();
+                    $this->cargarDatos($row['idmenu'], $row['menombre'], $row['medescripcion'], $row['idpadre'], $row['medeshabilitado']);
+                }
+            }
+        } else {
+            $this->setMensajeOperacion("Menu->cargar: " . $base->getError());
+        }
+        echo $resp;
+        return $resp;
+    }
+
+
+
+
     /**
      * Retorna una coleccion de menus donde se cumpla $condicion
      * @param $condicion // WHERE de sql

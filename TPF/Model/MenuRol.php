@@ -73,7 +73,7 @@ class MenuRol   {
 
                     if ($row['idmenu'] != null) {
 
-                        $objMenu = new menu();
+                        $objMenu = new Menu();
                         $objMenu->setIdmenu($row['idmenu']);
                         $objMenu->cargar();
                     }
@@ -94,9 +94,8 @@ class MenuRol   {
         $objMenu = $this->getObjMenu();
         $objRol = $this->getObjRol();
         $idmenu = $objMenu->getIdmenu();
-        $idRol = $objRol->getIdrol();
+        $idRol = $objRol->getId();
         $sql = "INSERT INTO menurol(idmenu,idrol)  VALUES(" . $idmenu . "," . $idRol . ")";
-        echo $sql;
 
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
@@ -116,7 +115,7 @@ class MenuRol   {
         $resp = false;
         $base = new BaseDatos();
         $idmenu = $this->getObjMenu()->getIdmenu();
-        $idRol = $this->getObjRol()->getIdrol();
+        $idRol = $this->getObjRol()->getId();
         $sql = " UPDATE menurol SET ";
         $sql .= " idrol = " . $idRol;
         $sql .= " WHERE idmenu =" . $idmenu;
@@ -139,7 +138,7 @@ class MenuRol   {
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "DELETE FROM menurol WHERE idmenu=" . $this->getObjMenu()->getIdmenu() . " and idrol= " . $this->getObjRol()->getIdrol();
+        $sql = "DELETE FROM menurol WHERE idmenu=" . $this->getObjMenu()->getIdmenu() . " and idrol= " . $this->getObjRol()->getId();
 
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
@@ -155,32 +154,56 @@ class MenuRol   {
     }
 
 
-
-    public static function listar($condicion = "")
-    {
-        $arreglo = array();
+    public function listar($condicion = "") {
+        $coleccion = [];
         $base = new BaseDatos();
-        $sql = "SELECT * FROM menurol ";
-        if ($condicion != "") {
-            $sql .= 'WHERE ' . $condicion;
-        }
-        $res = $base->Ejecutar($sql);
-        if ($res > -1) {
-            if ($res > 0) {
+        
+        // Verificamos si la conexión a la base de datos fue exitosa
+        if ($base->Iniciar()) {
+            // Armamos la consulta SQL
+            $sql = "SELECT * FROM menurol ";
+            
+            // Si hay alguna condición, la agregamos a la consulta
+            if ($condicion != "") {
+                $sql .= 'WHERE ' . $condicion;
+            }
+            
+            // Ejecutamos la consulta
+            if ($base->Ejecutar($sql)) {
+                // Recorremos los resultados
                 while ($row = $base->Registro()) {
-                    $objMenuRol = new menurol();
-                    $abmUs = new abmmenu();
-                    $arrayUs = $abmUs->buscar(['idmenu' => $row['idmenu']]);
-                    $abmRol = new abmrol();
-                    $objRol = $abmRol->buscar(['idrol' => $row['idrol']]);
-                    $objMenuRol->setear($arrayUs[0], $objRol);
-                    array_push($arreglo, $objMenuRol);
+                    // Creamos un nuevo objeto MenuRol
+                    $objMenuRol = new MenuRol();
+                    
+                    // Creamos los objetos Menu y Rol correspondientes
+                    $objMenu = new Menu();
+                    $objRol = new Rol();
+                    
+                    // Cargamos los datos del menú y el rol basados en los datos de la base de datos
+                    $objMenu->setIdmenu($row['idmenu']);
+                    $objMenu->cargar(); // Cargar detalles del menú
+                    
+                    $objRol->setId($row['idrol']);
+                    $objRol->cargar(); // Cargar detalles del rol
+                    
+                    // Configuramos el objeto MenuRol con el menú y rol correspondientes
+                    $objMenuRol->setear($objMenu, $objRol);
+                    
+                    // Añadimos el objeto a la colección
+                    array_push($coleccion, $objMenuRol);
                 }
             }
         } else {
-            $this->setMensajeOperacion("Menurol->listar: " . $base->getError());
+            $this->setMensajeOperacion("MenuRol->listar: " . $base->getError());
         }
-
-        return $arreglo;
+    
+        return $coleccion; // Devolvemos la colección de resultados
     }
+
+    public function __tostring()
+    {
+        return "Menu: " . $this->getObjMenu() . " \n Rol: " . $this->getObjRol();
+    }
+    
+
 }
