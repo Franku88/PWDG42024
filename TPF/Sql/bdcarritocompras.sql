@@ -52,7 +52,7 @@ CREATE TABLE `rol` (
 
 -- Estructura de tabla para la tabla `compraestadotipo`
 CREATE TABLE `compraestadotipo` (
-  `idcompraestadotipo` int(11) NOT NULL,
+  `idcompraestadotipo` int(11) NOT NULL AUTO_INCREMENT,
   `cetdescripcion` varchar(50) NOT NULL,
   `cetdetalle` varchar(256) NOT NULL,
   PRIMARY KEY (`idcompraestadotipo`)
