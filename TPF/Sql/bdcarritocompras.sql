@@ -133,3 +133,17 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 (3, 'enviada', 'cuando el usuario administrador envia a uno de las compras en estado =2 '),
 (4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1');
 -- --------------------------------------------------------
+
+-- Volcado de datos para la tabla `menu`
+INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`) VALUES
+(1, 'Cliente', '#', NULL, '0000-00-00 00:00:00'),
+(2, 'Deposito', '#', NULL, '0000-00-00 00:00:00'),
+(3, 'Administrador', '#', NULL, '0000-00-00 00:00:00'),
+(4, 'Administrar Usuarios', 'administrarUsuarios', 3, '0000-00-00 00:00:00'),
+(5, 'Cargar Usuario', 'cargarUsuario', 3, '0000-00-00 00:00:00'),
+(6, 'Administrar Menus', 'administrarMenus', 3, '0000-00-00 00:00:00'),
+(7, 'Cargar Menu', 'cargarMenu', 3, '0000-00-00 00:00:00'),
+(8, 'Administrar Productos', 'administrarProductos', 2, '0000-00-00 00:00:00'),
+(9, 'Cargar Producto', 'cargarProducto', 2, '0000-00-00 00:00:00'),
+(10, 'Carrito', 'carrito', 1, '0000-00-00 00:00:00');
+-- --------------------------------------------------------
