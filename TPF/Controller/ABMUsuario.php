@@ -1,6 +1,7 @@
 <?php 
 
-include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Usuario.php";
+
+// include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Usuario.php";
 
 class ABMUsuario {
     
@@ -123,7 +124,7 @@ class ABMUsuario {
                 $where = "usmail = '" . $param['usmail'] . "'"; 
             }
             if (isset($param['usdeshabilitado'])) {
-                $where = "usdeshabilitado = " . ($param['usdeshabilitado'] ? 1 : 0); 
+                $where.=" and usdeshabilitado ='".$param['usdeshabilitado']."'";
             }
         }
         $arreglo = (new Usuario())->listar($where);

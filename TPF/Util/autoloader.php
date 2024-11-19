@@ -7,10 +7,10 @@
 spl_autoload_register(function ($class_name) {
     //echo "class ".$class_name ;
     $directories = array(
-        $_SESSION['ROOT'] . '/Model/',
-        $_SESSION['ROOT'] . '/Util/',
-        $_SESSION['ROOT'] . '/Controller/',
-        $_SESSION['ROOT'] . '/View/Assets/',
+        $_SERVER['ROOT'] . '/Model/',
+        $_SERVER['ROOT'] . '/Util/',
+        $_SERVER['ROOT'] . '/Controller/',
+        $_SERVER['ROOT'] . '/View/Assets/',
         //  $GLOBALS['ROOT'].'util/class/',
     );
     //print_object($directories) ;
