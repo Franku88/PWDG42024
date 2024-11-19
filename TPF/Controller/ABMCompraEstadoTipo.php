@@ -40,10 +40,8 @@ class ABMCompraEstadoTipo
     public function alta($param)
     {
         $resp = false;
-
-        $elObjtCompraEstadoTipo = $this->cargarObjeto($param);
-
-        if ($elObjtCompraEstadoTipo != null and $elObjtCompraEstadoTipo->insertar()) {
+        $setear = $this->cargarObjeto( $param); 
+        if ($setear != null and $setear->insertar()) {
             $resp = true;
         }
         return $resp;
