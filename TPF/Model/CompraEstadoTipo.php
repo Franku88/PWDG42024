@@ -99,6 +99,7 @@ Class CompraEstadoTipo  {
         } else {
             $this->setMensajeOperacion("CompraEstadoTipo->insertar: " . $base->getError());
         }
+        return $resp;
         
     }
 
