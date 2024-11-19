@@ -36,7 +36,7 @@ CREATE TABLE `producto` (
   `pronombre` varchar(50) NOT NULL,
   `prodetalle` varchar(512) NOT NULL,
   `procantstock` int(11) NOT NULL,
-  `proprecio` int(11) NOT NULL,
+  `proprecio` DECIMAL(10, 2) NOT NULL,
   'prodeshabilitado' timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idproducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
