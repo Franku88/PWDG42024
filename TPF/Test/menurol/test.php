@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 // testing de ABM de MenuRol
 include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/BaseDatos.php";
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/MenuRol.php';
