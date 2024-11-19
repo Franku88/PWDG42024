@@ -11,7 +11,7 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 // $abmUsuario = new ABMUsuario();
 // $alta = $abmUsuario->alta($param);
 
-// if ($alta) {
+// if ($alta) {r
 //     echo "Alta exitosa";
 // } else {
 //     echo "Error en la alta";
