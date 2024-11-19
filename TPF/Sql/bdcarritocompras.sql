@@ -36,8 +36,8 @@ CREATE TABLE `producto` (
   `pronombre` varchar(50) NOT NULL,
   `prodetalle` varchar(512) NOT NULL,
   `procantstock` int(11) NOT NULL,
-  `proprecio` int(11) NOT NULL,
-  'prodeshabilitado' timestamp NULL DEFAULT NULL,
+  `proprecio` DECIMAL(10, 2) NOT NULL,
+  `prodeshabilitado` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idproducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 -- --------------------------------------------------------
@@ -52,7 +52,7 @@ CREATE TABLE `rol` (
 
 -- Estructura de tabla para la tabla `compraestadotipo`
 CREATE TABLE `compraestadotipo` (
-  `idcompraestadotipo` int(11) NOT NULL,
+  `idcompraestadotipo` int(11) NOT NULL AUTO_INCREMENT,
   `cetdescripcion` varchar(50) NOT NULL,
   `cetdetalle` varchar(256) NOT NULL,
   PRIMARY KEY (`idcompraestadotipo`)
