@@ -172,5 +172,4 @@ class UsuarioRol {
         return ("usuario: ".$this->getUsuario()." \n Rol: ".$this->getRol());
     }
 }
-
 ?>
