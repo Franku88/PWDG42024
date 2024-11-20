@@ -1,106 +1,89 @@
 <?php
 
-class producto
-{
+include_once 'BaseDatos.php';
+
+class Producto {
     private $idproducto;
     private $pronombre;
     private $prodetalle;
-    private $proprecio;
     private $procantstock;
+    private $proprecio;
     private $prodeshabilitado;
     private $mensajeOperacion;
 
-
-    public function __construct($idproducto = null, $proprecio = null, $pronombre = null, $prodetalle = null, $procantstock = null, $prodeshabilitado = null)
-    {
+    public function __construct($idproducto = null, $pronombre = null, $prodetalle = null, $procantstock = null, $proprecio = null, $prodeshabilitado = null) {
         $this->idproducto = $idproducto;
-        $this->proprecio = $proprecio;
         $this->pronombre = $pronombre;
         $this->prodetalle = $prodetalle;
         $this->procantstock = $procantstock;
+        $this->proprecio = $proprecio;
         $this->prodeshabilitado = $prodeshabilitado;
     }
 
     // Getters
-    public function getIdproducto()
-    {
+    public function getIdproducto() {
         return $this->idproducto;
     }
 
-    public function getProprecio()
-    {
-        return $this->proprecio;
-    }
-
-
-    public function getPronombre()
-    {
+    public function getPronombre() {
         return $this->pronombre;
     }
 
-    public function getProdetalle()
-    {
+    public function getProdetalle() {
         return $this->prodetalle;
     }
 
-    public function getProcantstock()
-    {
+    public function getProcantstock() {
         return $this->procantstock;
     }
 
-    public function getProdeshabilitado()
-    {
+    public function getProprecio() {
+        return $this->proprecio;
+    }
+
+    public function getProdeshabilitado() {
         return $this->prodeshabilitado;
     }
 
-    public function getMensajeOperacion()
-    {
+    public function getMensajeOperacion() {
         return $this->mensajeOperacion;
     }
 
     // Setters
-    public function setIdproducto($idproducto)
-    {
+    public function setIdproducto($idproducto) {
         $this->idproducto = $idproducto;
     }
 
-    public function setProprecio($proprecio)
-    {
-        $this->proprecio = $proprecio;
-    }
-
-    public function setPronombre($pronombre)
-    {
+    public function setPronombre($pronombre) {
         $this->pronombre = $pronombre;
     }
 
-    public function setProdetalle($prodetalle)
-    {
+    public function setProdetalle($prodetalle) {
         $this->prodetalle = $prodetalle;
     }
-    public function setProcantstock($procantstock)
-    {
+    public function setProcantstock($procantstock) {
         $this->procantstock = $procantstock;
     }
 
-    public function setProdeshabilitado($prodeshabilitado)
-    {
+    public function setProprecio($proprecio) {
+        $this->proprecio = $proprecio;
+    }
+
+    public function setProdeshabilitado($prodeshabilitado) {
         $this->prodeshabilitado = $prodeshabilitado;
     }
 
-    public function setMensajeOperacion($mensajeOperacion)
-    {
+    public function setMensajeOperacion($mensajeOperacion) {
         $this->mensajeOperacion = $mensajeOperacion;
     }
 
-    // Metodos
-    public function cargarDatos($idproducto, $proprecio = null, $pronombre = null, $prodetalle = null, $procantstock = null, $prodeshabilitado = null)
-    {
+    // metodos CRUD
+    public function cargarDatos($idproducto = null, $pronombre = null, $prodetalle = null, $procantstock = null, $proprecio = null, $prodeshabilitado = null) {
         $this->setIdproducto($idproducto);
-        $this->setProprecio($proprecio);
         $this->setPronombre($pronombre);
         $this->setProdetalle($prodetalle);
         $this->setProcantstock($procantstock);
+        $this->setProprecio($proprecio);
         $this->setProdeshabilitado($prodeshabilitado);
     }
 
@@ -116,120 +99,120 @@ class producto
             $consulta = "SELECT * FROM producto WHERE idproducto = $idproducto";
             if ($bd->Ejecutar($consulta)) {
                 if ($row = $bd->Registro()) {
-                    $this->cargarDatos($row['idproducto'], $row['proprecio'], $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['prodeshabilitado']);
+                    $this->cargarDatos($idproducto, $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['proprecio'], $row['prodeshabilitado']);
                     $resultado = true;
                 }
-            } else {
-                $this->setMensajeOperacion("Producto->buscarDatos: " . $bd->getError());
             }
         }
         return $resultado;
     }
 
-    public function listar($condicion = "")
-    {
+    /**
+     * Retorna una coleccion de productos donde se cumpla $condicion
+     * @param $condicion // WHERE de sql
+     * @return array // productos que cumplieron la condicion
+     */
+    public function listar($condicion = "") {
         $coleccion = [];
         $base = new BaseDatos();
-        if ($base->iniciar()) {
+        if ($base->Iniciar()) {
             $consulta = "SELECT * FROM producto";
             if ($condicion != "") {
-                $consulta = $consulta . ' WHERE ' . $condicion;
+                $consulta = $consulta.' WHERE '.$condicion;
             }
+            $consulta .= " ORDER BY idproducto ";
             if ($base->Ejecutar($consulta)) {
-                while ($row2 = $base->Registro()) {
+                while ($row = $base->Registro()) {
                     $obj = new Producto();
-                    $obj->cargarDatos($row2['idproducto'], $row2['proprecio'], $row2['pronombre'], $row2['prodetalle'], $row2['procantstock'], $row2['prodeshabilitado']);
+                    $obj->cargarDatos($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['proprecio'], $row['prodeshabilitado']);
                     array_push($coleccion, $obj);
                 }
             } else {
                 $this->setmensajeOperacion($base->getError());
             }
+        } else {
+            $this->setmensajeOperacion($base->getError());
         }
         return $coleccion;
     }
 
-
-
-    public function insertar()
-    {
-        $resp = false;
-        $base = new BaseDatos();
-        if ($base->Iniciar()) {
-            $sql = "INSERT INTO producto (proprecio, pronombre, prodetalle, procantstock) 
-                    VALUES ('" . $this->getProprecio() . "', '" . $this->getPronombre() . "', '" . $this->getProdetalle() . "', " . $this->getProcantstock() . ")";
-            
-            if ($base->Ejecutar($sql)) {
-                $resp = true;
+    /**
+     * Insertar los datos de un producto a la bd
+     * @return boolean
+     */
+    public function insertar() {
+        $resultado = false;
+        $bd = new BaseDatos();
+        if ($bd->Iniciar()) {
+            $consulta = "INSERT INTO producto (pronombre, prodetalle, procantstock, proprecio) VALUES 
+            ('".$this->getPronombre()."', '".$this->getProdetalle()."', ".$this->getProcantstock().", ".$this->getProprecio().")";
+            if ($bd->Ejecutar($consulta)) {
+                $resultado = true;
             } else {
-                $this->setMensajeOperacion("Producto->insertar: " . $base->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setMensajeOperacion("Producto->insertar: " . $base->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
-        return $resp;
+        return $resultado;
     }
     
-    public function modificar()
-    {
-        $resp = false;
-        $base = new BaseDatos();
-        if ($base->Iniciar()) {
-            $consulta = "UPDATE producto SET proprecio = '" . $this->getProprecio() . "', pronombre = '" . $this->getPronombre() . "', prodetalle = '" . $this->getProdetalle() . "', procantstock = " . $this->getProcantstock() . " WHERE idproducto = " . $this->getIdproducto();
-            if ($base->Ejecutar($consulta)) {
-                $resp = true;
+    /**
+     * Modificar los datos de un producto con los que tiene el objeto actual 
+     * @return boolean
+     */
+    public function modificar() {
+        $resultado = false;
+        $bd = new BaseDatos();
+        if ($bd->Iniciar()) {
+            $consulta = "UPDATE producto 
+            SET pronombre = '".$this->getPronombre()."', 
+                prodetalle = '".$this->getProdetalle()."', 
+                procantstock = ".$this->getProcantstock()."',
+                proprecio = ".$this->getProprecio()."
+            WHERE idproducto = ".$this->getIdproducto();
+            if ($bd->Ejecutar($consulta)) {
+                $resultado = true;
             } else {
-                $this->setMensajeOperacion("Producto->modificar: " . $base->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setMensajeOperacion("Producto->modificar: " . $base->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
-        return $resp;
+        return $resultado;
     }
 
-
-    public function eliminar()
-    {
-        $resp = false;
-        $base = new BaseDatos();
-        if ($base->Iniciar()) {
-            $consulta = "DELETE FROM producto WHERE idproducto = " . $this->getIdproducto();
-            if ($base->Ejecutar($consulta)) {
-                $resp = true;
+    /**
+     * Eliminar un producto de la bd
+     * @return boolean
+     */
+    public function eliminar() {
+        $resultado = false;
+        $bd = new BaseDatos();
+        if ($bd->Iniciar()) {
+            $consulta = "DELETE FROM producto WHERE idproducto = ".$this->getIdproducto();
+            if ($bd->Ejecutar($consulta)) {
+                $resultado = true;
             } else {
-                $this->setMensajeOperacion($base->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setMensajeOperacion($base->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
-        return $resp;
+        return $resultado;
     }
 
-    // public function estado($param = "")
-    // {
-    //     $resp = false;
-    //     $base = new BaseDatos();
-    //     $sql = "UPDATE producto SET prodeshabilitado= '" . $param . "' WHERE idproducto='" . $this->getIdproducto() . "'";
-    //     if ($base->Iniciar()) {
-    //         if ($base->Ejecutar($sql)) {
-    //             $resp = true;
-    //         } else {
-    //             $this->setMensajeOperacion("Producto->estado: " . $base->getError());
-    //         }
-    //     } else {
-    //         $this->setMensajeOperacion("Producto->estado: " . $base->getError());
-    //     }
-    //     return $resp;
-    // }
-
-    public function __toString()
-    {
-        return (
-            "ID del Producto: " . $this->getIdproducto() . "\n" .
-            "Nombre del Producto: " . $this->getPronombre() . "\n" .
-            "Precio del Producto: " . $this->getProprecio() . "\n" .
-            "Detalle del Producto: " . $this->getProdetalle() . "\n" .
-            "Cantidad en Stock: " . $this->getProcantstock() . "\n" .
-            "Producto Deshabilitado: " . $this->getProdeshabilitado() . "\n"
-        );
+    /**
+     * Retorna un string con los datos del producto
+     * @return String
+     */
+    public function __toString() {
+        return ("idproducto: ".$this->getIdproducto()."\n" .
+            "pronombre: ".$this->getPronombre()."\n".
+            "prodetalle: ".$this->getProdetalle()."\n".
+            "procantstock: ".$this->getProcantstock()."\n".
+            "proprecio: ".$this->getProprecio()."\n".
+            "prodeshabilitado: ".$this->getProdeshabilitado());
     }
 }
+?>

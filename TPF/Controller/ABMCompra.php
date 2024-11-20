@@ -99,7 +99,7 @@ class ABMCompra {
 
     /**
      * Busca compras en la BD
-     * Si $param es vacío, trae todos los compraestadotipo
+     * Si $param es vacío, trae todos las compras
      * @param array $param
      * @return array
      */
