@@ -123,7 +123,8 @@ class Usuario {
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "INSERT INTO usuario(usnombre, uspass, usmail) VALUES ('".$this->getUsNombre()."', '".$this->getUsPass()."', '".$this->getUsMail()."' )";
+            $consulta = "INSERT INTO usuario(usnombre, uspass, usmail, usdeshabilitado) VALUES 
+            ('".$this->getUsNombre()."', '".$this->getUsPass()."', '".$this->getUsMail()."', '0000-00-00 00:00:00')";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
