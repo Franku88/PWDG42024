@@ -1,6 +1,6 @@
 <?php
 
-include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Menu.php';
+// include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Menu.php';
 
 
 class ABMMenu
@@ -126,7 +126,7 @@ class ABMMenu
                 $where = "idpadre = " . intval($param["idpadre"]);
             }
             if (isset($param["medeshabilitado"])) {
-                $where = "medeshabilitado = " . $param["medeshabilitado"] ? 1 : 0;
+                $where = "medeshabilitado ='".$param['medeshabilitado']."'";
             }
         }
         $arreglo = (new Menu())->listar($where);
