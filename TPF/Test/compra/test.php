@@ -7,13 +7,12 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABMUsuario.php';
 
 
-// test alta Compra ❌
+// test alta Compra ✅
 // ['cofecha' => $cofecha, 'objUsuario' => $objUsuario] idcompra es AUTO_INCREMENT
 // $abmCompra = new ABMCompra();
 // $abmUsuario = new ABMUsuario();
 // $usuarios = $abmUsuario->buscar(['idusuario' => 3]);
-// $fechaActual = date('Y-m-d');
-// $alta = $abmCompra->alta(['cofecha' => $fechaActual , 'objUsuario' => $usuarios[0]]);
+// $alta = $abmCompra->alta(['usuario' => $usuarios[0]]);
 // if ($alta) {
 //     echo 'Alta exitosa';
 // } else {

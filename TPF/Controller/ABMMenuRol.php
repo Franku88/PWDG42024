@@ -12,9 +12,9 @@ class ABMMenuRol {
      */
     private function cargarObjeto($param) {
         $obj = null;
-        if (array_key_exists('idrol', $param) AND array_key_exists('idmenu', $param)) {
+        if (array_key_exists('rol', $param) AND array_key_exists('menu', $param)) {
             $obj = new MenuRol();
-            $obj->cargarDatos( $param['idrol'], $param['idmenu']);
+            $obj->cargarDatos( $param['rol'], $param['menu']);
         }
         return $obj;
     }
@@ -31,7 +31,7 @@ class ABMMenuRol {
         $obj = null;
         if ($this->seteadosCamposClaves($param)) {
             $obj = new MenuRol();
-            $obj->cargarDatos($param['idrol'], $param['idmenu']);
+            $obj->cargarDatos($param['rol'], $param['menu']);
         }
         return $obj;
     }
@@ -43,7 +43,7 @@ class ABMMenuRol {
      */
     private function seteadosCamposClaves($param) {
         $resp = false;
-        if (isset($param['idrol'], $param['idmenu'])) {
+        if (isset($param['rol'], $param['menu'])) {
             $resp = true;
         }
         return $resp;
@@ -104,11 +104,11 @@ class ABMMenuRol {
     public function buscar ($param = null) {
         $where = " true ";
         if ($param != null) {
-            if (isset($param['idrol'])) {
-                $where = " AND idrol = '".$param['idrol']->getIdrol()."'";
+            if (isset($param['rol'])) {
+                $where = " AND idrol = '".$param['rol']->getIdrol()."'";
             }
-            if (isset($param['idmenu'])) {
-                $where = " AND idmenu = '".$param['idmenu']->getIdmenu()."'";
+            if (isset($param['menu'])) {
+                $where = " AND idmenu = '".$param['menu']->getIdmenu()."'";
             }
         }
         $arreglo = (new MenuRol())->listar($where);
