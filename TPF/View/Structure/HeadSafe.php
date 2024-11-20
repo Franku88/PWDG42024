@@ -23,6 +23,9 @@
         <!-- jQuery -->
         <script src="<?php echo BASE_URL; ?>/View/Assets/js/jquery-3.7.1.min.js"></script>
         
+        <!-- EasyUI -->
+        <script src="<?php echo BASE_URL; ?>/View/Assets/js/jquery-easyui-1.11.0/jquery.easyui.min.js"></script>
+
     </head>
 
     <?php
