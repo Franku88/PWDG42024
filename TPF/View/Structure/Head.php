@@ -12,6 +12,9 @@
         <!-- Bootstrap -->
         <link href="<?php echo BASE_URL; ?>/View/Assets/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
+        <!-- EasyUI -->
+        <link href="<?php echo BASE_URL; ?>/View/Assets/js/jquery-easyui-1.11.0/themes/bootstrap/easyui.css" rel="stylesheet">
+        
         <!-- Estilos propios -->
         <link href="<?php echo BASE_URL; ?>/View/Assets/css/styles.css" rel="stylesheet">
 
@@ -27,19 +30,19 @@
         <script src="<?php echo BASE_URL; ?>/View/Assets/js/jquery-easyui-1.11.0/jquery.easyui.min.js"></script>
         
         
+        
     </head>
 
-    <body class="d-flex flex-column min-vh-100"> <!-- Comienza body -->
+    <body class="d-flex flex-column min-vh-100 bg-steam-darkgreen"> <!-- Comienza body saludos YT!-->
         <header>
             <!-- Barra de navegación -->
-            <nav class="navbar navbar-expand-sm contenedor-inactivo-steam justify-content-between">
+            <nav class="navbar navbar-expand-sm bg-steam-lightgreen bdr-steam-nofocus justify-content-between">
             <div class="mx-2 my-1">
                 <a class="btn btn-primary btn-steam3 mx-2" href="<?php echo BASE_URL; ?>/index.php">Inicio</a> <!-- Index button -->
             </div>
                 <div class="mx-3">
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL ;?>/View/Ejercicios/Tienda/Tienda.php"> Tienda </a>
-                    <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL ;?>/View/Ejercicios/">Iniciar sesión</a>
-                    <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL ;?>/View/Ejercicios/">Registrarse</a>
+                    <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL ;?>/View/Ejercicios/Login/Login.php">Login</a>
                 </div>
             </nav>
 

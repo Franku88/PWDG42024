@@ -27,32 +27,29 @@ input[readonly] {
     background-color: #31382a;
 }
 
-.contenedor-inactivo-steam {
-    border-top: 2px #737770 solid;
-    border-left: 2px #737770 solid;
-    border-bottom: 2px #31382a solid;
-    border-right:  2px #31382a solid;
+.bg-steam-lightgray {
+    background-color: #8C8C8C;
+    color: white;
+}
+
+.bg-steam-lightgreen {
     background-color: #4c5844;
     color: white;
 }
 
-.contenedor-activo-steam {
-    border-top: 2px #31382a solid;
-    border-left: 2px #31382a solid;
-    border-bottom: 2px #737770 solid;
-    border-right: 2px #737770 solid;
+.bg-steam-darkgreen {
     background-color: #3f4737;
     color: white;
 }
 
-.borde-inactivo-steam {
+.bdr-steam-nofocus {
     border-top: 2px #737770 solid;
     border-left: 2px #737770 solid;
     border-bottom: 2px #31382a solid;
     border-right:  2px #31382a solid;
 }
 
-.borde-activo-steam {
+.bdr-steam-focus {
     border-top: 2px #31382a solid;
     border-left: 2px #31382a solid;
     border-bottom: 2px #737770 solid;
@@ -131,18 +128,6 @@ input[readonly] {
     color: white;
 }
 
-.bg-color-steam-lightgray {
-    background-color: #8C8C8C;
-}
-
-.bg-color-steam-lightgreen {
-    background-color: #4c5844;
-}
-
-.bg-color-steam-darkgreen {
-    background-color: #3f4737;
-}
-
 .table-rounded {
     border-top: 2px #737770 solid;
     border-left: 2px #737770 solid;
@@ -152,3 +137,4 @@ input[readonly] {
     border-radius: 1em; /* Redondea las esquinas de la tabla */
     overflow: hidden; /* Asegura que el contenido no sobresalga de las esquinas redondeadas */
 }
+

@@ -12,6 +12,9 @@
         <!-- Bootstrap -->
         <link href="<?php echo BASE_URL; ?>/View/Assets/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
+        <!-- EasyUI -->
+        <link href="<?php echo BASE_URL; ?>/View/Assets/js/jquery-easyui-1.11.0/themes/gray/easyui.css" rel="stylesheet">
+
         <!-- Estilos propios -->
         <link href="<?php echo BASE_URL; ?>/View/Assets/css/styles.css" rel="stylesheet">
 
@@ -41,7 +44,7 @@
     <body class="d-flex flex-column min-vh-100"> <!-- Comienza body -->
         <header>
 
-        <nav class="navbar navbar-expand-sm contenedor-inactivo-steam">
+        <nav class="navbar navbar-expand-sm bg-steam-lightgreen bdr-steam-nofocus">
     <div class="mx-2 my-1">
         <a class="btn btn-primary btn-steam3 mx-2" href="<?php echo BASE_URL; ?>/index.php">Inicio</a> <!-- Index button -->
     </div>
@@ -51,7 +54,7 @@
 </nav>
             
             <!-- Barra de navegación -->
-            <nav class="navbar navbar-expand-sm contenedor-inactivo-steam justify-content-between">
+            <nav class="navbar navbar-expand-sm bg-steam-lightgreen bdr-steam-nofocus justify-content-between">
             <div class="mx-2 my-1">
                 <a class="btn btn-primary btn-steam3 mx-2" href="<?php echo BASE_URL; ?>/index.php">Inicio</a> <!-- Index button -->
             </div>

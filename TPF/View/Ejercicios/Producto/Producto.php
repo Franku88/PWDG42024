@@ -4,12 +4,12 @@ include_once '../../../configuracion.php';
 $data = Funciones::data_submitted();
 
 if (!empty($data)) {
-    $arrProductos = ABMProducto->buscar(['idproducto' => $data['idproducto']]);
+    $arrProductos = (new ABMProducto())->buscar(['idproducto' => $data['idproducto']]);
     $resultado = null;
     if (!empty($arrProductos)) {
         $producto = $arrProductos[0];
         $imagenesDiv = "";
-        $dirImagenes = '/View/Assets/Media/Product/' . $producto['idproducto'];
+        $dirImagenes = "/View/Assets/Media/Product/".$producto->getIdproducto();
         $dirImagenesDiv = $dirImagenes . '/Preview/*.png';
         // glob escanea la dirección y devuelve un array con las imágenes en el directorio (no incluye subcarpetas)
         $scanDiv = glob($dirImagenesDiv);
@@ -50,7 +50,7 @@ if (!empty($data)) {
                             <div class='producto__descripcion'>
                                 <div>
                                     <!--- TEXTO DESCRIPTIVO DEL PRODUCTO --->
-                                    <p id='producto__descripcion'> " . $producto['prodetalle'] . " </p>
+                                    <p id='producto__descripcion'> ".$producto->getProdetalle()." </p>
                                 </div>
                             </div>
                             <div id='producto__imagenes' class='borde-activo-steam'>
