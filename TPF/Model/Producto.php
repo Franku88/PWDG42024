@@ -169,7 +169,8 @@ class Producto {
             SET pronombre = '".$this->getPronombre()."', 
                 prodetalle = '".$this->getProdetalle()."', 
                 procantstock = ".$this->getProcantstock()."',
-                proprecio = ".$this->getProprecio()."
+                proprecio = ".$this->getProprecio()."',
+                prodeshabilitado = ".$this->getProdeshabilitado()."
             WHERE idproducto = ".$this->getIdproducto();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
