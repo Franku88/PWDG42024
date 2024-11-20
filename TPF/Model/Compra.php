@@ -118,8 +118,8 @@ class Compra {
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "INSERT INTO compra(cofecha, idusuario) VALUES
-            ('".$this->getCofecha()."', ".($this->getObjUsuario())->getIdusuario().")";
+            $consulta = "INSERT INTO compra(idusuario) VALUES
+            (".($this->getObjUsuario())->getIdusuario().")";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -140,7 +140,8 @@ class Compra {
         $resultado = false;
         if ($bd->Iniciar()) {
             $consulta = "UPDATE compra SET 
-            cofecha = '".$this->getCofecha()."', idusuario = ".($this->getObjUsuario())->getIdusuario()." 
+                cofecha = '".$this->getCofecha()."', 
+                idusuario = ".($this->getObjUsuario())->getIdusuario()." 
             WHERE idcompra = ".$this->getIdcompra();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
@@ -161,7 +162,8 @@ class Compra {
         $bd = new BaseDatos();
         $resultado = false; 
         if ($bd->Iniciar())  {
-            $consulta = "DELETE FROM compra WHERE idcompra = ".$this->getIdcompra();
+            $consulta = "DELETE FROM compra 
+                WHERE idcompra = ".$this->getIdcompra();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -178,8 +180,8 @@ class Compra {
      * @return string
      */
      public function __tostring() {
-        return ("Idcompra: " . $this->getIdcompra() . "\n" .
-                "Fecha: " . $this->getCoFecha() . "\n" .
-                "Usuario: " . $this->getObjUsuario() . "\n");
+        return ("idcompra: " . $this->getIdcompra() . "\n" .
+                "cofecha: " . $this->getCoFecha() . "\n" .
+                "usuario: " . $this->getObjUsuario() . "\n");
      }
 }
