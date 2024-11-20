@@ -142,15 +142,15 @@ INSERT INTO `rol` (`idrol`, `rodescripcion`) VALUES
 -- --------------------------------------------------------
 
 -- Volcado de datos para la tabla `menu`
-INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`) VALUES
-(1, 'Cliente', '#', NULL, '0000-00-00 00:00:00'),
-(2, 'Deposito', '#', NULL, '0000-00-00 00:00:00'),
-(3, 'Administrador', '#', NULL, '0000-00-00 00:00:00'),
-(4, 'Administrar Usuarios', 'administrarUsuarios', 3, '0000-00-00 00:00:00'),
-(5, 'Cargar Usuario', 'cargarUsuario', 3, '0000-00-00 00:00:00'),
-(6, 'Administrar Menus', 'administrarMenus', 3, '0000-00-00 00:00:00'),
-(7, 'Cargar Menu', 'cargarMenu', 3, '0000-00-00 00:00:00'),
-(8, 'Administrar Productos', 'administrarProductos', 2, '0000-00-00 00:00:00'),
-(9, 'Cargar Producto', 'cargarProducto', 2, '0000-00-00 00:00:00'),
-(10, 'Carrito', 'carrito', 1, '0000-00-00 00:00:00');
+INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`) VALUES
+(1, 'Cliente', '#', NULL),
+(2, 'Deposito', '#', NULL),
+(3, 'Administrador', '#', NULL),
+(4, 'Administrar Usuarios', 'administrarUsuarios', 3),
+(5, 'Cargar Usuario', 'cargarUsuario', 3),
+(6, 'Administrar Menus', 'administrarMenus', 3),
+(7, 'Cargar Menu', 'cargarMenu', 3),
+(8, 'Administrar Productos', 'administrarProductos', 2),
+(9, 'Cargar Producto', 'cargarProducto', 2),
+(10, 'Carrito', 'carrito', 1);
 -- --------------------------------------------------------
