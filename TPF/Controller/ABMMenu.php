@@ -115,8 +115,8 @@ class ABMMenu {
             if (isset($param["medescripcion"])) {
                 $where .= " AND medescripcion = ".$param["medescripcion"];
             }
-            if (isset($param["idpadre"])) {
-                $where .= " AND idpadre = ".intval($param["idpadre"]);
+            if (isset($param["padre"])) {
+                $where .= " AND idpadre = ".($param["padre"])->getIdmenu();
             }
             if (isset($param["medeshabilitado"])) {
                 $where .= " AND medeshabilitado ='".$param['medeshabilitado']."'";
