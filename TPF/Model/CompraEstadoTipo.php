@@ -134,8 +134,7 @@ class CompraEstadoTipo {
         if ($bd->Iniciar()) {
             $consulta = "UPDATE compraestadotipo 
                             SET cetdescripcion = '".$this->getCetdescripcion()."', 
-                                cetdetalle = '".$this->getCetdetalle()."', 
-                            WHERE idcompraestadotipo = ".$this->getIdcompraestadotipo();
+                                cetdetalle = '".$this->getCetdetalle()."' WHERE idcompraestadotipo = ".$this->getIdcompraestadotipo();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {

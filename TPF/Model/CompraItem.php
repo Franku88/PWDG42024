@@ -199,8 +199,7 @@ class CompraItem
             $consulta = "UPDATE compraitem 
                             SET idproducto = '" .($this->getObjProducto())->getIdproducto(). "', 
                             idcompra = '" .($this->getObjCompra())->getIdcompra(). "', 
-                            cicantidad = '" .$this->getCicantidad(). "', 
-                            WHERE idcompraitem = " .$this->getIdcompraitem();
+                            cicantidad = '" .$this->getCicantidad(). "' WHERE idcompraitem = " .$this->getIdcompraitem();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
