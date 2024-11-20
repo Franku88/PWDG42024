@@ -145,8 +145,8 @@ class CompraEstado {
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "INSERT INTO compraestado(idcompra, idcompraestadotipo, cefechaini, cefechafin) VALUES 
-            (".($this->getObjCompra())->getIdcompra().", ".($this->getObjCompraEstadoTipo())->getIdcompraestadotipo().", '".$this->getCefechaini()."', '".$this->getCefechafin()."')";
+            $consulta = "INSERT INTO compraestado(idcompra, idcompraestadotipo) VALUES 
+            (".($this->getObjCompra())->getIdcompra().", ".($this->getObjCompraEstadoTipo())->getIdcompraestadotipo().")";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -202,6 +202,7 @@ class CompraEstado {
         }
         return $resultado;
     }
+    
     /**
      * Retorna un string con los datos del compraestado
      * @return string
