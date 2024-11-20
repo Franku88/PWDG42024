@@ -11,15 +11,15 @@ include_once '../../configuracion.php';
 // cambio en Menu.php para que funcione (línea 150) 
 
 // insertando menu nuevo
-// $param = array('menombre' => 'Testing menu v2', 'medescripcion' => 'Menu de prueba', 'idpadre' => null);
-// $abmMenu = new ABMMenu();
-// $alta = $abmMenu->alta($param);
+$param = array('menombre' => 'Testing menu v2', 'medescripcion' => 'Menu de prueba', 'idpadre' => null);
+$abmMenu = new ABMMenu();
+$alta = $abmMenu->alta($param);
 
-// if ($alta) {
-//     echo "Alta exitosa";
-// } else {
-//     echo "Error en la alta";
-// }
+if ($alta) {
+    echo "Alta exitosa";
+} else {
+    echo "Error en la alta";
+}
 
 
 
@@ -69,23 +69,23 @@ include_once '../../configuracion.php';
 
 // test de modificacion de menu ✅ (verificar el usdesabilitado en NULL y que el $menu exista) v2 falta verificar usando idpadre con un objeto real
 // cambios en Menu.php para funcionar (línea 173)
-$menu = 9;
-$abmMenu = new ABMMenu();
-// Paso 2: Modificar el usuario
-//paso 2.1: recuperar fecha actual
-$fecha = date('Y-m-d H:i:s');
+// $menu = 9;
+// $abmMenu = new ABMMenu();
+// // Paso 2: Modificar el usuario
+// //paso 2.1: recuperar fecha actual
+// $fecha = date('Y-m-d H:i:s');
 
-$modificacionData = [
-    'idmenu' => $menu,
-    'menombre' => 'MenuModificado',
-    'medescripcion' => 'desc mod',
-    'idpadre' => null,
-    'medeshabilitado' => $fecha
-];
-// Ejecutar la modificación
-$resultadoModificacion = $abmMenu->modificacion($modificacionData);
-if ($resultadoModificacion) {
-    echo "Modificación exitosa";
-} else {
-    echo "Error en la modificación";
-}
+// $modificacionData = [
+//     'idmenu' => $menu,
+//     'menombre' => 'MenuModificado',
+//     'medescripcion' => 'desc mod',
+//     'idpadre' => null,
+//     'medeshabilitado' => $fecha
+// ];
+// // Ejecutar la modificación
+// $resultadoModificacion = $abmMenu->modificacion($modificacionData);
+// if ($resultadoModificacion) {
+//     echo "Modificación exitosa";
+// } else {
+//     echo "Error en la modificación";
+// }

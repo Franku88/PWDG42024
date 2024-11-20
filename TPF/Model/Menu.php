@@ -143,13 +143,13 @@ class Menu {
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $idpadre = null;
-            // if ($this->getPadre() != null) {
-            //     $idpadre = ($this->getPadre())->getIdmenu();
-            // }
-            $idpadre = ($this->getPadre() != null)? $this->getPadre()->getIdmenu() : 'NULL';
-            $consulta = "INSERT INTO menu(menombre, medescripcion, idpadre) VALUES 
-            ('".$this->getMenombre()."', '".$this->getMedescripcion()."', $idpadre)";
+            $idpadre = 'null';
+            if ($this->getPadre() != null) {
+                $idpadre = ($this->getPadre())->getIdmenu();
+            }
+
+            $consulta = "INSERT INTO menu(menombre, medescripcion, idpadre, medeshabilitado) VALUES 
+            ('".$this->getMenombre()."', '".$this->getMedescripcion()."', $idpadre , '0000-00-00 00:00:00')" ;
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -169,11 +169,10 @@ class Menu {
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
-            $idpadre = null;
-            // if ($this->getPadre() != null) {
-            //     $idpadre = ($this->getPadre())->getIdmenu();
-            // }
-            $idpadre = ($this->getPadre() != null)? $this->getPadre()->getIdmenu() : 'NULL';
+            $idpadre = 'null';
+            if ($this->getPadre() != null) {
+                $idpadre = ($this->getPadre())->getIdmenu();
+            }
             $consulta = "UPDATE menu 
                         SET menombre = '".$this->getMenombre()."',
                         medescripcion = '".$this->getMedescripcion()."' ,
