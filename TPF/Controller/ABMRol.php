@@ -1,7 +1,7 @@
 <?php 
 
 
-include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Rol.php';
+//include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Rol.php'; //Autoloader
 
 class ABMRol {
     /**
@@ -94,7 +94,7 @@ class ABMRol {
     }
 
     /**
-     * Busca un rol en la BD
+     * Busca roles en la BD
      * Si $param es vacío, trae todos los roles
      * @param array $param
      * @return array
@@ -103,13 +103,14 @@ class ABMRol {
         $where = " true ";
         if ($param != null) {
             if (isset($param['idrol'])) {
-                $where = "idrol = ".$param['idrol'];
+                $where .= " AND idrol = ".$param['idrol'];
             }
             if (isset($param['rodescripcion'])) {
-                $where = "rodescripcion = '".$param['rodescripcion']."'";
+                $where .= " AND rodescripcion = '".$param['rodescripcion']."'";
             }
         }
         $arreglo = (new Rol())->listar($where);
         return $arreglo;
     }
 }
+?>
