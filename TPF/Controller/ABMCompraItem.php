@@ -2,7 +2,7 @@
 
 // include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/CompraItem.php"; Lo carga el autoloader.php
 
-//idcompraitem(bigint) idproducto(obj) idcompra(obj) cicantidad(int)
+//idcompraitem(bigint) producto(obj) idcompra(obj) cicantidad(int)
 
 class ABMCompraItem {
     
@@ -14,11 +14,11 @@ class ABMCompraItem {
      */
     private function cargarObjeto($param) {
         $obj = null;
-        if (array_key_exists('idproducto', $param) AND array_key_exists('idcompra', $param) AND array_key_exists('cicantidad', $param)) {
+        if (array_key_exists('producto', $param) AND array_key_exists('compra', $param) AND array_key_exists('cicantidad', $param)) {
             // Solo asignamos 'idcompraitem' si está definido y es distinto de null
             $idcompraitem = array_key_exists('idcompraitem', $param) ? $param['idcompraitem'] : null;
             $obj = new CompraItem();
-            $obj->cargarDatos($idcompraitem, $param['idproducto'], $param['idcompra'], $param['cicantidad']);
+            $obj->cargarDatos($idcompraitem, $param['producto'], $param['compra'], $param['cicantidad']);
         }
         return $obj;
     }
@@ -109,11 +109,11 @@ class ABMCompraItem {
             if (isset($param['idcompraitem'])) {
                 $where .= " AND idcompraitem = ".$param['idcompraitem'];
             }
-            if (isset($param['idproducto'])) {
-                $where .= " AND idproducto = '".$param['idproducto']."'";
+            if (isset($param['producto'])) {
+                $where .= " AND idproducto = '".$param['producto']->getIdproducto()."'";
             }
-            if (isset($param['idcompra'])) {
-                $where .= " AND idcompra = '".$param['idcompra']."'";
+            if (isset($param['compra'])) {
+                $where .= " AND idcompra = '".$param['compra']->getIdcompra()."'";
             }
             if (isset($param['cicantidad'])) {
                 $where .= " AND cicantidad = '".$param['cicantidad']."'";
