@@ -53,7 +53,7 @@ class MenuRol {
         $resultado = false;
         if ($bd->Iniciar()) {
             $consulta = "SELECT * FROM menurol 
-            WHERE idmenu = ".$objMenu->getIdmenu()." AND idrol = ".$objRol->getId();
+            WHERE idmenu = ".$objMenu->getIdmenu()." AND idrol = ".$objRol->getIdrol();
             if ($bd->Ejecutar($consulta)) {
                 if ($row = $bd->Registro()) {
                     $objMenu = new Menu();
@@ -112,7 +112,7 @@ class MenuRol {
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
             $consulta = "INSERT INTO menurol(idmenu, idrol) VALUES 
-            ('".$this->getObjMenu()->getIdmenu()."', '".$this->getObjRol()->getId()."')";
+            ('".$this->getObjMenu()->getIdmenu()."', '".$this->getObjRol()->getIdrol()."')";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -135,8 +135,8 @@ class MenuRol {
         $resultado = false;
         if ($bd->Iniciar()) {
             $consulta = "UPDATE menurol 
-            SET idmenu = ".($this->getObjMenu())->getIdmenu().", idrol = ".($this->getObjRol())->getId()."
-            WHERE idmenu = ".($this->getObjMenu())->getIdmenu()." AND idrol = ".($this->getObjRol())->getId();
+            SET idmenu = ".($this->getObjMenu())->getIdmenu().", idrol = ".($this->getObjRol())->getIdrol()."
+            WHERE idmenu = ".($this->getObjMenu())->getIdmenu()." AND idrol = ".($this->getObjRol())->getIdrol();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -157,7 +157,7 @@ class MenuRol {
         $resp = false;
         if ($base->Iniciar()) {
             $consulta = "DELETE FROM menurol 
-            WHERE idmenu = ".($this->getObjMenu())->getIdmenu()." AND idrol = ".($this->getObjRol())->getId();
+            WHERE idmenu = ".($this->getObjMenu())->getIdmenu()." AND idrol = ".($this->getObjRol())->getIdrol();
             if ($base->Ejecutar($consulta)) {
                 $resp = true;
             } else {
