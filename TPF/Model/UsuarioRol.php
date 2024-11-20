@@ -13,30 +13,37 @@ class UsuarioRol {
         $this->objUsuario = $objUsuario;
         $this->objRol = $objRol;
     }
+
     // getters
-    public function getUsuario() {
+    public function getObjUsuario() {
         return $this->objUsuario;
     }
-    public function getRol() {
+
+    public function getObjRol() {
         return $this->objRol;
     }
-    public function getmensajeOperacion() {
+
+    public function getMensajeOperacion() {
         return $this->mensajeOperacion;
     }
+
     // setters
-    public function setUsuario($objUsuario) {
+    public function setObjUsuario($objUsuario) {
         $this->objUsuario = $objUsuario;
     }
-    public function setRol($objRol) {
+
+    public function setObjRol($objRol) {
         $this->objRol = $objRol;
     }
-    public function setmensajeOperacion($mensajeOperacion){
+
+    public function setMensajeOperacion($mensajeOperacion){
         $this->mensajeOperacion = $mensajeOperacion;
     }
+
     // metodos CRUD
     public function cargarDatos($objUsuario, $objRol) {
-        $this->setUsuario($objUsuario);
-        $this->setRol($objRol);
+        $this->setObjUsuario($objUsuario);
+        $this->setObjRol($objRol);
     }
 
     /**
@@ -50,7 +57,7 @@ class UsuarioRol {
         $resultado = false;
         if ($bd->Iniciar()) {
             $consulta = "SELECT * FROM usuariorol 
-            WHERE idusuario = '".$objUsuario->getIdusuario()."' AND idrol = '".$objRol->getIdrol()."'";
+            WHERE idusuario = ".$objUsuario->getIdusuario()." AND idrol = ".$objRol->getIdrol();
             if ($bd->Ejecutar($consulta)) {
                 if ($row = $bd->Registro()) {
                     //Busca datos de cada objeto por separado
@@ -93,10 +100,10 @@ class UsuarioRol {
                     array_push($coleccion, $obj);
                 }
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $coleccion;
     }
@@ -110,14 +117,14 @@ class UsuarioRol {
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
             $consulta = "INSERT INTO usuariorol(idusuario, idrol) VALUES 
-            ('".($this->getUsuario())->getIdusuario()."', '".($this->getRol())->getIdrol()."')";
+            (".($this->getObjUsuario())->getIdusuario().", ".($this->getObjRol())->getIdrol().")";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $resultado;
     }
@@ -132,15 +139,15 @@ class UsuarioRol {
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
-            $consulta = "UPDATE usuariorol SET idrol = '".($this->getRol())->getIdrol()."' 
-            WHERE idusuario = ".($this->getUsuario())->getIdusuario();
+            $consulta = "UPDATE usuariorol SET idrol = ".($this->getObjRol())->getIdrol()." 
+            WHERE idusuario = ".($this->getObjUsuario())->getIdusuario();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $resultado;
     }
@@ -154,14 +161,14 @@ class UsuarioRol {
         $resultado = false;
         if ($bd->Iniciar()) {
             $consulta = "DELETE FROM usuariorol 
-            WHERE idusuario = '".($this->getUsuario())->getIdusuario()."' AND idrol = '".($this->getRol())->getIdrol()."'";
+            WHERE idusuario = ".($this->getObjUsuario())->getIdusuario()." AND idrol = ".($this->getObjRol())->getIdrol();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $resultado;
     }
@@ -171,7 +178,7 @@ class UsuarioRol {
      * @return string
      */
     public function __toString() {
-        return ("usuario: ".$this->getUsuario()." \n Rol: ".$this->getRol());
+        return ("Usuario: ".$this->getObjUsuario()." \n Rol: ".$this->getObjRol());
     }
 }
 ?>
