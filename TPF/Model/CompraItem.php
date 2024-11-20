@@ -2,28 +2,29 @@
 
 include_once 'BaseDatos.php';
 
-// idCompraItem objProducto idcompra cicantidad
+// idcompraitem(bigint) idproducto(obj) idcompra(obj) cicantidad(int)
 include_once 'BaseDatos.php';
 
 class CompraItem
 {
-    private $idCompraItem;
+    private $idcompraitem;
     private $objProducto;
     private $objCompra;
-    private $cICantidad;
+    private $cicantidad;
     private $mensajeOperacion;
 
-    public function __construct($objProducto = null, $objCompra = null, $cICantidad = null)
+    public function __construct($idcompraitem = null, $objProducto = null, $objCompra = null, $cicantidad = null)
     {
+        $this->idcompraitem  =$idcompraitem;
         $this->objProducto = $objProducto;
         $this->objCompra = $objCompra;
-        $this->cICantidad = $cICantidad;
+        $this->cicantidad = $cicantidad;
     }
 
     // Getters
-    public function getIdCompraItem()
+    public function getIdcompraitem()
     {
-        return $this->idCompraItem;
+        return $this->idcompraitem;
     }
 
     public function getObjProducto()
@@ -36,9 +37,9 @@ class CompraItem
         return $this->objCompra;
     }
 
-    public function getCICantidad()
+    public function getCicantidad()
     {
-        return $this->cICantidad;
+        return $this->cicantidad;
     }
 
     public function getMensajeOperacion()
@@ -47,9 +48,9 @@ class CompraItem
     }
 
     // Setters
-    public function setIdCompraItem($idCompraItem)
+    public function setIdcompraitem($idcompraitem)
     {
-        $this->idCompraItem = $idCompraItem;
+        $this->idcompraitem = $idcompraitem;
     }
 
     public function setObjProducto($objProducto)
@@ -62,9 +63,9 @@ class CompraItem
         $this->objCompra = $objCompra;
     }
 
-    public function setCICantidad($cICantidad)
+    public function setCicantidad($cicantidad)
     {
-        $this->cICantidad = $cICantidad;
+        $this->cicantidad = $cicantidad;
     }
 
     public function setMensajeOperacion($mensajeOperacion)
@@ -74,18 +75,18 @@ class CompraItem
 
     // Métodos CRUD
 
-    public function cargarDatos($idCompraItem, $objProducto = null, $objCompra = null, $cICantidad = null)
+    public function cargarDatos($idcompraitem = null, $objProducto = null, $objCompra = null, $cicantidad = null)
     {
-        $this->setIdCompraItem($idCompraItem);
+        $this->setIdcompraitem($idcompraitem);
         $this->setObjProducto($objProducto);
         $this->setObjCompra($objCompra);
-        $this->setCICantidad($cICantidad);
+        $this->setCicantidad($cicantidad);
     }
 
 
 
     /**
-     * Buscar datos de un usuario por su id
+     * Buscar datos de una compra por su id
      * @param int $id
      * @return boolean
      */
@@ -110,7 +111,7 @@ class CompraItem
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "SELECT * FROM compraitem WHERE idcompraitem = " . $this->getIdCompraItem();
+        $sql = "SELECT * FROM compraitem WHERE idcompraitem = " .$this->getIdcompraitem();
 
         if ($base->Iniciar()) {
             $res = $base->Ejecutar($sql);
@@ -145,14 +146,14 @@ class CompraItem
         if ($bd->Iniciar()) {
             $consulta = "SELECT * FROM compraitem";
             if ($condicion != "") {
-                $consulta = $consulta . ' WHERE ' . $condicion;
+                $consulta = $consulta .' WHERE '. $condicion;
             }
             $consulta .= " order by idcompraitem";
             if ($bd->Ejecutar($consulta)) {
                 while ($row = $bd->Registro()) {
-                    $compraItem = new CompraItem();
-                    $compraItem->cargarDatos($row['idcompraitem'], $row['idproducto'], $row['idcompra'], $row['cicantidad']);
-                    array_push($coleccion, $compraItem);
+                    $compraitem = new CompraItem();
+                    $compraitem->cargarDatos($row['idcompraitem'], $row['idproducto'], $row['idcompra'], $row['cicantidad']);
+                    array_push($coleccion, $compraitem);
                 }
             } else {
                 $this->setMensajeOperacion($bd->getError());
@@ -171,7 +172,10 @@ class CompraItem
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "INSERT INTO compraitem(idproducto, idcompra, cicantidad) VALUES ('" . ($this->getObjProducto())->getIdproducto() . "','" . ($this->getObjCompra())->getIdcompra() . "','" . $this->getCICantidad() . "')";
+            $consulta = "INSERT INTO compraitem(idproducto, idcompra, cicantidad) 
+                            VALUES ('" .($this->getObjProducto())->getIdproducto(). "',
+                                    '" .($this->getObjCompra())->getIdcompra(). "',
+                                    '" . $this->getCicantidad(). "')";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -192,11 +196,11 @@ class CompraItem
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "UPDATE compraitem SET idproducto = '" . ($this->getObjProducto())->getIdproducto() . "', 
-            idcompra = '" . ($this->getObjCompra())->getIdcompra() . "', 
-            cicantidad = '" . $this->getCICantidad() . "', 
-            '
-        WHERE idcompraitem = " . $this->getIdCompraItem();
+            $consulta = "UPDATE compraitem 
+                            SET idproducto = '" .($this->getObjProducto())->getIdproducto(). "', 
+                            idcompra = '" .($this->getObjCompra())->getIdcompra(). "', 
+                            cicantidad = '" .$this->getCicantidad(). "', 
+                            WHERE idcompraitem = " .$this->getIdcompraitem();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -217,7 +221,7 @@ class CompraItem
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
-            $consulta = "DELETE FROM compraitem WHERE idcompraitem = " . $this->getIdCompraItem();
+            $consulta = "DELETE FROM compraitem WHERE idcompraitem = " .$this->getIdcompraitem();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -235,6 +239,9 @@ class CompraItem
      */
     public function __tostring()
     {
-        return ("Id: " . $this->getIdCompraItem() . "\nProductos: " . $this->getObjProducto() . "\nCompra: " . $this->getObjCompra() . "\nCantidad: " . $this->getCICantidad());
+        return ("Id Compra Item : " .$this->getIdcompraitem(). " \n
+        Productos: " .$this->getObjProducto(). " \n
+        Compra: " .$this->getObjCompra(). " \n
+        Cantidad: " .$this->getCicantidad());
     }
 }
