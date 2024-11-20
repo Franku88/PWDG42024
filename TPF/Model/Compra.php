@@ -3,67 +3,64 @@
 include_once 'BaseDatos.php';
 include_once 'Usuario.php';
 
-class Compra
-{
+class Compra {
     private $idcompra;
     private $cofecha;
     private $objUsuario;
     private $mensajeoperacion;
 
-
-    public function __construct($idcompra = null, $cofecha = null, $objUsuario = null)
-    {
+    public function __construct($idcompra = null, $cofecha = null, $objUsuario = null) {
         $this->idcompra = $idcompra;
         $this->cofecha = $cofecha;
         $this->objUsuario = $objUsuario;
     }
+
     // getters 
-    public function getIdcompra()
-    {
+    public function getIdcompra() {
         return $this->idcompra;
     }
-    public function getCoFecha()
-    {
+
+    public function getCofecha() {
         return $this->cofecha;
     }
-    public function getObjUsuario()
-    {
+
+    public function getObjUsuario() {
         return $this->objUsuario;
     }
-    public function getMensajeOperacion()
-    {
+
+    public function getMensajeOperacion() {
         return $this->mensajeoperacion;
     }
+
     // setters
-    public function setIdcompra($idcompra)
-    {
+    public function setIdcompra($idcompra) {
         $this->idcompra = $idcompra;
     }
-    public function setCofecha($cofecha)
-    {
+
+    public function setCofecha($cofecha) {
         $this->cofecha = $cofecha;
     }
-    public function setObjUsuario($objUsuario)
-    {
+
+    public function setObjUsuario($objUsuario) {
         $this->objUsuario = $objUsuario;
     }
-    public function setMensajeOperacion($mensajeoperacion)
-    {
+
+    public function setMensajeOperacion($mensajeoperacion) {
         $this->mensajeoperacion = $mensajeoperacion;
     }
-    public function cargarDatos($idcompra, $cofecha = null, $objUsuario = null)
-    {
+
+    public function cargarDatos($idcompra = null, $cofecha = null, $objUsuario = null) {
         $this->setIdcompra($idcompra);
         $this->setCofecha($cofecha);
         $this->setObjUsuario($objUsuario);
     }
+
     /**
      * Buscar datos de una compra por su id
      * @param int $idcompra
      * @return boolean
      */
-    public function buscarDatos($idcompra)
-    {
+    public function buscarDatos($idcompra) {
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
@@ -72,7 +69,7 @@ class Compra
                 if ($row = $bd->Registro()) {
                     $objUsuario = new Usuario();
                     $objUsuario->buscarDatos($row['idusuario']);
-                    // carga al objUsuario sujeto a la compra
+                    
                     $this->cargarDatos($row['idcompra'], $row['cofecha'], $objUsuario);
                     $resultado = true;
                 }
@@ -86,29 +83,29 @@ class Compra
      * @param $condicion // WHERE de sql
      * @return array // compras que cumplieron la condicion
      */
-    public function listar($condicion = "")
-    {
+    public function listar($condicion = "") {
         $coleccion = [];
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
             $consulta = "SELECT * FROM compra";
             if ($condicion != "") {
-                $consulta = $consulta . ' WHERE ' . $condicion;
+                $consulta = $consulta.' WHERE '.$condicion;
             }
             $consulta .= " ORDER BY idcompra ";
             if ($bd->Ejecutar($consulta)) {
                 while ($row = $bd->Registro()) {
                     $objUsuario = new Usuario();
                     $objUsuario->buscarDatos($row['idusuario']);
+
                     $obj = new Compra();
                     $obj->cargarDatos($row['idcompra'], $row['cofecha'], $objUsuario);
                     array_push($coleccion, $obj);
                 }
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $coleccion;
     }
@@ -122,14 +119,14 @@ class Compra
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
             $consulta = "INSERT INTO compra(cofecha, idusuario) VALUES
-            ('".$this->getCoFecha()."', '".($this->getObjUsuario())->getIdusuario()."')";
+            ('".$this->getCofecha()."', ".($this->getObjUsuario())->getIdusuario().")";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $resultado;
     }
@@ -138,19 +135,20 @@ class Compra
      * Modificar los datos de una compra en la bd (No se deberia usar en principio)
      * @return boolean
      */
-
     public function modificar() {
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
-            $consulta = "UPDATE compra SET cofecha = '".$this->getCoFecha()."', idusuario = '".($this->getObjUsuario())->getIdusuario()."' WHERE idcompra = ".$this->getIdcompra();
+            $consulta = "UPDATE compra SET 
+            cofecha = '".$this->getCofecha()."', idusuario = ".($this->getObjUsuario())->getIdusuario()." 
+            WHERE idcompra = ".$this->getIdcompra();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $resultado;
     }
@@ -167,24 +165,21 @@ class Compra
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $resultado;
     }
-
 
     /**
      * Retorna un string con los datos de la compra
      * @return string
      */
-
      public function __tostring() {
         return ("Idcompra: " . $this->getIdcompra() . "\n" .
                 "Fecha: " . $this->getCoFecha() . "\n" .
                 "Usuario: " . $this->getObjUsuario() . "\n");
      }
-
 }
