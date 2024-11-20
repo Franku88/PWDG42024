@@ -2,7 +2,6 @@
 
 include_once 'BaseDatos.php';
 
-
 // idCompraItem objProducto idcompra cicantidad
 include_once 'BaseDatos.php';
 
@@ -151,9 +150,9 @@ class CompraItem
             $consulta .= " order by idcompraitem";
             if ($bd->Ejecutar($consulta)) {
                 while ($row = $bd->Registro()) {
-                    $rol = new CompraItem();
-                    $rol->cargarDatos($row['idcompraitem'], $row['idproducto'], $row['idcompra'], $row['cicantidad']);
-                    array_push($coleccion, $rol);
+                    $compraItem = new CompraItem();
+                    $compraItem->cargarDatos($row['idcompraitem'], $row['idproducto'], $row['idcompra'], $row['cicantidad']);
+                    array_push($coleccion, $compraItem);
                 }
             } else {
                 $this->setMensajeOperacion($bd->getError());
