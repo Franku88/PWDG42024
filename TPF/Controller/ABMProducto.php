@@ -1,7 +1,5 @@
 <?php
 
-include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Producto.php";
-
 Class ABMProducto
 {
     private function cargarObjeto($param)

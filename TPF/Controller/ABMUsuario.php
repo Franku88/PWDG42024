@@ -1,8 +1,5 @@
 <?php 
 
-
-// include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Usuario.php";
-
 class ABMUsuario {
     
     /**

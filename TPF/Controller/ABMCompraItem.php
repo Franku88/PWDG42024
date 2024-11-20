@@ -1,9 +1,5 @@
 <?php
 
-// include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/CompraItem.php"; Lo carga el autoloader.php
-
-//idcompraitem(bigint) producto(obj) idcompra(obj) cicantidad(int)
-
 class ABMCompraItem {
     
     /**

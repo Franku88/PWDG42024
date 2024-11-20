@@ -1,6 +1,5 @@
 <?php 
 
-
 class ABMCompraEstado {
     //['objCompra' => $objCompra, 'objCompraEstadoTipo' => $objCompraEstadoTipo, 'cefechaini' => $cefechaini, 'cefechafin' => $cefechafin]
     /**

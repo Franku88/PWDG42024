@@ -1,7 +1,5 @@
 <?php
 
-// include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/MenuRol.php"; Lo carga el autoloader.php
-
 class ABMMenuRol {
     
     /**

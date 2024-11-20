@@ -1,7 +1,5 @@
 <?php 
 
-//include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Rol.php'; //Autoloader
-
 class ABMRol {
     /**
      * Espera como parametro un arreglo asociativo donde 
