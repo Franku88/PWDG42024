@@ -1,11 +1,11 @@
 <?php 
 
-
 //include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Rol.php'; //Autoloader
 
 class ABMRol {
     /**
-     * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto
+     * Espera como parametro un arreglo asociativo donde 
+     * las claves coinciden con los nombres de las variables instancias del objeto
      * @param array $param
      * @return Rol
      */
@@ -21,7 +21,8 @@ class ABMRol {
     }
 
     /**
-     * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto que son claves
+     * Espera como parametro un arreglo asociativo donde 
+     * las claves coinciden con los nombres de las variables instancias del objeto que son claves
      * @param array $param
      * @return Rol
      */
@@ -54,8 +55,8 @@ class ABMRol {
      */
     public function alta($param) {
         $resp = false;
-        $ObjRol = $this->cargarObjeto($param);
-        if ($ObjRol != null && $ObjRol->insertar()) {
+        $obj = $this->cargarObjeto($param);
+        if ($obj != null && $obj->insertar()) {
             $resp = true;
         }
         return $resp;
@@ -69,8 +70,8 @@ class ABMRol {
     public function baja($param) {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
-            $ObjRol = $this->cargarObjetoConClave($param);
-            if ($ObjRol != null && $ObjRol->eliminar()) {
+            $obj = $this->cargarObjetoConClave($param);
+            if ($obj != null && $obj->eliminar()) {
                 $resp = true;
             }
         }
@@ -85,8 +86,8 @@ class ABMRol {
     public function modificacion($param) {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
-            $ObjRol = $this->cargarObjeto($param);
-            if ($ObjRol != null && $ObjRol->modificar()) {
+            $obj = $this->cargarObjeto($param);
+            if ($obj != null && $obj->modificar()) {
                 $resp = true;
             }
         }
