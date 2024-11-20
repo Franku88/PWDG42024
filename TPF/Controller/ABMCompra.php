@@ -14,10 +14,11 @@ class ABMCompra {
     private function cargarObjeto($param) {
         // ['cofecha' => $cofecha, 'usuario' => $usuario] idcompra es AUTO_INCREMENT
         $obj = null;
-        if (array_key_exists('cofecha', $param) AND array_key_exists('usuario', $param)) {
+        if (array_key_exists('usuario', $param)) {
             $idcompra = array_key_exists('idcompra', $param) ? $param['idcompra'] : null;
+            $cofecha = array_key_exists('cofecha', $param) ? $param['cofecha'] : null;
             $obj = new Compra();
-            $obj->cargarDatos($idcompra, $param['cofecha'], $param['usuario']);
+            $obj->cargarDatos($idcompra, $cofecha, $param['usuario']);
         }
         return $obj;
     }

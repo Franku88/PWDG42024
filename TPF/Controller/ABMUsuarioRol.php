@@ -3,7 +3,7 @@
 include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/UsuarioRol.php";
 
 class ABMUsuarioRol {
-
+    
     /**
      * Espera como parametro un arreglo asociativo donde las claves coinciden
      * con los nombres de las variables instancias del objeto

@@ -1,6 +1,5 @@
 <?php
 
-// testing de ABM de UsuarioRol
 include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/BaseDatos.php";
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Compra.php';
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABMCompra.php';
