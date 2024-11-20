@@ -148,8 +148,8 @@ class Menu {
                 $idpadre = ($this->getPadre())->getIdmenu();
             }
 
-            $consulta = "INSERT INTO menu(menombre, medescripcion, idpadre, medeshabilitado) VALUES 
-            ('".$this->getMenombre()."', '".$this->getMedescripcion()."', $idpadre , '0000-00-00 00:00:00')" ;
+            $consulta = "INSERT INTO menu(menombre, medescripcion, idpadre) VALUES 
+            ('".$this->getMenombre()."', '".$this->getMedescripcion()."', $idpadre)" ;
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
