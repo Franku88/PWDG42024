@@ -173,7 +173,7 @@ class CompraEstadoTipo {
     public function __toString() {
         return ("idcompraestadotipo: ".$this->getIdcompraestadotipo()." \n 
         cetdescripcion: ".$this->getCetdescripcion()."\n 
-        cetdetalle: ".$this->getCetdetalle()."\n");
+        cetdetalle: ".$this->getCetdetalle());
     }
 }
 ?>
