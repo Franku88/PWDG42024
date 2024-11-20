@@ -17,44 +17,57 @@ class Usuario {
         $this->usmail = $usmail;
         $this->usdeshabilitado = $usdeshabilitado;
     }
+
     // getters
     public function getIdusuario() {
         return $this->idusuario;
     }
+
     public function getUsNombre() {
         return $this->usnombre;
     }
+
     public function getUsMail() {
         return $this->usmail;
     }
+
     public function getUsPass() {
         return $this->uspass;
     }
+
     public function getUsdesabilitado() {
         return $this->usdeshabilitado;
     }
-    public function getmensajeOperacion() {
+
+    public function getMensajeOperacion() {
         return $this->mensajeOperacion;
     }
+
     // setters
     public function setIdusuario($idusuario) {
         $this->idusuario = $idusuario;
     }
+
     public function setUsNombre($usNombre) {
         $this->usnombre = $usNombre;
     }
+
     public function setUsPass($usPass) {
         $this->uspass = $usPass;
     }
+
     public function setUsMail($usMail) {
         $this->usmail = $usMail;
     }
+
     public function setUsdesabilitado($usdeshabilitado) {
         $this->usdeshabilitado = $usdeshabilitado;
     }
-    public function setmensajeOperacion($mensajeOperacion){
-        $this->mensajeOperacion=$mensajeOperacion;
+
+    public function setMensajeOperacion($mensajeOperacion){
+        $this->mensajeOperacion = $mensajeOperacion;
     }
+
     // metodos CRUD
     public function cargarDatos($idusuario, $usnombre = null , $uspass = null , $usmail = null , $usdeshabilitado = null) {
         $this->setIdusuario($idusuario);
@@ -80,9 +93,7 @@ class Usuario {
                     $resultado = true;
                 }
             }
-
         }
-        
         return $resultado;
     }
     
@@ -107,10 +118,10 @@ class Usuario {
                     array_push($coleccion, $obj);
                 }
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $coleccion;
     }
@@ -128,10 +139,10 @@ class Usuario {
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $resultado;
     }
@@ -153,10 +164,10 @@ class Usuario {
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $resultado;
     }
@@ -173,19 +184,24 @@ class Usuario {
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
-                $this->setmensajeOperacion($bd->getError());
+                $this->setMensajeOperacion($bd->getError());
             }
         } else {
-            $this->setmensajeOperacion($bd->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
         return $resultado;
     }
+
     /**
      * Retorna un string con los datos del usuario
-     * @return string
+     * @return String
      */
-    public function __tostring() {
-        return ("idusuario: ".$this->getIdusuario()." \n usnombre: ".$this->getUsNombre()."\n uspass: ".$this->getUsPass()."\n usmail: ".$this->getUsMail()." \n usdeshabilitado: ".$this->getUsdesabilitado());
+    public function __toString() {
+        return ("idusuario: ".$this->getIdusuario()." \n 
+        usnombre: ".$this->getUsNombre()."\n 
+        uspass: ".$this->getUsPass()."\n 
+        usmail: ".$this->getUsMail()." \n 
+        usdeshabilitado: ".$this->getUsdesabilitado());
     }
-
 }
+?>
