@@ -11,15 +11,15 @@ include_once '../../configuracion.php';
 // cambio en Menu.php para que funcione (línea 150) 
 
 // insertando menu nuevo
-$param = array('menombre' => 'Testing menu v2', 'medescripcion' => 'Menu de prueba', 'idpadre' => null);
-$abmMenu = new ABMMenu();
-$alta = $abmMenu->alta($param);
+// $param = array('menombre' => 'Testing menu v2', 'medescripcion' => 'Menu de prueba', 'idpadre' => null);
+// $abmMenu = new ABMMenu();
+// $alta = $abmMenu->alta($param);
 
-if ($alta) {
-    echo "Alta exitosa";
-} else {
-    echo "Error en la alta";
-}
+// if ($alta) {
+//     echo "Alta exitosa";
+// } else {
+//     echo "Error en la alta";
+// }
 
 
 

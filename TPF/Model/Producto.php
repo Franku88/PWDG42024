@@ -204,7 +204,7 @@ class Producto {
 
     /**
      * Retorna un string con los datos del producto
-     * @return String
+     * @return string
      */
     public function __toString() {
         return ("idproducto: ".$this->getIdproducto()."\n" .
