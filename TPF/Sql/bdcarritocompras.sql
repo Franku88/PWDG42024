@@ -134,6 +134,13 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 (4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1');
 -- --------------------------------------------------------
 
+-- Volcado de datos para la tabla `rol`
+INSERT INTO `rol` (`idrol`, `rodescripcion`) VALUES
+(1, 'Administrador'),
+(2, 'Deposito'),
+(3, 'Cliente');
+-- --------------------------------------------------------
+
 -- Volcado de datos para la tabla `menu`
 INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`) VALUES
 (1, 'Cliente', '#', NULL, '0000-00-00 00:00:00'),
