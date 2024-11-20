@@ -22,13 +22,13 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 
 // test baja de compra ✅
 // ['cofecha' => $cofecha, 'objUsuario' => $objUsuario] idcompra es AUTO_INCREMENT
-$abmCompra = new abmCompra();
-$baja = $abmCompra->baja(['idcompra' => 6]);
-if ($baja) {
-    echo 'Baja exitosa';
-} else {
-    echo 'Error en la baja';
-}
+// $abmCompra = new abmCompra();
+// $baja = $abmCompra->baja(['idcompra' => 6]);
+// if ($baja) {
+//     echo 'Baja exitosa';
+// } else {
+//     echo 'Error en la baja';
+// }
 
 // test busqueda de todas las compras ✅
 // ['cofecha' => $cofecha, 'objUsuario' => $objUsuario] idcompra es AUTO_INCREMENT

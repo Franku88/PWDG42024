@@ -11,7 +11,7 @@ Class ABMProducto
             $obj = new Producto();
             $idproducto = array_key_exists('idproducto', $param) ? $param['idproducto'] : null;
             $prodeshabilitado = array_key_exists('prodeshabilitado', $param) ? $param['prodeshabilitado'] : null;
-            $obj->setear($idproducto, $param['proprecio'], $param['pronombre'], $param['prodetalle'], $param['procantstock'], $prodeshabilitado);
+            $obj->cargarDatos($idproducto, $param['proprecio'], $param['pronombre'], $param['prodetalle'], $param['procantstock'], $prodeshabilitado);
         }
 
         return $obj;
@@ -23,7 +23,7 @@ Class ABMProducto
 
         if (isset($param['idproducto'])) {
             $obj = new Producto();
-            $obj->setear($param['idproducto']);
+            $obj->cargarDatos($param['idproducto']);
         }
         return $obj;
     }
@@ -92,6 +92,7 @@ Class ABMProducto
     //     }
     //     return $resp;
     // }
+
 
     public function buscar($param = null)
     {

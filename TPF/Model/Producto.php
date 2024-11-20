@@ -94,7 +94,7 @@ class producto
     }
 
     // Metodos
-    public function setear($idproducto, $proprecio = null, $pronombre = null, $prodetalle = null, $procantstock = null, $prodeshabilitado = null)
+    public function cargarDatos($idproducto, $proprecio = null, $pronombre = null, $prodetalle = null, $procantstock = null, $prodeshabilitado = null)
     {
         $this->setIdproducto($idproducto);
         $this->setProprecio($proprecio);
@@ -104,28 +104,51 @@ class producto
         $this->setProdeshabilitado($prodeshabilitado);
     }
 
-    public function cargar()
-    {
-        $resp = false;
-        $base = new BaseDatos();
-
-        $sql = "SELECT * FROM producto WHERE idproducto = '" . $this->getIdproducto() . "'";
-
-        if ($base->Iniciar()) {
-            $res = $base->Ejecutar($sql);
-            if ($res > -1) {
-                if ($res > 0) {
-                    $row = $base->Registro();
-                    $this->setear($row['idproducto'], $row['proprecio'], $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['prodeshabilitado']);
-                    $resp = true;
+    /**
+     * Buscar datos de un producto por su id
+     * @param int $idproducto
+     * @return boolean
+     */
+    public function buscarDatos($idproducto) {
+        $bd = new BaseDatos();
+        $resultado = false;
+        if ($bd->Iniciar()) {
+            $consulta = "SELECT * FROM producto WHERE idproducto = $idproducto";
+            if ($bd->Ejecutar($consulta)) {
+                if ($row = $bd->Registro()) {
+                    $this->cargarDatos($row['idproducto'], $row['proprecio'], $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['prodeshabilitado']);
+                    $resultado = true;
                 }
+            } else {
+                $this->setMensajeOperacion("Producto->buscarDatos: " . $bd->getError());
             }
-        } else {
-            $this->setMensajeOperacion("Producto->listar: " . $base->getError());
         }
-
-        return $resp;
+        return $resultado;
     }
+
+    public function listar($condicion = "")
+    {
+        $coleccion = [];
+        $base = new BaseDatos();
+        if ($base->iniciar()) {
+            $consulta = "SELECT * FROM producto";
+            if ($condicion != "") {
+                $consulta = $consulta . ' WHERE ' . $condicion;
+            }
+            if ($base->Ejecutar($consulta)) {
+                while ($row2 = $base->Registro()) {
+                    $obj = new Producto();
+                    $obj->cargarDatos($row2['idproducto'], $row2['proprecio'], $row2['pronombre'], $row2['prodetalle'], $row2['procantstock'], $row2['prodeshabilitado']);
+                    array_push($coleccion, $obj);
+                }
+            } else {
+                $this->setmensajeOperacion($base->getError());
+            }
+        }
+        return $coleccion;
+    }
+
+
 
     public function insertar()
     {
@@ -146,23 +169,13 @@ class producto
         return $resp;
     }
     
-
-
     public function modificar()
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE producto SET 
-                    idproducto='" . $this->getIdproducto() . "',
-                    proprecio=" . $this->getProprecio() . ", 
-                    pronombre='" . $this->getPronombre() . "', 
-                    prodetalle='" . $this->getProdetalle() . "', 
-                    procantstock=" . $this->getProcantstock() . ", 
-                    prodeshabilitado = '0000-00-00 00:00:00' 
-                WHERE idproducto='" . $this->getIdproducto() . "'";
-
         if ($base->Iniciar()) {
-            if ($base->Ejecutar($sql)) {
+            $consulta = "UPDATE producto SET proprecio = '" . $this->getProprecio() . "', pronombre = '" . $this->getPronombre() . "', prodetalle = '" . $this->getProdetalle() . "', procantstock = " . $this->getProcantstock() . " WHERE idproducto = " . $this->getIdproducto();
+            if ($base->Ejecutar($consulta)) {
                 $resp = true;
             } else {
                 $this->setMensajeOperacion("Producto->modificar: " . $base->getError());
@@ -178,57 +191,45 @@ class producto
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "DELETE FROM producto WHERE idproducto='" . $this->getIdproducto() . "'";
         if ($base->Iniciar()) {
-            if ($base->Ejecutar($sql)) {
-                return true;
-            } else {
-                $this->setMensajeOperacion("Producto->eliminar: " . $base->getError());
-            }
-        } else {
-            $this->setMensajeOperacion("Producto->eliminar: " . $base->getError());
-        }
-        return $resp;
-    }
-
-
-    public function listar($condicion = "")
-    {
-        $coleccion = [];
-        $base = new BaseDatos();
-        if ($base->iniciar()) {
-            $consulta = "SELECT * FROM producto";
-            if ($condicion != "") {
-                $consulta = $consulta . ' WHERE ' . $condicion;
-            }
+            $consulta = "DELETE FROM producto WHERE idproducto = " . $this->getIdproducto();
             if ($base->Ejecutar($consulta)) {
-                while ($row2 = $base->Registro()) {
-                    $obj = new Producto();
-                    $obj->setear($row2['idproducto'], $row2['proprecio'], $row2['pronombre'], $row2['prodetalle'], $row2['procantstock'], $row2['prodeshabilitado']);
-                    array_push($coleccion, $obj);
-                }
-            } else {
-                $this->setmensajeOperacion($base->getError());
-            }
-        }
-        return $coleccion;
-    }
-
-
-    public function estado($param = "")
-    {
-        $resp = false;
-        $base = new BaseDatos();
-        $sql = "UPDATE producto SET prodeshabilitado= '" . $param . "' WHERE idproducto='" . $this->getIdproducto() . "'";
-        if ($base->Iniciar()) {
-            if ($base->Ejecutar($sql)) {
                 $resp = true;
             } else {
-                $this->setMensajeOperacion("Producto->estado: " . $base->getError());
+                $this->setMensajeOperacion($base->getError());
             }
         } else {
-            $this->setMensajeOperacion("Producto->estado: " . $base->getError());
+            $this->setMensajeOperacion($base->getError());
         }
         return $resp;
+    }
+
+    // public function estado($param = "")
+    // {
+    //     $resp = false;
+    //     $base = new BaseDatos();
+    //     $sql = "UPDATE producto SET prodeshabilitado= '" . $param . "' WHERE idproducto='" . $this->getIdproducto() . "'";
+    //     if ($base->Iniciar()) {
+    //         if ($base->Ejecutar($sql)) {
+    //             $resp = true;
+    //         } else {
+    //             $this->setMensajeOperacion("Producto->estado: " . $base->getError());
+    //         }
+    //     } else {
+    //         $this->setMensajeOperacion("Producto->estado: " . $base->getError());
+    //     }
+    //     return $resp;
+    // }
+
+    public function __toString()
+    {
+        return (
+            "ID del Producto: " . $this->getIdproducto() . "\n" .
+            "Nombre del Producto: " . $this->getPronombre() . "\n" .
+            "Precio del Producto: " . $this->getProprecio() . "\n" .
+            "Detalle del Producto: " . $this->getProdetalle() . "\n" .
+            "Cantidad en Stock: " . $this->getProcantstock() . "\n" .
+            "Producto Deshabilitado: " . $this->getProdeshabilitado() . "\n"
+        );
     }
 }
