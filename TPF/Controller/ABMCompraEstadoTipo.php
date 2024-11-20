@@ -96,7 +96,7 @@ class ABMCompraEstadoTipo {
     }
 
     /**
-     * Busca un compraestadotipo en la BD
+     * Busca compraestadotipo en la BD
      * Si $param es vacío, trae todos los compraestadotipo
      * @param array $param
      * @return array
