@@ -171,7 +171,7 @@ class MenuRol {
 
     /**
      * Retorna un string con los datos del menurol
-     * @return String
+     * @return string
      */
     public function __toString() {
         return ("Menu: ".$this->getObjMenu()." \n Rol: ".$this->getObjRol());

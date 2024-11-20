@@ -157,7 +157,7 @@ class Rol {
 
     /**
      * Retorna un string con los datos del rol
-     * @return String
+     * @return string
      */
     public function __toString() {
         return ("idrol: ".$this->getIdrol()."\n".
