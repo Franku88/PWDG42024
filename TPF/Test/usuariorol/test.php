@@ -1,61 +1,50 @@
 <?php
 
-
-
-
 // testing de ABM de UsuarioRol
 include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/BaseDatos.php";
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/UsuarioRol.php';
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABMUsuarioRol.php';
+include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABMUsuario.php';
+include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABMRol.php';
 
 
 // test alta UsuarioRol✅
-
 // $abmUsuarioRol = new ABMUsuarioRol();
-// $param = [
-//     'idusuario' => 3,
-//     'idrol' => 3
-// ];
-// $resultadoAlta = $abmUsuarioRol->alta($param);
-// if ($resultadoAlta) {
-//     echo "Alta exitosa\n";
-// } else {
-//     echo "Error en la alta\n";
-// }
+// // ['usuario' => $objUsuario , 'rol' => $objRol]
+// $abmUsuario = new ABMUsuario();
+// $abmRol = new AbmRol();
+// $usuarios = $abmUsuario->buscar(['idusuario' => 3]);
+// $roles = $abmRol->buscar(['idrol'=> 1]);
 
+// $alta = $abmUsuarioRol->alta(['usuario' => $usuarios[0], 'rol' => $roles[0]]);
+// if ($alta) {
+//     echo 'Alta exitosa';
+// } else {
+//     echo 'Error en la alta';
+// }
 
 // test baja de UsuarioRol ✅
 // $abmUsuarioRol = new ABMUsuarioRol();
-// $param = [
-//     'idusuario' => 3,
-//     'idrol' => 3
-// ];
-// $resultadoBaja = $abmUsuarioRol->baja($param);
-// if ($resultadoBaja) {
-//     echo "Baja exitosa\n";
+// $abmUsuario = new ABMUsuario();
+// $abmRol = new AbmRol();
+// $usuarios = $abmUsuario->buscar(['idusuario' => 3]);
+// $roles = $abmRol->buscar(['idrol'=> 1]);
+
+// $baja = $abmUsuarioRol->baja(['usuario' => $usuarios[0], 'rol' => $roles[0]]);
+
+// if ($baja) {
+//     echo 'Baja exitosa';
 // } else {
-//     echo "Error en la baja\n";
+//     echo 'Error en la baja';
 // }
 
 
-// test buscar UsuarioRol por id ✅ (funciona, pero verificar que  existan)
-
-// $abmUsuarioRol = new ABMUsuarioRol();
-// $param = [
-//     'idusuario' => 2,
-//     'idrol' => 1
-// ];
-// $busqueda = $abmUsuarioRol->buscar($param);
-// if ($busqueda) {
-//     echo "UsuarioRol encontrado ⬇️ \n";
-//     echo  $busqueda[0];
-// } else {
-//     echo "No se encontró UsuarioRol";  
-// }
+// test modificacion de UsuarioRol ❌ 
+// (dado que ambas son claves primarias y foraneas, verificar la estructura de modificacion)
 
 
 // test busqueda de todos los UsuarioRol ✅
-
+// ['usuario' => $objUsuario , 'rol' => $objRol]
 // $abmUsuarioRol = new ABMUsuarioRol();
 // $busqueda = $abmUsuarioRol->buscar();
 // if ($busqueda) {
@@ -66,8 +55,3 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 // } else {
 //     echo "No se encontraron UsuarioRol";  
 // }
-
-
-
-// test modificacion de UsuarioRol ❌ 
-// (dado que ambas son claves primarias y foraneas, verificar la estructura de modificacion)

@@ -2,15 +2,16 @@
 
 include_once 'BaseDatos.php';
 
-class MenuRol   {
+class MenuRol
+{
     private $objMenu;
     private $objRol;
     private $mensajeOperacion;
 
-    public function __construct()
+    public function __construct($objMenu = null, $objRol = null)
     {
-        $this->objMenu = null;
-        $this->objRol = null;
+        $this->objMenu = $objMenu;
+        $this->objRol = $objRol;
     }
     public function getObjMenu()
     {
@@ -43,167 +44,121 @@ class MenuRol   {
     }
 
     // Metodos
-    public function setear($menu, $rol)
+    public function cargarDatos($objMenu, $objRol)
     {
-        $this->setObjMenu($menu);
-        $this->setObjRol($rol);
+        $this->setObjMenu($objMenu);
+        $this->setObjRol($objRol);
     }
 
-    public function cargar()
+    public function buscarDatos($objMenu, $objRol)
     {
-        $resp = false;
-        $base = new BaseDatos();
-        $idmenu = $this->getObjMenu()->getIdmenu();
-        $idRol = $this->getObjRol()->getIdrol();
-        $sql = "SELECT * FROM menurol WHERE idmenu= " . $idmenu . " AND idrol= " . $idRol;
-
-        if ($base->Iniciar()) {
-            $res = $base->Ejecutar($sql);
-            if ($res > -1) {
-                if ($res > 0) {
-                    $objRol = null;
-                    $objMenu = null;
-                    $row = $base->Registro();
-
-                    if ($row['idrol'] != null) {
-                        $objRol = new Rol();
-                        $objRol->setId($row['idrol']);
-                        $objRol->cargar();
-                    }
-
-                    if ($row['idmenu'] != null) {
-
-                        $objMenu = new Menu();
-                        $objMenu->setIdmenu($row['idmenu']);
-                        $objMenu->cargar();
-                    }
-                    $this->setear($objMenu, $objRol);
+        $bd = new BaseDatos();
+        $resultado = false;
+        if ($bd->Iniciar()) {
+            $consulta = "SELECT * FROM menurol WHERE idmenu = '" . $objMenu->getIdmenu() . "' AND idrol = '" . $objRol->getId() . "'";
+            if ($bd->Ejecutar($consulta)) {
+                if ($row = $bd->Registro()) {
+                    $objMenu = new Menu();
+                    $objMenu->buscarDatos($row['idmenu']);
+                    $objRol = new Rol();
+                    $objRol->buscarDatos($row['idrol']);
+                    $this->cargarDatos($objMenu, $objRol);
+                    $resultado = true;
                 }
+            } else {
+                $this->setMensajeOperacion("MenuRol->buscarDatos: " . $bd->getError());
             }
         } else {
-            $this->setMensajeOperacion("menuRol->cargar: " . $base->getError());
+            $this->setMensajeOperacion("MenuRol->buscarDatos: " . $bd->getError());
         }
-
-        return $resp;
+        return $resultado;
     }
 
     public function insertar()
     {
-        $resp = false;
-        $base = new BaseDatos();
-        $objMenu = $this->getObjMenu();
-        $objRol = $this->getObjRol();
-        $idmenu = $objMenu->getIdmenu();
-        $idRol = $objRol->getId();
-        $sql = "INSERT INTO menurol(idmenu,idrol)  VALUES(" . $idmenu . "," . $idRol . ")";
-
-        if ($base->Iniciar()) {
-            if ($base->Ejecutar($sql)) {
-                $resp = true;
+        $resultado = false;
+        $bd = new BaseDatos();
+        if ($bd->Iniciar()) {
+            $consulta = "INSERT INTO menurol(idmenu, idrol) VALUES ('" . $this->getObjMenu()->getIdmenu() . "','" . $this->getObjRol()->getId() . "')";
+            if ($bd->Ejecutar($consulta)) {
+                $resultado = true;
             } else {
-                $this->setmensajeoperacion("Menurol->insertar: " . $base->getError());
+                $this->setMensajeOperacion("MenuRol->insertar: " . $bd->getError());
             }
         } else {
-            $this->setmensajeoperacion("Menurol->insertar: " . $base->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
-
-        return $resp;
+        return $resultado;
     }
 
     public function modificar()
     {
-        $resp = false;
-        $base = new BaseDatos();
-        $idmenu = $this->getObjMenu()->getIdmenu();
-        $idRol = $this->getObjRol()->getId();
-        $sql = " UPDATE menurol SET ";
-        $sql .= " idrol = " . $idRol;
-        $sql .= " WHERE idmenu =" . $idmenu;
-
-        if ($base->Iniciar()) {
-            if ($base->Ejecutar($sql)) {
-                $resp = true;
+        $bd = new BaseDatos();
+        $resultado = false;
+        if ($bd->Iniciar()) {
+            $consulta = "UPDATE menurol SET idmenu = '" . $this->getObjMenu()->getIdmenu() . "', idrol = '" . $this->getObjRol()->getId() . "' WHERE idmenu = '" . $this->getObjMenu()->getIdmenu() . "' AND idrol = '" . $this->getObjRol()->getId() . "'";
+            if ($bd->Ejecutar($consulta)) {
+                $resultado = true;
             } else {
-                $this->setMensajeOperacion("Menurol->modificar 1: " . $base->getError());
+                $this->setMensajeOperacion("MenuRol->modificar: " . $bd->getError());
             }
         } else {
-            $this->setMensajeOperacion("Menurol->modificar 2: " . $base->getError());
+            $this->setMensajeOperacion($bd->getError());
         }
-
-        return $resp;
+        return $resultado;
     }
 
 
     public function eliminar()
     {
-        $resp = false;
         $base = new BaseDatos();
-        $sql = "DELETE FROM menurol WHERE idmenu=" . $this->getObjMenu()->getIdmenu() . " and idrol= " . $this->getObjRol()->getId();
-
+        $resp = false;
         if ($base->Iniciar()) {
-            if ($base->Ejecutar($sql)) {
+            $consulta = "DELETE FROM menurol WHERE idmenu = '" . $this->getObjMenu()->getIdmenu() . "' AND idrol = '" . $this->getObjRol()->getId() . "'";
+            if ($base->Ejecutar($consulta)) {
                 $resp = true;
             } else {
-                $this->setMensajeOperacion("Menurol->eliminar: " . $base->getError());
+                $this->setMensajeOperacion("MenuRol->eliminar: " . $base->getError());
             }
         } else {
-            $this->setMensajeOperacion("Menurol->eliminar: " . $base->getError());
+            $this->setMensajeOperacion($base->getError());
         }
-
         return $resp;
     }
 
 
-    public function listar($condicion = "") {
+    public function listar($condicion = "")
+    {
         $coleccion = [];
-        $base = new BaseDatos();
-        
-        // Verificamos si la conexión a la base de datos fue exitosa
-        if ($base->Iniciar()) {
-            // Armamos la consulta SQL
-            $sql = "SELECT * FROM menurol ";
-            
-            // Si hay alguna condición, la agregamos a la consulta
-            if ($condicion != "") {
-                $sql .= 'WHERE ' . $condicion;
+        $bd = new BaseDatos();
+        if ($bd->Iniciar()) {
+            $consulta = "SELECT * FROM menurol";
+            if ($consulta != "") {
+                $consulta = $consulta . " WHERE " . $condicion;
             }
-            
-            // Ejecutamos la consulta
-            if ($base->Ejecutar($sql)) {
-                // Recorremos los resultados
-                while ($row = $base->Registro()) {
-                    // Creamos un nuevo objeto MenuRol
-                    $objMenuRol = new MenuRol();
-                    
-                    // Creamos los objetos Menu y Rol correspondientes
+            $consulta .= " ORDER BY idmenu";
+
+            if ($bd->Ejecutar($consulta)) {
+                while ($row = $bd->Registro()) {
                     $objMenu = new Menu();
+                    $objMenu->buscarDatos($row['idmenu']);
                     $objRol = new Rol();
-                    
-                    // Cargamos los datos del menú y el rol basados en los datos de la base de datos
-                    $objMenu->setIdmenu($row['idmenu']);
-                    $objMenu->cargar(); // Cargar detalles del menú
-                    
-                    $objRol->setId($row['idrol']);
-                    $objRol->cargar(); // Cargar detalles del rol
-                    
-                    // Configuramos el objeto MenuRol con el menú y rol correspondientes
-                    $objMenuRol->setear($objMenu, $objRol);
-                    
-                    // Añadimos el objeto a la colección
-                    array_push($coleccion, $objMenuRol);
+                    $objRol->buscarDatos($row['idrol']);
+                    $obj = new MenuRol();
+                    $obj->cargarDatos($objMenu, $objRol);
+                    array_push($coleccion, $obj);
                 }
+            } else {
+                $this->setMensajeOperacion('MenuRol->listar: ' . $bd->getError());
             }
         } else {
-            $this->setMensajeOperacion("MenuRol->listar: " . $base->getError());
+            $this->setMensajeOperacion('MenuRol->listar: ' . $bd->getError());
         }
-    
-        return $coleccion; // Devolvemos la colección de resultados
+        return $coleccion;
     }
 
     public function __tostring()
     {
         return "Menu: " . $this->getObjMenu() . " \n Rol: " . $this->getObjRol();
     }
-    
-
 }

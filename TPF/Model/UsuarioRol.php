@@ -1,6 +1,8 @@
 <?php 
 
 include_once 'BaseDatos.php';
+include_once 'Usuario.php';
+include_once 'Rol.php';
 
 class UsuarioRol {
     private $objUsuario;
