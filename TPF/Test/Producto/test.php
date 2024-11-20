@@ -53,7 +53,7 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 // }
 
 // test busqueda de producto por id ✅
-$abmProducto = new abmProducto();
+$abmProducto = new ABMProducto();
 $param = ['idproducto' => 2];
 $busqueda = $abmProducto->buscar($param);
 if ($busqueda) {

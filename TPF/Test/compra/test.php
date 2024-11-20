@@ -7,7 +7,7 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABMUsuario.php';
 
 
-// test alta Compra✅
+// test alta Compra ❌
 // ['cofecha' => $cofecha, 'objUsuario' => $objUsuario] idcompra es AUTO_INCREMENT
 // $abmCompra = new ABMCompra();
 // $abmUsuario = new ABMUsuario();
@@ -23,7 +23,7 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 // test baja de compra ✅
 // ['cofecha' => $cofecha, 'objUsuario' => $objUsuario] idcompra es AUTO_INCREMENT
 // $abmCompra = new abmCompra();
-// $baja = $abmCompra->baja(['idcompra' => 6]);
+// $baja = $abmCompra->baja(['idcompra' => 5]);
 // if ($baja) {
 //     echo 'Baja exitosa';
 // } else {
@@ -43,3 +43,13 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 //     echo "No se encontraron compras";  
 // }
 
+// test buqueda de compra por id ✅
+// $abmCompra = new ABMCompra();
+// $idCompra = ['idcompra' => 1];
+// $busqueda = $abmCompra->buscar($idCompra);
+// if ($busqueda) {
+//     echo "Compra encontrada ⬇️ \n";
+//     echo $busqueda[0];
+// } else {
+//     echo "No se encontraron compras";  
+// }

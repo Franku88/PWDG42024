@@ -1,6 +1,6 @@
 <?php
 
-// include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/CompraEstadoTipo.php"; Lo carga el autoloader.php
+ include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/CompraEstadoTipo.php"; 
 
 class ABMCompraEstadoTipo {
     
@@ -105,13 +105,13 @@ class ABMCompraEstadoTipo {
         $where = " true ";
         if ($param != null) {
             if (isset($param['idcompraestadotipo'])) {
-                $where = " AND idcompraestadotipo = ".$param['idcompraestadotipo'];
+                $where .= " AND idcompraestadotipo = ".$param['idcompraestadotipo'];
             }
             if (isset($param['cetdescripcion'])) {
-                $where = " AND cetdescripcion = '".$param['cetdescripcion']."'";
+                $where .= " AND cetdescripcion = '".$param['cetdescripcion']."'";
             }
             if (isset($param['cetdetalle'])) {
-                $where = " AND cetdetalle = '".$param['cetdetalle']."'";
+                $where .= " AND cetdetalle = '".$param['cetdetalle']."'";
             }
         }
         $arreglo = (new CompraEstadoTipo())->listar($where);

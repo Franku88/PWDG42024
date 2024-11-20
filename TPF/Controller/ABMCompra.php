@@ -1,7 +1,7 @@
 <?php
 
-// include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Compra.php"; // Lo carga el autoloader.php
-// include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABMUsuario.php"; // Lo carga el autoloader.php
+ include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Model/Compra.php"; // Lo carga el autoloader.php
+include_once "/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABMUsuario.php"; // Lo carga el autoloader.php
 
 class ABMCompra {
     
