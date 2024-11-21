@@ -143,16 +143,13 @@ INSERT INTO `rol` (`idrol`, `rodescripcion`) VALUES
 
 -- Volcado de datos para la tabla `menu`
 INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`) VALUES
-(1, 'Cliente', '#', NULL),
+(1, 'Administrador', '#', NULL),
 (2, 'Deposito', '#', NULL),
-(3, 'Administrador', '#', NULL),
-(4, 'Administrar Usuarios', 'administrarUsuarios', 3),
-(5, 'Cargar Usuario', 'cargarUsuario', 3),
-(6, 'Administrar Menus', 'administrarMenus', 3),
-(7, 'Cargar Menu', 'cargarMenu', 3),
-(8, 'Administrar Productos', 'administrarProductos', 2),
-(9, 'Cargar Producto', 'cargarProducto', 2),
-(10, 'Carrito', 'carrito', 1);
+(3, 'Cliente', '#', NULL),
+(4, 'Administrar Usuarios', 'administrarUsuarios', 1),
+(5, 'Administrar Productos', 'administrarProductos', 2),
+(6, 'Administrar Compras', 'administrarCompras', 2),
+(7, 'Carrito', 'carrito', 3);
 -- --------------------------------------------------------
 
 -- Volcado de datos para la tabla `usuario`
@@ -187,9 +184,9 @@ INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`
 
 -- Volcado de datos para la tabla `menurol`
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
-(1, 3), -- Cliente
+(1, 1), -- Administrador
 (2, 2), -- Depósito
-(3, 1); -- Administrador
+(3, 3); -- Cliente
 
 -- Volcado de datos para la tabla `usuariorol`
 INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
