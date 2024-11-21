@@ -19,41 +19,41 @@ if ($session->validar()) { //Si ya tiene una sesion, redirige a tienda
             
         </div>
     </div>
+</div>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#loginForm').on('submit', function(e) {
-                e.preventDefault();
-                const formData = {
-                    user: $('#user').val(),
-                    password: $('#password').val()
-                };
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#loginForm').on('submit', function(e) {
+            e.preventDefault();
+            const formData = {
+                user: $('#user').val(),
+                password: $('#password').val()
+            };
 
-                const messageContainer = $('#messageContainer');
-                messageContainer.removeClass('d-none bg-danger bg-success').text('');
+            const messageContainer = $('#messageContainer');
+            messageContainer.removeClass('d-none bg-danger bg-success').text('');
 
-                $.ajax({
-                    url: 'Action/LoginAction.php',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: formData,
-                    success: function(response) {
-                        if (response) {
-                            messageContainer.addClass('bg-success').text('Inicio de sesión exitoso. Redirigiendo...');
-                            setTimeout(function() {
-                                window.location.href = '../../Ejercicios/Tienda/Tienda.php';
-                            }, 2000);
-                        } else {
-                            messageContainer.addClass('bg-danger').text('Datos incorrectos.');
-                        }
-                    },
-                    error: function() {
-                        messageContainer.addClass('bg-danger').text('Ocurrió un error al procesar la solicitud.');
+            $.ajax({
+                url: 'Action/LoginAction.php',
+                type: 'POST',
+                dataType: 'json',
+                data: formData,
+                success: function(response) {
+                    if (response) {
+                        messageContainer.addClass('bg-success').text('Inicio de sesión exitoso. Redirigiendo...');
+                        setTimeout(function() {
+                            window.location.href = '../../Ejercicios/Tienda/Tienda.php';
+                        }, 2000);
+                    } else {
+                        messageContainer.addClass('bg-danger').text('Datos incorrectos.');
                     }
-                });
+                },
+                error: function() {
+                    messageContainer.addClass('bg-danger').text('Ocurrió un error al procesar la solicitud.');
+                }
             });
         });
-    </script>
-</div>
+    });
+</script>
 
 <?php include STRUCTURE_PATH . '/Foot.php'; ?>
