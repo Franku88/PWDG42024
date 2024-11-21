@@ -7,15 +7,20 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 
 // test alta de producto ✅
 
-// $params = ['proprecio' => 1001, 'pronombre' => 'Producto de prueba', 'prodetalle' => 'Detalle de prueba', 'procantstock' => 10];
-// $abmProducto = new ABMProducto();
-// $alta = $abmProducto->alta($params);
 
+// $abmProducto = new ABMProducto();
+// $params = [
+//     'proprecio' => 120 , 
+//     'pronombre' => 'age',
+//     'prodetalle' => 'ageDefinitive', 
+//     'procantstock' => 10];
+// $alta = $abmProducto->alta($params);
 // if ($alta) {
 //     echo "Alta exitosa";
 // } else {
 //     echo "Error en la alta";
 // }
+
 
 // test baja de producto ✅
 
@@ -53,13 +58,13 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 // }
 
 // test busqueda de producto por id ✅
-$abmProducto = new ABMProducto();
-$param = ['idproducto' => 2];
-$busqueda = $abmProducto->buscar($param);
-if ($busqueda) {
-    echo "Producto encontrado ⬇️ \n";
-    echo $busqueda[0];
-} else {
-    echo "Producto no encontrado";
-}
+// $abmProducto = new ABMProducto();
+// $param = ['idproducto' => 2];
+// $busqueda = $abmProducto->buscar($param);
+// if ($busqueda) {
+//     echo "Producto encontrado ⬇️ \n";
+//     echo $busqueda[0];
+// } else {
+//     echo "Producto no encontrado";
+// }
 

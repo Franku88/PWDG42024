@@ -154,3 +154,45 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`) VALUES
 (9, 'Cargar Producto', 'cargarProducto', 2),
 (10, 'Carrito', 'carrito', 1);
 -- --------------------------------------------------------
+
+-- Volcado de datos para la tabla `usuario`
+INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
+(1, 'admin', MD5('password'), 'admin@example.com', NULL),
+(2, 'cliente1', MD5('password'), 'cliente1@example.com', NULL),
+(3, 'deposito1', MD5('password'), 'deposito1@example.com', NULL);
+
+-- Volcado de datos para la tabla `producto`
+INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`, `proprecio`, `prodeshabilitado`) VALUES
+(1, 'Counter Strike', 'Juego de disparos', 10, 250.00, NULL),
+(2, 'Fallout', 'Juego de rol', 20, 45.00, NULL),
+(3, 'Minecraft', 'Juego sandbox', 30, 130.00, NULL),
+(4, 'GTA VI', 'Próximo juego de Rockstar', 0, 200.00, '2024-10-15 18:30:00');
+
+
+-- Volcado de datos para la tabla `compra`
+INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`) VALUES
+(1, NOW(), 2),
+(2, NOW(), 3);
+
+-- Volcado de datos para la tabla `compraestado`
+INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, `cefechaini`, `cefechafin`) VALUES
+(1, 1, 1, NOW(), NULL),
+(2, 2, 1, NOW(), NULL);
+
+-- Volcado de datos para la tabla `compraitem`
+INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`) VALUES
+(1, 1, 1, 2),
+(2, 2, 2, 1),
+(3, 3, 2, 5);
+
+-- Volcado de datos para la tabla `menurol`
+INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
+(1, 3), -- Cliente
+(2, 2), -- Depósito
+(3, 1); -- Administrador
+
+-- Volcado de datos para la tabla `usuariorol`
+INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
+(1, 1), -- Admin
+(2, 3), -- Cliente 1
+(3, 2); -- Depósito 1

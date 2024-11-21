@@ -6,20 +6,20 @@ Class ABMProducto
     {
         $obj = null;
         if (array_key_exists('proprecio', $param) && array_key_exists('pronombre', $param) && array_key_exists('prodetalle', $param) && array_key_exists('procantstock', $param)) {
-            $obj = new Producto();
             $idproducto = array_key_exists('idproducto', $param) ? $param['idproducto'] : null;
             $prodeshabilitado = array_key_exists('prodeshabilitado', $param) ? $param['prodeshabilitado'] : null;
-            $obj->cargarDatos($idproducto, $param['proprecio'], $param['pronombre'], $param['prodetalle'], $param['procantstock'], $prodeshabilitado);
+            $obj = new Producto();
+            $obj->cargarDatos($idproducto, $param['pronombre'], $param['prodetalle'], $param['procantstock'], $param['proprecio'], $prodeshabilitado);
         }
-
+    
         return $obj;
     }
-
+    
     private function cargarObjetoConClave($param)
     {
         $obj = null;
 
-        if (isset($param['idproducto'])) {
+        if ($this->seteadosCamposClaves($param)) {
             $obj = new Producto();
             $obj->cargarDatos($param['idproducto']);
         }

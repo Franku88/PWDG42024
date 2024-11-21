@@ -16,7 +16,7 @@ if ($session->validar()) { //Si ya tiene una sesion, redirige a tienda
             <button type="submit" class="btn btn-primary btn-steam">Ingresar</a>
         </form>
         <div id="messageContainer" class="text-center mt-3 p-2 rounded-3 w-100 mx-auto text-white d-none">
-            
+
         </div>
     </div>
 </div>

@@ -78,7 +78,7 @@ class Producto {
     }
 
     // metodos CRUD
-    public function cargarDatos($idproducto = null, $pronombre = null, $prodetalle = null, $procantstock = null, $proprecio = null, $prodeshabilitado = null) {
+    public function cargarDatos($idproducto, $pronombre = null, $prodetalle = null, $procantstock = null, $proprecio = null, $prodeshabilitado = null) {
         $this->setIdproducto($idproducto);
         $this->setPronombre($pronombre);
         $this->setProdetalle($prodetalle);
@@ -136,16 +136,14 @@ class Producto {
         return $coleccion;
     }
 
-    /**
-     * Insertar los datos de un producto a la bd
-     * @return boolean
-     */
     public function insertar() {
         $resultado = false;
         $bd = new BaseDatos();
+    
         if ($bd->Iniciar()) {
             $consulta = "INSERT INTO producto (pronombre, prodetalle, procantstock, proprecio) VALUES 
-            ('".$this->getPronombre()."', '".$this->getProdetalle()."', ".$this->getProcantstock().", ".$this->getProprecio().")";
+            ('" . $this->getPronombre() . "', '" . $this->getProdetalle() . "', " . $this->getProcantstock() . ", " . $this->getProprecio() . ")";
+    
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -154,8 +152,11 @@ class Producto {
         } else {
             $this->setMensajeOperacion($bd->getError());
         }
+    
         return $resultado;
     }
+    
+    
     
     /**
      * Modificar los datos de un producto con los que tiene el objeto actual 

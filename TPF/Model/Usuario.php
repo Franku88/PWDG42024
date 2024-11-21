@@ -194,7 +194,7 @@ class Usuario {
 
     /**
      * Retorna un string con los datos del usuario
-     * @return String
+     * @return string
      */
     public function __toString() {
         return ("idusuario: ".$this->getIdusuario()." \n 
