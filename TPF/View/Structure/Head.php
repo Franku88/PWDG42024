@@ -1,12 +1,11 @@
 <?php
-
-$session = new Session();
-$sessionValida = $session->validar();
-if ($sessionValida) {
-    $usuarioRolId = $session->getRol()[0]->getIdrol();
-} else {
-    $usuarioRolId = 0;
-}
+    $session = new Session();
+    $sessionValida = $session->validar();
+    if ($sessionValida) {
+        $usuarioRolId = $session->getRol()[0]->getIdrol();
+    } else {
+        $usuarioRolId = 0;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -60,23 +59,21 @@ if ($sessionValida) {
                 
                 <?php if ($usuarioRolId == 1) { ?>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/AdministrarUsuarios/AdministrarUsuarios.php">Administrar Usuarios</a>
-                    <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Perfil/Perfil.php">Perfil?</a>
                 <?php } ?>
 
                 <?php if ($usuarioRolId == 2) { ?>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/AdministrarProductos/AdministrarProductos.php">Administrar Productos</a>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/AdministrarCompras/AdministrarCompras.php">Administrar Compras</a>
-                    <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Perfil/Perfil.php">Perfil?</a>
                 <?php } ?>
 
                 <?php if ($usuarioRolId == 3) { ?>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Carrito/Carrito.php">Carrito</a>
-                    <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Perfil/Perfil.php">Perfil?</a>
                 <?php } ?>
             </div>
 
             <div class="mx-3">
                 <?php if ($sessionValida) { ?>
+                    <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Perfil/Perfil.php">Perfil?</a>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Logout/Logout.php">Logout</a>
                 <?php } else { ?>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Login/Login.php">Login</a>
