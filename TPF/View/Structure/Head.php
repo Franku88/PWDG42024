@@ -1,5 +1,5 @@
 <?php
-include_once '../../../configuracion.php';
+
 $session = new Session();
 $sessionValida = $session->validar();
 if ($sessionValida) {
@@ -41,6 +41,8 @@ if ($sessionValida) {
     <!-- EasyUI -->
     <script src="<?php echo BASE_URL; ?>/View/Assets/js/jquery-easyui-1.11.0/jquery.easyui.min.js"></script>
 
+    <!-- js-md5 -->
+    <script src="<?php echo BASE_URL; ?>/View/Assets/js/md5.min.js"></script>
 
 
 </head>
@@ -62,7 +64,7 @@ if ($sessionValida) {
                 <?php } ?>
 
 
-                <?php if ($usuarioRolId == 1) { ?>
+                <?php if ($usuarioRolId == 3) { ?>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/ABMUsuario/ABMUsuario.php">Carrito</a>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/ABMUsuarioRol/ABMUsuarioRol.php">Perfil?</a>
                 <?php } ?>
@@ -70,7 +72,7 @@ if ($sessionValida) {
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/ABMUsuario/ABMUsuario.php">Deposito</a>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/ABMUsuarioRol/ABMUsuarioRol.php">Perfil?</a>
                 <?php } ?>
-                <?php if ($usuarioRolId == 3) { ?>
+                <?php if ($usuarioRolId == 1) { ?>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/ABMUsuario/ABMUsuario.php">Administrar Usuarios</a>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/ABMUsuario/ABMUsuario.php">Administrar Compras</a>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/ABMUsuarioRol/ABMUsuarioRol.php">Perfil?</a>

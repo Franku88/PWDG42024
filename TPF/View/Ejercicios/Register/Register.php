@@ -47,11 +47,14 @@ include STRUCTURE_PATH . '/Head.php';
                 e.preventDefault();
                 $('#errorMessage').text('').removeClass('d-block').addClass('d-none');
                 $('#successMessage').text('').removeClass('d-block').addClass('d-none');
-
+                pass = $('#password').val()
+                console.log(pass)
+                passMD5  = md5(pass)
+                console.log(passMD5)
                 const formData = {
                     user: $('#user').val(),
                     email: $('#email').val(),
-                    password: $('#password').val()
+                    password: passMD5
                 };
                 $.ajax({
                     url: 'RegisterAction.php',
