@@ -3,8 +3,8 @@ include_once '../../../configuracion.php';
 include STRUCTURE_PATH . '/Head.php';
 ?>
 
-<div class="container py-4">
-    <div class="text-center p-2 bg-steam-lightgreen bdr-steam-nofocus mx-auto rounded-4" style="margin-top: 200px; max-width: 400px;">
+<div class="container my-auto ">
+    <div class="text-center p-2 bg-steam-lightgreen bdr-steam-nofocus mx-auto rounded-4" style="max-width: 400px;">
         <h2 class="m-4">Register</h2>
         <form id="registerForm" class="bg-steam-darkgreen bdr-steam-focus rounded-4 m-4 d-flex flex-column justify-content-center align-items-center p-5 gap-5">
             <input
@@ -57,7 +57,7 @@ include STRUCTURE_PATH . '/Head.php';
                     password: passMD5
                 };
                 $.ajax({
-                    url: 'RegisterAction.php',
+                    url: 'Action/RegisterAction.php',
                     type: 'POST',
                     data: formData,
                     success: function(response) {
