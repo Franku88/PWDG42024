@@ -24,7 +24,7 @@ class ABMUsuarioRol {
      */
     private function seteadosCamposClaves($param) {
         $resp = false;
-        if (isset($param['idusuario'], $param['idrol'])) {
+        if (isset($param['usuario'], $param['rol'])) {
            $resp = true;
         }
         return $resp;
@@ -40,7 +40,7 @@ class ABMUsuarioRol {
         $obj = null;
         if ($this->seteadosCamposClaves($param)) {
             $obj = new UsuarioRol();
-            $obj->cargarDatos($param['idusuario'], $param['idrol']);
+            $obj->cargarDatos($param['usuario'], $param['rol']);
         }
         return $obj;
     }
@@ -100,11 +100,11 @@ class ABMUsuarioRol {
     public function buscar ($param = null) {
         $where = " true ";
         if ($param != null) {
-            if (isset($param['idusuario'])) {
-                $where .= " and idusuario = ".$param['idusuario'];
+            if (isset($param['usuario'])) {
+                $where .= " and idusuario = ".$param['usuario']->getIdusuario();
             }
-            if (isset($param['idrol'])) {
-                $where .= " and idrol = ".$param['idrol'];
+            if (isset($param['rol'])) {
+                $where .= " and idrol = ".$param['rol']->getIdrol();
             }
         }
         $arreglo = (new UsuarioRol())->listar($where);
