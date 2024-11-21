@@ -1,49 +1,6 @@
 <?php
 include_once "../../../configuracion.php";
 include STRUCTURE_PATH . "/Head.php";
-
-$data['idproducto'] = 8;
-
-
-
-
-
-$producto = (new ABMProducto())->buscar(['idproducto' => $data['idproducto']]);
-    
-echo '<pre>';
-var_dump($producto[0]->getProdeshabilitado());
-echo '</pre>';
-    // if ($producto) {
-    //     // Si el producto se encuentra, actualizar
-    //     if ($data['nombre']) {
-    //         $param['pronombre'] = $data['nombre'];
-    //     } else {
-    //         $param['pronombre'] = $product[0]->getPronombre();
-    //     }
-    //     if ($data['detalle']) {
-    //         $param['prodetalle'] = $data['detalle'];
-    //     } else {
-    //         $param['prodetalle'] = $product[0]->getProdetalle();
-    //     }
-    //     if ($data['stock']) {
-    //         $param['procantstock'] = $data['stock'];
-    //     } else {
-    //         $param['procantstock'] = $product[0]->getProcantstock();
-    //     }
-    //     if ($data['precio']) {
-    //         $param['proprecio'] = $data['precio'];
-    //     } else {
-    //         $param['proprecio'] = $product[0]->getProprecio();
-    //     }
-
-    //     echo '<pre>';
-    //     var_dump($param);
-    //     echo '</pre>';
-
-    // }
-
-
-
 ?>
 
 <div class="d-flex justify-content-center align-items-start gap-3">
@@ -73,20 +30,20 @@ echo '</pre>';
         <h2>Alta de Producto</h2>
         <form id="altaProductoForm">
             <div class="form-group">
-                <label for="nombre" class="text-white">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <label for="nombreAlta" class="text-white">Nombre</label>
+                <input type="text" class="form-control" id="nombreAlta" name="nombreAlta" required>
             </div>
             <div class="form-group">
-                <label for="detalle" class="text-white">Detalle</label>
-                <input type="text" class="form-control" id="detalle" name="detalle" required>
+                <label for="detalleAlta" class="text-white">Detalle</label>
+                <input type="text" class="form-control" id="detalleAlta" name="detalleAlta" required>
             </div>
             <div class="form-group">
-                <label for="stock" class="text-white">Stock</label>
-                <input type="number" class="form-control" id="stock" name="stock" required>
+                <label for="stockAlta" class="text-white">Stock</label>
+                <input type="number" class="form-control" id="stockAlta" name="stockAlta" required>
             </div>
             <div class="form-group">
-                <label for="precio" class="text-white">Precio</label>
-                <input type="number" class="form-control" id="precio" name="precio" required>
+                <label for="precioAlta" class="text-white">Precio</label>
+                <input type="number" class="form-control" id="precioAlta" name="precioAlta" required>
             </div>
 
             <button type="submit" class="btn btn-success mt-3">Crear producto</button>
@@ -174,10 +131,10 @@ echo '</pre>';
 
             // Recopilación de los datos del formulario
             const formData = {
-                nombre: $('#nombre').val(),
-                detalle: $('#detalle').val(),
-                stock: $('#stock').val(),
-                precio: $('#precio').val()
+                nombre: $('#nombreAlta').val(),
+                detalle: $('#detalleAlta').val(),
+                stock: $('#stockAlta').val(),
+                precio: $('#precioAlta').val()
             };
 
             // Envío de los datos a través de Ajax
@@ -210,46 +167,55 @@ echo '</pre>';
         });
 
         $('#modificarProductoForm').submit(function(e) {
-        e.preventDefault(); // Evita el envío por defecto del formulario
-        $('#errorMessageMod').text('').removeClass('d-block').addClass('d-none');
-        $('#successMessageMod').text('').removeClass('d-block').addClass('d-none');
+            e.preventDefault(); // Evita el envío por defecto del formulario
+            $('#errorMessageMod').text('').removeClass('d-block').addClass('d-none');
+            $('#successMessageMod').text('').removeClass('d-block').addClass('d-none');
 
-        const formData = {
-            idproducto: $('#idproducto').val(),
-            nombre: $('#nombre').val(),
-            detalle: $('#detalle').val(),
-            stock: $('#stock').val(),
-            precio: $('#precio').val()
-        };
+            var formData = {
+                idproducto: parseInt($('#idproducto').val(), 10)
+            }; // Convertir a entero
+            
+            if ($('#nombre').val().trim() != "") {
+                formData.nombre = $('#nombre').val().trim();
+            }
+            if ($('#detalle').val().trim() != "") {
+                formData.detalle = $('#detalle').val().trim();
+            }
+            if (!isNaN(parseInt($('#stock').val(), 10))) {
+                formData.stock = parseInt($('#stock').val(), 10); // Validar si es NaN    
+            }
+            if (!isNaN(parseFloat($('#precio').val()))) {
+                formData.precio = parseFloat($('#precio').val()); // Validar si es NaN
+            }
 
-        $.ajax({
-            url: 'Action/ModificacionProductos.php',
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                const res = JSON.parse(response);
-                console.log(res);
-                if (res) {
-                    $('#successMessageMod')
-                        .text(res.message)
-                        .removeClass('d-none')
-                        .addClass('d-block');
-                    cargarProductos(); // Recargar la lista de productos
-                } else {
+            $.ajax({
+                url: 'Action/ModificacionProductos.php',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    const res = JSON.parse(response);
+                    //console.log(res);
+                    if (res) {
+                        $('#successMessageMod')
+                            .text(res.message)
+                            .removeClass('d-none')
+                            .addClass('d-block');
+                        cargarProductos(); // Recargar la lista de productos
+                    } else {
+                        $('#errorMessageMod')
+                            .text(res.message)
+                            .removeClass('d-none')
+                            .addClass('d-block');
+                    }
+                },
+                error: function() {
                     $('#errorMessageMod')
-                        .text(res.message)
+                        .text('Ocurrió un error al procesar la solicitud.')
                         .removeClass('d-none')
                         .addClass('d-block');
                 }
-            },
-            error: function() {
-                $('#errorMessageMod')
-                    .text('Ocurrió un error al procesar la solicitud.')
-                    .removeClass('d-none')
-                    .addClass('d-block');
-            }
+            });
         });
-    });
     });
 </script>
 

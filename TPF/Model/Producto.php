@@ -142,8 +142,7 @@ class Producto {
     
         if ($bd->Iniciar()) {
             $consulta = "INSERT INTO producto (pronombre, prodetalle, procantstock, proprecio) VALUES 
-            ('" . $this->getPronombre() . "', '" . $this->getProdetalle() . "', " . $this->getProcantstock() . ", " . $this->getProprecio() . ")";
-    
+            ('".$this->getPronombre()."','".$this->getProdetalle()."',".$this->getProcantstock().",".$this->getProprecio().")";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -169,9 +168,9 @@ class Producto {
             $consulta = "UPDATE producto 
             SET pronombre = '".$this->getPronombre()."', 
                 prodetalle = '".$this->getProdetalle()."', 
-                procantstock = ".$this->getProcantstock()."',
-                proprecio = ".$this->getProprecio()."',
-                prodeshabilitado = ".$this->getProdeshabilitado()."
+                procantstock = ".$this->getProcantstock().",
+                proprecio = ".$this->getProprecio().",
+                prodeshabilitado = '".$this->getProdeshabilitado()."'
             WHERE idproducto = ".$this->getIdproducto();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;

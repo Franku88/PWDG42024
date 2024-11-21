@@ -1,8 +1,6 @@
 <?php
 include_once '../../../../configuracion.php';
-
 $data = Funciones::data_submitted();  // Obtener los datos enviados
-$salida = [];  // Iniciar salida vacía
 
 // Verificar que todos los campos necesarios están presentes
 if (isset($data['idproducto'])) {
@@ -10,36 +8,35 @@ if (isset($data['idproducto'])) {
     $productos = (new ABMProducto())->buscar(['idproducto' => $data['idproducto']]);
     
     if (!empty($productos)) {
-        $product = $productos[0];
-
-        $data['idproducto'] = $product->getIdproducto();
-        // if ($data['nombre']) {
-        //     $param['pronombre'] = $data['nombre'];
-        // } else {
-        //     $param['pronombre'] = $product->getPronombre();
-        // }
-        // if ($data['detalle']) {
-        //     $param['prodetalle'] = $data['detalle'];
-        // } else {
-        //     $param['prodetalle'] = $product->getProdetalle();
-        // }
-        // if ($data['stock']) {
-        //     $param['procantstock'] = $data['stock'];
-        // } else {
-        //     $param['procantstock'] = $product->getProcantstock();
-        // }
-        // if ($data['precio']) {
-        //     $param['proprecio'] = $data['precio'];
-        // } else {
-        //     $param['proprecio'] = $product->getProprecio();
-        // }
+        $producto = $productos[0];
+        $param['idproducto'] = $producto->getIdproducto();
+        if (isset($data['nombre'])) {
+            $param['pronombre'] = $data['nombre'];
+        } else {
+            $param['pronombre'] = $producto->getPronombre();
+        }
+        if (isset($data['detalle'])) {
+            $param['prodetalle'] = $data['detalle'];
+        } else {
+            $param['prodetalle'] = $producto->getProdetalle();
+        }
+        if (isset($data['stock'])) {
+            $param['procantstock'] = $data['stock'];
+        } else {
+            $param['procantstock'] = $producto->getProcantstock();
+        }
+        if (isset($data['precio'])) {
+            $param['proprecio'] = $data['precio'];
+        } else {
+            $param['proprecio'] = $producto->getProprecio();
+        }
         
         $modificacion = (new ABMProducto())->modificacion($param);
         
         if ($modificacion) {
             echo json_encode(['success' => true, 'message' => 'Producto modificado exitosamente.']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Error al modificar el producto.' , 'data' => $data]);
+            echo json_encode(['success' => false, 'message' => 'Error al modificar el producto.']);
         }
     } else {
         echo json_encode(['success' => false, 'message' => 'Producto no encontrado.']);
