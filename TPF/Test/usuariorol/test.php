@@ -55,3 +55,16 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 // } else {
 //     echo "No se encontraron UsuarioRol";  
 // }
+
+// test busqueda de UsuarioRol por claves primarias ✅
+$abmUsuarioRol = new ABMUsuarioRol();
+$idUsuario = 2;
+$busqueda = $abmUsuarioRol->buscar(['idusuario' => $idUsuario]);
+if ($busqueda) {
+    echo "UsuarioRol encontrados ⬇️ \n";
+    foreach ($busqueda as $usuarioRol) {
+        echo $usuarioRol;
+    }
+} else {
+    echo "No se encontraron UsuarioRol";  
+}

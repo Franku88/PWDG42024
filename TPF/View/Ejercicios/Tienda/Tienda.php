@@ -18,18 +18,14 @@ $productos = $abmProducto->buscar();
                         
                         <div class="align-self-center bdr-steam-nofocus m-2 p-2">
                             <!-- Product Image -->
-                            <?php  echo("<img src='../../Media/Product/".$producto->getIdproducto()."/icon.png'  width='200' heigh='200' alt='...'>") ?>
+                            <?php  echo("<img src='../../Media/Product/".$producto->getIdproducto()."/icon.png'  width='200' height='200' alt='...'>") ?>
                         </div>
 
                         <div class="d-flex flex-column justify-content-center items-center ">
                             <h5 class="card-title">
                                 <?= htmlspecialchars($producto->getPronombre()); ?>
                             </h5>
-
-                            <p class="card-text">
-                                <?= htmlspecialchars($producto->getProdetalle()); ?>
-                            </p>
-
+                            
                             <p class="card-text">
                                 Precio: $<?= number_format($producto->getProprecio(), 2) ?>
                             </p>

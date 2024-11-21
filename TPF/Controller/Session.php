@@ -72,23 +72,19 @@ class Session {
      * Devuelve lista de roles del usuario logeado. Necesario en session por seguridad.
      */
     public function getRol() {
-        $list_rol = null;
+        $arreglo = [];
         if ($this->validar()) {
-            $usuarioRol = new ABMUsuarioRol();
-            $param['idusuario'] = $_SESSION['idusuario'];
-            $resultado = $usuarioRol->buscar($param);
-            if (count($resultado) > 0) {
-                $i = 0;
-                foreach($resultado as $aRol) {
-                    $idrol = $aRol->getIdRol();
-                    $obj = new Rol();
-                    $rol = $obj->listar("idrol = $idrol");
-                    $list_rol[$i] = $rol[0];
-                    $i++;
+            $usuarios = (new ABMUsuario())->buscar(['idusuario' => $_SESSION['idusuario']]);
+            if (count($usuarios) > 0) {
+                $resultado = (new ABMUsuarioRol())->buscar(['usuario' => $usuarios[0]]);
+                if (count($resultado) > 0) {
+                    foreach($resultado as $unUsuarioRol) {
+                        array_push($arreglo, $unUsuarioRol->getObjRol());
+                    }
                 }
             }
-        }
-        return $list_rol;
+        } 
+        return $arreglo;
     }
 
     /**
