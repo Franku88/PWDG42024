@@ -103,10 +103,10 @@ class ABMMenuRol {
         $where = " true ";
         if ($param != null) {
             if (isset($param['rol'])) {
-                $where = " AND idrol = '".$param['rol']->getIdrol()."'";
+                $where .= " AND idrol = ".$param['rol']->getIdrol();
             }
             if (isset($param['menu'])) {
-                $where = " AND idmenu = '".$param['menu']->getIdmenu()."'";
+                $where .= " AND idmenu = ".$param['menu']->getIdmenu();
             }
         }
         $arreglo = (new MenuRol())->listar($where);
