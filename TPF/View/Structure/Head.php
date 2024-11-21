@@ -7,13 +7,6 @@ if ($sessionValida) {
 } else {
     $usuarioRolId = 0;
 }
-// $usuarioRolId = $session->getRol()[0]->getIdrol();
-
-// echo '<pre>';
-// // print_r($usuarioRolId);
-// echo '</pre>';
-
-
 ?>
 
 <!DOCTYPE html>
