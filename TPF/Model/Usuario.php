@@ -35,7 +35,7 @@ class Usuario {
         return $this->uspass;
     }
 
-    public function getUsdesabilitado() {
+    public function getUsdeshabilitado() {
         return $this->usdeshabilitado;
     }
 
@@ -60,7 +60,7 @@ class Usuario {
         $this->usmail = $usMail;
     }
 
-    public function setUsdesabilitado($usdeshabilitado) {
+    public function setUsdeshabilitado($usdeshabilitado) {
         $this->usdeshabilitado = $usdeshabilitado;
     }
 
@@ -74,7 +74,7 @@ class Usuario {
         $this->setUsnombre($usnombre);
         $this->setUspass($uspass);
         $this->setUsmail($usmail);
-        $this->setUsdesabilitado($usdeshabilitado);
+        $this->setUsdeshabilitado($usdeshabilitado);
     }
 
     /**
@@ -159,7 +159,7 @@ class Usuario {
                          SET usnombre = '".$this->getUsnombre()."', 
                              uspass = '".$this->getUspass()."', 
                              usmail = '".$this->getUsmail()."', 
-                             usdeshabilitado = '".$this->getUsdesabilitado()."'
+                             usdeshabilitado = '".$this->getUsdeshabilitado()."'
                          WHERE idusuario = ".$this->getIdusuario();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
@@ -194,14 +194,14 @@ class Usuario {
 
     /**
      * Retorna un string con los datos del usuario
-     * @return string
+     * @return String
      */
     public function __toString() {
         return ("idusuario: ".$this->getIdusuario()." \n 
         usnombre: ".$this->getUsnombre()."\n 
         uspass: ".$this->getUspass()."\n 
         usmail: ".$this->getUsmail()." \n 
-        usdeshabilitado: ".$this->getUsdesabilitado());
+        usdeshabilitado: ".$this->getUsdeshabilitado());
     }
 }
 ?>

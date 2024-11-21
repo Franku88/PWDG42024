@@ -5,29 +5,19 @@ $data = Funciones::data_submitted();
 $salida = [];
 
 // Obtener los usuarios con su rol
-$rolUsuario = (new ABMUsuarioRol())->buscar($data);
+$usuarioRoles = (new ABMUsuarioRol())->buscar($data);
 
-if (!empty($rolUsuario)) {
-    foreach ($rolUsuario as $usuario) {
+if (!empty($usuarioRoles)) {
+    foreach ($usuarioRoles as $cadaUsuarioRol) {
         // Obtener los detalles del usuario y su rol
-        $nuevoElem['idusuario'] = $usuario->getObjUsuario()->getIdusuario();
-        $nuevoElem['usnombre'] = $usuario->getObjUsuario()->getUsnombre();
-        $nuevoElem['usmail'] = $usuario->getObjUsuario()->getUsmail();
-        
-        $desa =  ($usuario->getObjUsuario())->getUsdeshabilitado(); // NULL = Habilitado, fecha = Deshabilitado
-
-        if ($desa == NULL) {
-            $nuevoElem['usdeshabilitado'] = 'Habilitado';
-        } else {
-            $nuevoElem['usdeshabilitado'] = 'Deshabilitado';
-        }
-
-
-        $nuevoElem['rol'] = $usuario->getObjRol()->getRodescripcion(); 
+        $nuevoElem['idusuario'] = $cadaUsuarioRol->getObjUsuario()->getIdusuario();
+        $nuevoElem['usnombre'] = $cadaUsuarioRol->getObjUsuario()->getUsnombre();
+        $nuevoElem['usmail'] = $cadaUsuarioRol->getObjUsuario()->getUsmail();
+        $nuevoElem['usdeshabilitado'] = $cadaUsuarioRol->getObjUsuario()->getUsdeshabilitado(); // NULL = Habilitado, fecha = Deshabilitado
+        $nuevoElem['rol'] = $cadaUsuarioRol->getObjRol()->getRodescripcion(); 
         array_push($salida, $nuevoElem);
     }
 }
-
 // Retornar los resultados en formato JSON
 echo json_encode($salida);
 ?>

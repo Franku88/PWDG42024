@@ -1,13 +1,6 @@
 <?php
 include_once "../../../configuracion.php";
-include STRUCTURE_PATH . "/Head.php";
-
-$rolUsuario = (new ABMUsuarioRol())->buscar($data);
-
-echo '<pre>';
-var_dump($rolUsuario);
-echo '</pre>';
-
+include STRUCTURE_PATH . "/Head.php"; 
 ?>
 
 <div class="d-flex justify-content-center align-items-start gap-3">
@@ -118,12 +111,12 @@ echo '</pre>';
                     var tableContent = '';
                     $.each(response, function(index, usuario) {
                         console.log(usuario)
-                        console.log('test')
                         tableContent += `
                         <tr id="usuario-${usuario.idusuario}">
                             <td>${usuario.idusuario}</td>
                             <td>${usuario.usnombre}</td>
                             <td>${usuario.usmail}</td>
+                            <td>${usuario.usdeshabilitado} </td>
                             <td>${usuario.rol}</td>
                             <td>
                                 <button class="btn btn-warning btn-sm" onclick="modificarUsuario(${usuario.idusuario})">Modificar</button>
