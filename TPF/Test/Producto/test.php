@@ -32,17 +32,16 @@ include_once '/Applications/XAMPP/xamppfiles/htdocs/PWDG42024/TPF/Controller/ABM
 //     echo "Error en la baja";
 // }
 
-// test buscar producto por id ✅
 
-// $param = ['idproducto' => 8];
-// $abmProducto = new ABMProducto();
-// $busqueda = $abmProducto->buscar($param);
-// if ($busqueda) {
-//     echo "Producto encontrado ⬇️ \n";
-//     print_r($busqueda[0]);
-// } else {
-//     echo "Producto no encontrado";
-// }
+
+// test buscar modificacion de producto ✅
+
+$param = ['idproducto' => 8];
+$abmProducto = new ABMProducto();
+$busqueda = $abmProducto->buscar($param);
+$producto= $busqueda[0];
+
+print_r($producto);
 
 
 // test busqueda de todos los productos ✅
