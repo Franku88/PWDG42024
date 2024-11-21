@@ -56,7 +56,6 @@ class ABMUsuario {
      */
     public function alta($param) {
         $resp = false;
-    
         if (!array_key_exists('idusuario', $param)) {
             $usuario = $this->cargarObjeto($param);
             if ($usuario != null && $usuario->insertar()) {
@@ -109,23 +108,22 @@ class ABMUsuario {
         $where = " true ";
         if ($param != null) {
             if (isset($param['idusuario'])) {
-                $where = "idusuario = " . intval($param['idusuario']); 
+                $where .= " AND idusuario = ".$param['idusuario'];
             }
             if (isset($param['usnombre'])) {
-                $where = "usnombre = '" . $param['usnombre'] . "'"; 
+                $where .= " AND usnombre = '".$param['usnombre']."'"; 
             }
             if (isset($param['uspass'])) {
-                $where = "uspass = '" . $param['uspass'] . "'"; 
+                $where .= " AND uspass = '".$param['uspass']."'"; 
             }
             if (isset($param['usmail'])) {
-                $where = "usmail = '" . $param['usmail'] . "'"; 
+                $where .= " AND usmail = '".$param['usmail']."'"; 
             }
             if (isset($param['usdeshabilitado'])) {
-                $where.=" and usdeshabilitado ='".$param['usdeshabilitado']."'";
+                $where .= " AND usdeshabilitado ='".$param['usdeshabilitado']."'";
             }
         }
         $arreglo = (new Usuario())->listar($where);
         return $arreglo;
     }
-    
 }

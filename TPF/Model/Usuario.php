@@ -23,15 +23,15 @@ class Usuario {
         return $this->idusuario;
     }
 
-    public function getUsNombre() {
+    public function getUsnombre() {
         return $this->usnombre;
     }
 
-    public function getUsMail() {
+    public function getUsmail() {
         return $this->usmail;
     }
 
-    public function getUsPass() {
+    public function getUspass() {
         return $this->uspass;
     }
 
@@ -48,15 +48,15 @@ class Usuario {
         $this->idusuario = $idusuario;
     }
 
-    public function setUsNombre($usNombre) {
+    public function setUsnombre($usNombre) {
         $this->usnombre = $usNombre;
     }
 
-    public function setUsPass($usPass) {
+    public function setUspass($usPass) {
         $this->uspass = $usPass;
     }
 
-    public function setUsMail($usMail) {
+    public function setUsmail($usMail) {
         $this->usmail = $usMail;
     }
 
@@ -71,9 +71,9 @@ class Usuario {
     // metodos CRUD
     public function cargarDatos($idusuario, $usnombre = null , $uspass = null , $usmail = null , $usdeshabilitado = null) {
         $this->setIdusuario($idusuario);
-        $this->setUsNombre($usnombre);
-        $this->setUsPass($uspass);
-        $this->setUsMail($usmail);
+        $this->setUsnombre($usnombre);
+        $this->setUspass($uspass);
+        $this->setUsmail($usmail);
         $this->setUsdesabilitado($usdeshabilitado);
     }
 
@@ -135,7 +135,7 @@ class Usuario {
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
             $consulta = "INSERT INTO usuario(usnombre, uspass, usmail) VALUES 
-            ('".$this->getUsNombre()."', '".$this->getUsPass()."', '".$this->getUsMail()."')";
+            ('".$this->getUsnombre()."', '".$this->getUspass()."', '".$this->getUsmail()."')";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -156,9 +156,9 @@ class Usuario {
         $resultado = false;
         if ($bd->Iniciar()) {
             $consulta = "UPDATE usuario 
-                         SET usnombre = '".$this->getUsNombre()."', 
-                             uspass = '".$this->getUsPass()."', 
-                             usmail = '".$this->getUsMail()."', 
+                         SET usnombre = '".$this->getUsnombre()."', 
+                             uspass = '".$this->getUspass()."', 
+                             usmail = '".$this->getUsmail()."', 
                              usdeshabilitado = '".$this->getUsdesabilitado()."'
                          WHERE idusuario = ".$this->getIdusuario();
             if ($bd->Ejecutar($consulta)) {
@@ -198,9 +198,9 @@ class Usuario {
      */
     public function __toString() {
         return ("idusuario: ".$this->getIdusuario()." \n 
-        usnombre: ".$this->getUsNombre()."\n 
-        uspass: ".$this->getUsPass()."\n 
-        usmail: ".$this->getUsMail()." \n 
+        usnombre: ".$this->getUsnombre()."\n 
+        uspass: ".$this->getUspass()."\n 
+        usmail: ".$this->getUsmail()." \n 
         usdeshabilitado: ".$this->getUsdesabilitado());
     }
 }
