@@ -29,6 +29,9 @@
         <!-- EasyUI -->
         <script src="<?php echo BASE_URL; ?>/View/Assets/js/jquery-easyui-1.11.0/jquery.easyui.min.js"></script>
 
+        <!-- js-md5 -->
+        <script src="<?php echo BASE_URL; ?>/View/Assets/js/md5.min.js"></script>
+
     </head>
 
     <?php
