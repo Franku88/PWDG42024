@@ -1,63 +1,74 @@
 <?php
-    include_once "../../../configuracion.php";
-    include STRUCTURE_PATH."/Head.php"
+include_once '../../../configuracion.php';
+include STRUCTURE_PATH . '/Head.php';
+$abmProducto = new ABMProducto();
+$productos = $abmProducto->buscar();
+
+$roles = ($session)->getRol();
+$esCliente = false;
+if (!empty($roles)) { //Si tiene roles
+    $rolesFiltrados = (array_filter($roles, function($cadaRol) { 
+        return $cadaRol->getRodescripcion() == 'Cliente'; //filtra array para que tenga solo los que cumplan la condicion
+    }));
+    $esCliente = !empty($rolesFiltrados); // Si no esta vacio, entonces encontro un rol Cliente
+}
 ?>
 
-<!-- TABLA DONDE SE PLASMAN LOS ELEMENTOS DE LA BD -->
-<!-- <div class=''>
-    <table id="dg" title="Productos" class="easyui-datagrid" url="Action/listarProductos.php" toolbar="#toolbar" 
-    pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
-        <thead class="">
-            <tr>
-                <th field="icon" width="50">Icono</th>
-                <th field="idproducto" width="50">ID</th>
-                <th field="pronombre" width="50">Nombre</th>
-                <th field="proprecio" width="50">Precio</th>
-            </tr>
-        </thead>
-    </table>
-</div> -->
-<!-- TABLA DONDE SE PLASMAN LOS ELEMENTOS DE LA BD -->
-
-
-<div class="container">
-    <h1>Catálogo de Productos</h1>
-    <div class="row" id="catalogo"></div> <!-- Aquí se cargarán los productos -->
+<div class="container py-4">
+    <h1 class="text-center mb-4">Productos</h1>
+    <!-- Product Grid -->
+    <div class="d-flex flex-wrap bg-steam-lightgreen bdr-steam-nofocus" id="catalogo">
+    </div>
 </div>
 
 <script>
-$(document).ready(function(){
-    // Realizar la solicitud AJAX
-    $.ajax({
-        url: 'Action/ListarProductos.php', // Ruta al script PHP que genera los datos
-        method: 'POST',
-        data: 'todo',
-        dataType: 'json',
-        success: function(response) {
-            console.log(response);
-            var htmlContent = '';
-            // Iterar sobre los productos y construir el HTML
-            $.each(response, function(index, producto) {
-                htmlContent += `
-                    <div class="col-md-4 my-3" id="${producto.idproducto}">
-                        <div class="card" style="width: 18rem;">
-                            <img src="${producto.icon}" class="card-img-top" alt="${producto.pronombre}">
-                            <div class="card-body">
-                                <h5 class="card-title">${producto.pronombre}</h5>
-                                <a href="#" class="btn btn-primary">Ver Detalles</a>
+    $(document).ready(function(){
+        // Realizar la solicitud AJAX
+        $.ajax({
+            url: 'Action/ListarProductos.php', // Ruta al script PHP que genera los datos
+            method: 'POST',
+            data: 'todo',
+            dataType: 'json',
+            success: function(response) {
+                //console.log(response);
+                var htmlContent = '';
+                // Iterar sobre los productos y construir el HTML
+                $.each(response, function(index, producto) {
+                    htmlContent += `
+                    <div class="d-flex p-3 my-3 mx-auto">
+                        <div class="h-100 shadow-sm">
+                            <!-- Product Details -->
+                            <div class='card-body bg-steam-darkgreen bdr-steam-focus d-flex'>
+                                <div class='align-self-center bdr-steam-nofocus m-1 p-1'>
+                                    <!-- Product Image -->
+                                    <img src='${producto.icon}'  width='100' height='100' alt='...'>
+                                </div>
+
+                                <div class='d-flex flex-column justify-content-center items-center mx-5'>
+                                    <h5 class='card-title'> ${producto.pronombre} </h5>
+                                    <p class='card-text'> Precio: $ ${producto.proprecio} </p>
+                                </div>
+                            </div>
+                            <!-- Product Actions -->
+                            <div class="bg-steam-lightgreen bdr-steam-nofocus  text-center p-2">
+                                <a href='../Producto/Producto.php?idproducto=${producto.idproducto}' class='btn btn-primary btn-steam'>Ver detalles</a>
+                                
+                                <?php if ($usuarioRolId == 3) { //Inserta estos botones si el usuario es un cliente idrol = 3?> 
+                                    <button class="btn btn-primary btn-steam" onclick="agregarAlCarrito(${producto.idproducto})" id="${producto.idproducto}">Agregar al carro</button>
+                                <?php } ?>
+
                             </div>
                         </div>
-                    </div>
-                `;
-            });
-            // Insertar el HTML generado en el contenedor
-            $('#catalogo').html(htmlContent);
-        },
-        error: function() {
-            alert('Error al cargar el catálogo.');
-        }
+                    </div>`;
+                });
+                // Insertar el HTML generado en el contenedor
+                $('#catalogo').html(htmlContent);
+            },
+            error: function() {
+                alert('Error al cargar el catálogo.');
+            }
+        });
     });
-});
 </script>
 
-<?php include STRUCTURE_PATH."/Foot.php"?>
+<?php include STRUCTURE_PATH . '/Foot.php'; ?>

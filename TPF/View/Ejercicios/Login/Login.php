@@ -2,8 +2,8 @@
 include_once '../../../configuracion.php';
 include STRUCTURE_PATH . '/Head.php';
 
-if ($session->validar()) { //Si ya tiene una sesion, redirige a tienda
-    header('Location: ../../Ejercicios/Tienda/Tienda.php');
+if ($session->validar()) { //Si ya tiene una sesion, redirige a Catalogo
+    header('Location: ../../Ejercicios/Catalogo/Catalogo.php');
 }
 ?>
 
@@ -42,7 +42,7 @@ if ($session->validar()) { //Si ya tiene una sesion, redirige a tienda
                     if (response) {
                         messageContainer.addClass('bg-success').text('Inicio de sesión exitoso. Redirigiendo...');
                         setTimeout(function() {
-                            window.location.href = '../../Ejercicios/Tienda/Tienda.php';
+                            window.location.href = '../../Ejercicios/Catalogo/Catalogo.php';
                         }, 2000);
                     } else {
                         messageContainer.addClass('bg-danger').text('Datos incorrectos.');
