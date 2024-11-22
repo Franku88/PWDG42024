@@ -4,13 +4,18 @@ include_once '../../../../configuracion.php';
 $data = Funciones::data_submitted();
 $salida = false;
 if (!empty($data)) {
+    var_dump($data);
     $param = [];
+    $abmUsuario = new ABMUsuario();
+    $usuarios = $abmUsuario->buscar(['idusuario' => intval($data['idusuario'])]);
+
     $datetime = new DateTime('now');
-    $datetime->setTime(0, 0, 0); // Hora: 00:11:12
+    $datetime->setTime(0, 0, 0); 
     $param['cofecha'] = $datetime->format('Y-m-d H:i:s');
-    $param['usuario'] = $data;
-    $productos = (new ABMCompra())->alta($param);
-    if ($productos) {
+    $param['usuario'] = $usuarios;
+
+    $compra = (new ABMCompra())->alta($param);
+    if ($compra) {
         $salida = true;
     }
 }

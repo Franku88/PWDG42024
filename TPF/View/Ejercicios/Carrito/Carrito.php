@@ -2,6 +2,12 @@
 include_once "../../../configuracion.php";
 include STRUCTURE_PATH . "/HeadSafe.php";
 
+$sessionValida = $session->validar();
+if ($sessionValida) {
+    $usuarioId = $session->getUsuario()->getIdusuario();
+} else {
+    $usuarioId = 0;
+}
 //ESTE BLOQUE DEBE SER PERSONALIZADO PARA CADA PAGINA CON HEAD SAFE (ESTABLECER SU ID)
 $menuesFiltrados = array_filter($menues, function ($menu) {
     return ($menu->getIdmenu()) == 7; //7 es el id del menu Carrito
@@ -126,16 +132,18 @@ if (empty($menuesFiltrados)) {
         $(document).on('click', '.boton_comprar', function() {
             const idProductosCarro = productosSS.map(item => ({
                 "idproducto": item.idproducto
-            }));
-            user = 3
+            }));   
+            var usuarioId = {idusuario : <?php echo $usuarioId; ?>};
+            console.log(usuarioId)
+             
             $.ajax({
                 url: 'Action/confirmaCompraAction.php', // Ruta al script PHP que procesa los datos
                 method: 'POST', // Método de la solicitud
-                data: user,// Dato que se enviará al servidor,
+                data: usuarioId,// Dato que se enviará al servidor,
                 dataType: 'json', // El tipo de datos que se espera recibir como respuesta                
                 success: function(response) {
                     console.log(response)
-                    if (response.success) {
+                    if (response) {
                         // Verificar si el servidor indicó que la operación fue exitosa
                         alert('Compra ingresada correctamente.');
                     } else {
