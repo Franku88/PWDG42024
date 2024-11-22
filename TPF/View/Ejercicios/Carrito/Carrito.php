@@ -133,16 +133,13 @@ if (empty($menuesFiltrados)) {
             const idProductosCarro = productosSS.map(item => ({
                 "idproducto": item.idproducto
             }));   
-            var usuarioId = {idusuario : <?php echo $usuarioId; ?>};
-            console.log(usuarioId)
-             
+            var usuarioId = {idusuario : <?php echo json_encode($usuarioId); ?>};
             $.ajax({
                 url: 'Action/confirmaCompraAction.php', // Ruta al script PHP que procesa los datos
                 method: 'POST', // Método de la solicitud
                 data: usuarioId,// Dato que se enviará al servidor,
                 dataType: 'json', // El tipo de datos que se espera recibir como respuesta                
-                success: function(response) {
-                    console.log(response)
+                success: function(response) {                    
                     if (response) {
                         // Verificar si el servidor indicó que la operación fue exitosa
                         alert('Compra ingresada correctamente.');
