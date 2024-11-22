@@ -7,7 +7,6 @@
         $usuarioRolId = 0;
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -43,7 +42,15 @@
     <!-- js-md5 -->
     <script src="<?php echo BASE_URL; ?>/View/Assets/js/md5.min.js"></script>
 
-
+    <script> //Crea carrito en sessionStorage si fuese el caso (usuario es Cliente idrol=3)
+        $(document).ready(function(){
+            if (<?php echo $usuarioRolId?> == 3) { //Si es cliente (idrol = 3)
+                if (!sessionStorage.getItem('carrito')) {
+                    sessionStorage.setItem('carrito', JSON.stringify([]));
+                }
+            }
+        });
+    </script>
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-steam-darkgreen"> <!-- Comienza body saludos YT!-->
