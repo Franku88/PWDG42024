@@ -1,14 +1,14 @@
 <?php
 include_once "../../../configuracion.php";
-include STRUCTURE_PATH . "/HeadSafe.php"; 
+include STRUCTURE_PATH . "/HeadSafe.php";
 
 //ESTE BLOQUE DEBE SER PERSONALIZADO PARA CADA PAGINA CON HEAD SAFE (ESTABLECER SU ID)
-$menuesFiltrados = array_filter($menues, function($menu) {
+$menuesFiltrados = array_filter($menues, function ($menu) {
     return ($menu->getIdmenu()) == 5; //5 es el id del menu AdminsitrarProductos
 });
 
 if (empty($menuesFiltrados)) {
-    echo("Sesión inválida"); //Puede embellecerse un poco más
+    echo ("Sesión inválida"); //Puede embellecerse un poco más
     //header("Location: ".ROOT_PATH."/index.php");
     exit();
 }
@@ -18,7 +18,7 @@ if (empty($menuesFiltrados)) {
 <div class="d-flex justify-content-center align-items-start gap-3">
 
     <!-- Tabla de Productos -->
-    <div class="mt-5" style="max-width: 45%; padding: 20px;">
+    <div class="mt-5" style="max-width: 65%; padding: 20px;">
         <h1>Administrar Productos</h1>
         <table class="table table-bordered table-striped" id="productosTable" style="width: 100%;">
             <thead class="thead-dark">
@@ -27,6 +27,7 @@ if (empty($menuesFiltrados)) {
                     <th>Nombre</th>
                     <th>Detalle</th>
                     <th>Stock</th>
+                    <th>Estado</th>
                     <th>Precio</th>
                     <th>Acciones</th>
                 </tr>
@@ -70,25 +71,25 @@ if (empty($menuesFiltrados)) {
     <div class="mt-5" style="max-width: 45%; padding: 20px;">
         <h2>Modificar Producto</h2>
         <form id="modificarProductoForm">
-        <div class="form-group">
+            <div class="form-group">
                 <label for="idproducto" class="text-white">Id</label>
-                <input type="number" class="form-control" id="idproducto" name="idproducto" >
+                <input type="number" class="form-control" id="idproducto" name="idproducto">
             </div>
             <div class="form-group">
                 <label for="nombre" class="text-white">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" >
+                <input type="text" class="form-control" id="nombre" name="nombre">
             </div>
             <div class="form-group">
                 <label for="detalle" class="text-white">Detalle</label>
-                <input type="text" class="form-control" id="detalle" name="detalle" >
+                <input type="text" class="form-control" id="detalle" name="detalle">
             </div>
             <div class="form-group">
                 <label for="stock" class="text-white">Stock</label>
-                <input type="number" class="form-control" id="stock" name="stock" >
+                <input type="number" class="form-control" id="stock" name="stock">
             </div>
             <div class="form-group">
                 <label for="precio" class="text-white">Precio</label>
-                <input type="number" class="form-control" id="precio" name="precio" >
+                <input type="number" class="form-control" id="precio" name="precio">
             </div>
 
             <button type="submit" class="btn btn-primary mt-3">Actualizar producto</button>
@@ -114,18 +115,26 @@ if (empty($menuesFiltrados)) {
                 success: function(response) {
                     var tableContent = '';
                     $.each(response, function(index, producto) {
+                        // Determinar estado y el botón correspondiente
+                        const estado = producto.prodeshabilitado ? 'Deshabilitado' : 'Disponible';
+                        const botonEstado = producto.prodeshabilitado ?
+                            `<button class="btn btn-success btn-sm" onclick="habilitarProducto(${producto.idproducto})">Habilitar</button>` :
+                            `<button class="btn btn-warning btn-sm" onclick="deshabilitarProducto(${producto.idproducto})">Deshabilitar</button>`;
+
                         tableContent += `
-                        <tr id="producto-${producto.idproducto}">
-                            <td>${producto.idproducto}</td>
-                            <td>${producto.pronombre}</td>
-                            <td>${producto.prodetalle}</td>
-                            <td>${producto.procantstock}</td>
-                            <td>${producto.proprecio}</td>
-                            <td>
-                                <button class="btn btn-danger btn-sm" onclick="bajaProducto(${producto.idproducto})">Eliminar</button>
-                            </td>
-                        </tr>
-                    `;
+                <tr id="producto-${producto.idproducto}">
+                    <td>${producto.idproducto}</td>
+                    <td>${producto.pronombre}</td>
+                    <td>${producto.prodetalle}</td>
+                    <td>${producto.procantstock}</td>
+                    <td>${estado}</td>
+                    <td>${producto.proprecio}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="bajaProducto(${producto.idproducto})">Eliminar</button>
+                        ${botonEstado}
+                    </td>
+                </tr>
+                `;
                     });
                     $('#productosTable tbody').html(tableContent);
                 },
@@ -134,6 +143,7 @@ if (empty($menuesFiltrados)) {
                 }
             });
         }
+
 
         // Manejo de alta de producto
         $('#altaProductoForm').submit(function(e) {
@@ -178,6 +188,83 @@ if (empty($menuesFiltrados)) {
             });
         });
 
+        //baja de producto
+        window.bajaProducto = function(idproducto) {
+            if (confirm('¿Está seguro que desea eliminar el producto?')) {
+                $.ajax({
+                    url: 'Action/BajaProductos.php',
+                    type: 'POST',
+                    data: {
+                        idproducto: idproducto
+                    },
+                    success: function(response) {
+                        const res = JSON.parse(response);
+                        if (res.success) {
+                            alert(res.message);
+                            $('#producto-' + idproducto).remove();
+                        } else {
+                            alert(res.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Ocurrió un error al procesar la solicitud.');
+                    }
+                });
+            }
+        }
+        // deshabilitado de producto
+        window.deshabilitarProducto = function(idproducto) {
+            if (confirm('¿Está seguro que desea deshabilitar el producto?')) {
+                $.ajax({
+                    url: 'Action/DeshabilitarProducto.php',
+                    type: 'POST',
+                    data: {
+                        idproducto: idproducto 
+                    },
+                    success: function(response) {
+                        const res = JSON.parse(response);
+                        if (res.success) {
+                            alert(res.message);
+                            cargarProductos(); // Recargar la lista de productos
+                        } else {
+                            alert(res.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Ocurrió un error al procesar la solicitud.');
+                    }
+
+                });
+            }
+        }
+        // habilitado de producto
+        window.habilitarProducto = function(idproducto) {
+            var id = idproducto;
+            if (confirm('¿Está seguro que desea habilitar el producto?')) {
+                $.ajax({
+                    url: 'Action/HabilitarProducto.php',
+                    type: 'POST',
+                    data: {
+                        idproducto: id // hay que usar si o si idproducto, claro
+                    },
+                    
+                    success: function(response) {
+                        const res = JSON.parse(response);
+                        if (res.success) {
+                            alert(res.message);
+                            cargarProductos(); // Recargar la lista de productos tampoco
+                        } else {
+                            alert(res.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Ocurrió un error al procesar la solicitud.');
+                    }
+                });
+            }
+        };
+
+
         $('#modificarProductoForm').submit(function(e) {
             e.preventDefault(); // Evita el envío por defecto del formulario
             $('#errorMessageMod').text('').removeClass('d-block').addClass('d-none');
@@ -186,7 +273,7 @@ if (empty($menuesFiltrados)) {
             var formData = {
                 idproducto: parseInt($('#idproducto').val(), 10)
             }; // Convertir a entero
-            
+
             if ($('#nombre').val().trim() != "") {
                 formData.nombre = $('#nombre').val().trim();
             }
@@ -199,7 +286,6 @@ if (empty($menuesFiltrados)) {
             if (!isNaN(parseFloat($('#precio').val()))) {
                 formData.precio = parseFloat($('#precio').val()); // Validar si es NaN
             }
-
             $.ajax({
                 url: 'Action/ModificacionProductos.php',
                 type: 'POST',

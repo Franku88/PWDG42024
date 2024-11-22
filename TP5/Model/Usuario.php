@@ -173,6 +173,7 @@ class Usuario {
         }
         return $resultado;
     }
+
     /**
      * Retorna un string con los datos del usuario
      * @return string

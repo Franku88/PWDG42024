@@ -77,17 +77,22 @@ if (empty($menuesFiltrados)) {
     <div class=" mt-5" style="max-width: 45%; padding: 20px;">
         <h2>Modificar Usuario</h2>
         <form id="modificarUsuarioForm">
+        <div class="form-group">
+                    <!--  SEGUIMOS DESDE ACA, hay que actualizar el ajax y en modificacionUsuario tener en cuenta el ABMUsuarioRol  -->
+                <label for="usuarioID" class="text-white">Id</label>
+                <input type="text" class="form-control" id="usuarioID" name="usuarioID" required>
+            </div>
             <div class="form-group">
                 <label for="modNombre" class="text-white">Nombre</label>
-                <input type="text" class="form-control" id="modNombre" name="modNombre" required>
+                <input type="text" class="form-control" id="modNombre" name="modNombre" >
             </div>
             <div class="form-group">
                 <label for="modEmail" class="text-white">Email</label>
-                <input type="email" class="form-control" id="modEmail" name="modEmail" required>
+                <input type="email" class="form-control" id="modEmail" name="modEmail" >
             </div>
             <div class="form-group">
                 <label for="modRol" class="text-white">Rol</label>
-                <select class="form-control" id="modRol" name="modRol" required>
+                <select class="form-control" id="modRol" name="modRol" >
                     <option value="">Seleccionar...</option>
                     <option value="Administrador">Administrador</option>
                     <option value="Deposito">Deposito</option>
@@ -96,11 +101,11 @@ if (empty($menuesFiltrados)) {
                 </select>
             </div>
             <input type="hidden" id="modUserId">
-            <button type="submit" class="btn btn-primary mt-3">Guardar cambios</button>
+            <button type="submit" class="btn btn-primary mt-3">Actualizar usuario</button>
         </form>
         <div class="d-flex flex-column justify-content-center align-items-center">
-            <div id="errorMessage" class="text text-center mt-3 p-2 bg-danger rounded-3 w-100 text-white d-none"></div>
-            <div id="successMessage" class="text text-center mt-3 p-2 bg-success rounded-3 w-100 text-white d-none"></div>
+            <div id="errorMessageMod" class="text text-center mt-3 p-2 bg-danger rounded-3 w-100 text-white d-none"></div>
+            <div id="successMessageMod" class="text text-center mt-3 p-2 bg-success rounded-3 w-100 text-white d-none"></div>
         </div>
     </div>
 
@@ -122,7 +127,6 @@ if (empty($menuesFiltrados)) {
                 success: function(response) {
                     var tableContent = '';
                     $.each(response, function(index, usuario) {
-                        console.log(usuario)
                         tableContent += `
                         <tr id="usuario-${usuario.idusuario}">
                             <td>${usuario.idusuario}</td>
@@ -131,7 +135,6 @@ if (empty($menuesFiltrados)) {
                             <td>${usuario.usdeshabilitado} </td>
                             <td>${usuario.rol}</td>
                             <td>
-                                <button class="btn btn-warning btn-sm" onclick="modificarUsuario(${usuario.idusuario})">Modificar</button>
                                 <button class="btn btn-danger btn-sm" onclick="bajaUsuario(${usuario.idusuario}, '${usuario.rol}')">Baja</button>
                             </td>
                         </tr>
@@ -242,22 +245,49 @@ if (empty($menuesFiltrados)) {
 
 
         // Modificación de usuario
-        $('#modificarUsuarioForm').submit(function(e) {
+       $('#modificarUsuarioForm').submit(function(e) {
             e.preventDefault();
-            const datos = $(this).serialize();
+            $('#errorMessage').text('').removeClass('d-block').addClass('d-none');
+            $('#successMessage').text('').removeClass('d-block').addClass('d-none');
+            
+            var formData = {
+                usuarioID: parseInt($('#usuarioID').val(), 10),
+            }
+            if ($('#modNombre').val().trim() != "") {
+                formData['modNombre'] = $('#modNombre').val();
+            }
+            if ($('#modEmail').val().trim() != "") {
+                formData['modEmail'] = $('#modEmail').val();
+            }
+            if ($('#modRol').val().trim() != "") {
+                formData['modRol'] = $('#modRol').val();
+            }
+
             $.ajax({
-                url: 'Action/ModificarUsuario.php',
-                method: 'POST',
-                data: datos,
-                dataType: 'json',
+                url: 'Action/ModificacionUsuario.php',
+                type: 'POST',
+                data: formData,
                 success: function(response) {
-                    alert(response.message);
-                    if (response.success) {
+                    const res = JSON.parse(response);
+                    console.log(res);
+                    if (res.success) {
+                        $('#successMessageMod')
+                            .text(res.message)
+                            .removeClass('d-none')
+                            .addClass('d-block');
                         cargarUsuarios(); // Recargar la lista de usuarios
+                    } else {
+                        $('#errorMessageMod')
+                            .text(res.message)
+                            .removeClass('d-none')
+                            .addClass('d-block');
                     }
                 },
                 error: function() {
-                    alert('Error al modificar el usuario.');
+                    $('#errorMessageMod')
+                        .text('Ocurrió un error al procesar la solicitud.')
+                        .removeClass('d-none')
+                        .addClass('d-block');
                 }
             });
         });
