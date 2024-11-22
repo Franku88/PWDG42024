@@ -34,10 +34,11 @@ CREATE TABLE `usuario` (
 CREATE TABLE `producto` (
   `idproducto` bigint(20) NOT NULL AUTO_INCREMENT,
   `pronombre` varchar(50) NOT NULL,
-  `prodetalle` varchar(512) NOT NULL,
+  `prodetalle` varchar(1024) NOT NULL,
   `procantstock` int(11) NOT NULL,
   `proprecio` DECIMAL(10, 2) NOT NULL,
   `prodeshabilitado` timestamp NULL DEFAULT NULL,
+  `idvideoyt` varchar(11) NOT NULL DEFAULT 'dQw4w9WgXcQ',
   PRIMARY KEY (`idproducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 -- --------------------------------------------------------
@@ -159,12 +160,15 @@ INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabili
 (3, 'deposito1', MD5('password'), 'deposito1@example.com', NULL);
 
 -- Volcado de datos para la tabla `producto`
-INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`, `proprecio`, `prodeshabilitado`) VALUES
-(1, 'Counter Strike', 'Juego de disparos', 10, 250.00, NULL),
-(2, 'Fallout', 'Juego de rol', 20, 45.00, NULL),
-(3, 'Minecraft', 'Juego sandbox', 30, 130.00, NULL),
-(4, 'GTA VI', 'Próximo juego de Rockstar', 0, 200.00, '2024-10-15 18:30:00');
-
+INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`, `proprecio`, `prodeshabilitado`, `idvideoyt`) VALUES
+(1, 'Counter Strike', 'Durante las dos últimas décadas, Counter-Strike ha proporcionado una experiencia competitiva de primer nivel para los millones de jugadores de todo el mundo que contribuyeron a darle forma. Ahora el próximo capítulo en la historia de CS está a punto de comenzar. Hablamos de Counter-Strike 2.',
+10, 250.00, NULL, 'c80dVYcL69E'),
+(2, 'Fallout 4', 'Bethesda Game Studios, el galardonado creador de Fallout 3 y The Elder Scrolls V: Skyrim, os da la bienvenida al mundo de Fallout 4, su juego más ambicioso hasta la fecha y la siguiente generación de mundos abiertos.', 
+20, 45.00, NULL, 'XW7Of3g2JME'),
+(3, 'Minecraft', 'Explora mundos generados al azar y construye cosas increíbles, desde las casas más sencillas hasta los castillos más grandiosos. Juega en modo creativo con recursos ilimitados o excava hasta las profundidades del mundo en el modo supervivencia, donde deberás fabricar armas y armaduras para defenderte de las criaturas peligrosas. Escala montañas escarpadas, explora cuevas complejas y extrae grandes vetas de minerales. Descubre los biomas de cuevas y espeleotemas fascinantes. ¡Ilumina tu mundo con velas para presumir tus habilidades de espeleología y montañismo!', 
+30, 130.00, NULL, 'MmB9b5njVbA'),
+(4, 'GTA VI', 'Grand Theft Auto VI pone rumbo al estado de Leonida, hogar de las calles rebosantes de neones de Vice City y sus alrededores, en la evolución más grande e inmersiva de la serie Grand Theft Auto hasta la fecha. Disponible en 2025 para PlayStation®5 y Xbox Series X|S.', 
+0, 200.00, '2024-10-15 18:30:00', 'QdBZY2fkU-0');
 
 -- Volcado de datos para la tabla `compra`
 INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`) VALUES
