@@ -47,6 +47,7 @@ if (!empty($roles)) { //Si tiene roles
                                 <div class='d-flex flex-column justify-content-center items-center mx-5'>
                                     <h5 class='card-title'> <a href='../Producto/Producto.php?idproducto=${producto.idproducto}'> ${producto.pronombre}</a> </h5>
                                     <p class='card-text'> Precio: $ ${producto.proprecio} </p>
+                                    <p class='card-text'> Stock: ${producto.procantstock} </p>
                                 </div>
                             </div>
                             <!-- Product Actions -->
