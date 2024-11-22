@@ -36,20 +36,19 @@ if (isset($data['usuarioID'])) {
         if (isset($data['modRol'])) {
             $roles = (new ABMRol())->buscar(['rodescripcion' => $data['modRol']]);
             $usuarioRoles = (new ABMUsuarioRol())->buscar(['usuario' => $usuario]);
-
-            $subaRol = (new ABMUsuarioRol())->alta(['usuario' => $usuario, 'rol' => $roles[0]]); //Sube nuevo rol
             $bajaRol = (new ABMUsuarioRol())->baja(['usuario' => $usuario, 'rol' => $usuarioRoles[0]->getObjRol()]); //Baja rol anterior
+            $subaRol = (new ABMUsuarioRol())->alta(['usuario' => $usuario, 'rol' => $roles[0]]); //Sube nuevo rol            
         }
 
         $modificacion = (new ABMUsuario())->modificacion($param); //Modifica otros datos
         
-        if ($modificacion && $subaRol && $bajaRol) {
+        if ($subaRol && $bajaRol) {
             echo json_encode(['success' => true, 'message' => 'usuario modificado exitosamente.']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Error al modificar el producto.', 'datos' => $data]);
+            echo json_encode(['success' => false, 'message' => 'Error al modificar el usuario.', 'data'=> $param]);
         }
     } else {
-        echo json_encode(['success' => false, 'message' => 'Producto no encontrado.']);
+        echo json_encode(['success' => false, 'message' => 'usuario no encontrado.']);
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Datos incompletos.']);

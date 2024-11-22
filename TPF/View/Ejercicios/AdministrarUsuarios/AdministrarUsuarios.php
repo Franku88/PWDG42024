@@ -221,12 +221,20 @@ if (empty($menuesFiltrados)) {
                 data: formData,
                 success: function(response) {
                     if (response.trim() === 'success') {
+                        $('#errorMessage')
+                            .text('Usuario creado exitosamente.')
+                            .removeClass('d-block')
+                            .addClass('d-none');
                         $('#successMessage')
                             .text('Usuario creado exitosamente.')
                             .removeClass('d-none')
                             .addClass('d-block');
                         cargarUsuarios(); // Recargar la lista de usuarios
                     } else {
+                        $('#successMessage')
+                            .text('Usuario creado exitosamente.')
+                            .removeClass('d-block')
+                            .addClass('d-none');
                         $('#errorMessage')
                             .text(response)
                             .removeClass('d-none')
@@ -234,6 +242,10 @@ if (empty($menuesFiltrados)) {
                     }
                 },
                 error: function() {
+                    $('#successMessage')
+                            .text('Usuario creado exitosamente.')
+                            .removeClass('d-block')
+                            .addClass('d-none');
                     $('#errorMessage')
                         .text('Ocurrió un error al procesar la solicitud.')
                         .removeClass('d-none')
@@ -270,14 +282,23 @@ if (empty($menuesFiltrados)) {
                 data: formData,
                 success: function(response) {
                     var res = JSON.parse(response);
-                    //console.log(res);
+                    console.log(res);
                     if (res.success) {
+                        $('#errorMessageMod')
+                            .text(res.message)
+                            .removeClass('d-block')
+                            .addClass('d-none');
                         $('#successMessageMod')
                             .text(res.message)
                             .removeClass('d-none')
                             .addClass('d-block');
                         cargarUsuarios(); // Recargar la lista de usuarios
                     } else {
+                        $('#successMessageMod')
+                            .text(res.message)
+                            .removeClass('d-block')
+                            .addClass('d-none');
+                        cargarUsuarios();
                         $('#errorMessageMod')
                             .text(res.message)
                             .removeClass('d-none')
@@ -285,6 +306,10 @@ if (empty($menuesFiltrados)) {
                     }
                 },
                 error: function() {
+                    $('#successMessageMod')
+                            .text(res.message)
+                            .removeClass('d-block')
+                            .addClass('d-none');
                     $('#errorMessageMod')
                         .text('Ocurrió un error al procesar la solicitud.')
                         .removeClass('d-none')
