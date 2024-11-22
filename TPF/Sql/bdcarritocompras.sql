@@ -157,8 +157,8 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`) VALUES
 -- Volcado de datos para la tabla `usuario`
 INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
 (1, 'admin', MD5('password'), 'admin@example.com', NULL),
-(2, 'cliente1', MD5('password'), 'cliente1@example.com', NULL),
-(3, 'deposito1', MD5('password'), 'deposito1@example.com', NULL);
+(2, 'deposito1', MD5('password'), 'deposito1@example.com', NULL),
+(3, 'cliente1', MD5('password'), 'cliente1@example.com', NULL);
 
 -- Volcado de datos para la tabla `producto`
 INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`, `proprecio`, `prodeshabilitado`, `idvideoyt`) VALUES
@@ -197,19 +197,15 @@ INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`,
 
 -- Volcado de datos para la tabla `compra`
 INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`) VALUES
-(1, NOW(), 2),
-(2, NOW(), 3);
+(1, NOW(), 3);
 
 -- Volcado de datos para la tabla `compraestado`
 INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, `cefechaini`, `cefechafin`) VALUES
-(1, 1, 1, NOW(), NULL),
-(2, 2, 1, NOW(), NULL);
+(1, 1, 1, NOW(), NULL);
 
 -- Volcado de datos para la tabla `compraitem`
 INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`) VALUES
-(1, 1, 1, 2),
-(2, 2, 2, 1),
-(3, 3, 2, 5);
+(1, 1, 1, 2);
 
 -- Volcado de datos para la tabla `menurol`
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
@@ -220,5 +216,5 @@ INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
 -- Volcado de datos para la tabla `usuariorol`
 INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
 (1, 1), -- Admin
-(2, 3), -- Cliente 1
-(3, 2); -- Depósito 1
+(2, 2), -- Depósito 1
+(3, 3); -- Cliente 1
