@@ -11,8 +11,8 @@ include STRUCTURE_PATH . '/Head.php';
 
 <script>
     $(document).ready(function() {
-        // Obtener el arreglo de productos desde localStorage
-        const productosLS = JSON.parse(localStorage.getItem('productos_carrito')) || [];
+        // Obtener el arreglo de productos desde sessionStorage
+        const productosLS = JSON.parse(sessionStorage.getItem('carrito')) || [];
         // Realizar la solicitud AJAX
         $.ajax({
             url: 'Action/testcarritoAction.php', // Ruta al script PHP que genera los datos
@@ -22,21 +22,25 @@ include STRUCTURE_PATH . '/Head.php';
             success: function(response) {
                 console.log(response)
                 var htmlContent = '';
-                $.each(response, function(index, encontrado){
+                var respuestaEncontrado = false
+                $.each(response, function(index, encontrado) {
                     const prodLS = productosLS.find(p => p.idproducto === encontrado.idproducto);
                     const cantidad = prodLS ? prodLS.cicantidad : null;
                     console.log(prodLS)
-                    console.log(cantidad) 
-
+                    console.log(cantidad)
+                    if (typeof prodLS !== 'undefined') {
+                        respuestaEncontrado = true
+                    }
+                    console.log(respuestaEncontrado)
                 })
-                
+                console.log(respuestaEncontrado)
+
                 // Iterar sobre los productos y construir el HTML
                 $.each(response, function(index, producto) {
                     const prodLS = productosLS.find(p => p.idproducto === producto.idproducto);
                     const cantidad = prodLS ? prodLS.cicantidad : null;
-                    console.log(prodLS)
-                    console.log(cantidad)             
-                    htmlContent += `
+                    if (respuestaEncontrado) {
+                        htmlContent += `
                 <ul class="list-group bg-steam-lightgreen bdr-steam-nofocus p-2 my-3" style="max-height: 100px" >
                 <li class="list-group-item bg-steam-lightgreen bdr-steam-nofocus p-2 h-100">                    
                         <div class="row g-0 h-100">
@@ -61,6 +65,9 @@ include STRUCTURE_PATH . '/Head.php';
                     </li>
                 </ul>
                 `;
+                    } else {
+                        htmlContent = `<div>Carrito vacío</div>`
+                    }
                 });
                 // Insertar el HTML generado en el contenedor
                 $('#catalogo').html(htmlContent);

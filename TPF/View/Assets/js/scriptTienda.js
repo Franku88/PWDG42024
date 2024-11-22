@@ -7,10 +7,10 @@ $(document).ready(function () {
       // Crear el objeto producto con el id del producto
       const producto = { idproducto: idProducto, cicantidad: 1 };
   
-      // Levantar el carrito desde localStorage
-      const carritoAlmacenado = JSON.parse(localStorage.getItem('productos_carrito'));
+      // Levantar el carrito desde sessionStorage
+      const carritoAlmacenado = JSON.parse(sessionStorage.getItem('carrito'));
   
-      // Si el carrito existe en localStorage
+      // Si el carrito existe en sessionStorage
       let carrito = carritoAlmacenado ? carritoAlmacenado : [];
   
       // Revisar si el producto ya está en el carrito
@@ -24,11 +24,11 @@ $(document).ready(function () {
         carrito.push(producto);
       }
   
-      // Guardar el carrito actualizado en localStorage
-      localStorage.setItem('productos_carrito', JSON.stringify(carrito));
+      // Guardar el carrito actualizado en sessionStorage
+      sessionStorage.setItem('carrito', JSON.stringify(carrito));
   
       // Mostrar una alerta con el producto y su cantidad
-      alert('Producto agregado: ' + producto['idproducto'] + ' | cicantidad: ' + (productoExistente?.cantidad || 1));
+      // alert('Producto agregado: ' + producto['idproducto'] + ' | cicantidad: ' + (productoExistente?.cantidad || 1));
   
       // Llamada AJAX para procesar el carrito en el servidor
       $.ajax({
@@ -49,7 +49,7 @@ $(document).ready(function () {
   
     // Función para actualizar la cantidad de productos en el carrito
     function actualizarCantidadCarrito() {
-      const carritoAlmacenado = JSON.parse(localStorage.getItem('productos_carrito'));
+      const carritoAlmacenado = JSON.parse(sessionStorage.getItem('productos_carrito'));
       const cantidadTotal = carritoAlmacenado ? carritoAlmacenado.reduce((total, producto) => total + producto.cantidad, 0) : 0;
       $('#cantidad_carrito').text(cantidadTotal);  // Actualiza la interfaz con la cantidad total de productos
     }
@@ -59,20 +59,20 @@ $(document).ready(function () {
       // Obtener el id del producto a eliminar
       const idProducto = parseInt($(this).attr('id')); // Asumimos que el id del botón contiene el id del producto a eliminar
   
-      // Levantar el carrito desde localStorage
-      const carritoAlmacenado = JSON.parse(localStorage.getItem('productos_carrito'));
+      // Levantar el carrito desde sessionStorage
+      const carritoAlmacenado = JSON.parse(sessionStorage.getItem('carrito'));
       let carrito = carritoAlmacenado ? carritoAlmacenado : [];
   
       // Filtrar el producto a eliminar, eliminando el producto con el id correspondiente
       carrito = carrito.filter((producto) => producto.idproducto !== idProducto);
   
-      // Guardar el carrito actualizado en localStorage
-      localStorage.setItem('productos_carrito', JSON.stringify(carrito));
+      // Guardar el carrito actualizado en sessionStorage
+      sessionStorage.setItem('carrito', JSON.stringify(carrito));
   
       // Actualizar la cantidad de productos en el carrito
       actualizarCantidadCarrito();  
   
-      // Mostrar una alerta (opcional)
-      alert('Producto eliminado: ' + idProducto);
+      // // Mostrar una alerta (opcional)
+      // alert('Producto eliminado: ' + idProducto);
     });
   });
