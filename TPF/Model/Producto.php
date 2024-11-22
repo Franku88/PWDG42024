@@ -9,15 +9,17 @@ class Producto {
     private $procantstock;
     private $proprecio;
     private $prodeshabilitado;
+    private $idvideoyt;
     private $mensajeOperacion;
 
-    public function __construct($idproducto = null, $pronombre = null, $prodetalle = null, $procantstock = null, $proprecio = null, $prodeshabilitado = null) {
+    public function __construct($idproducto = null, $pronombre = null, $prodetalle = null, $procantstock = null, $proprecio = null, $prodeshabilitado = null, $idvideoyt = null) {
         $this->idproducto = $idproducto;
         $this->pronombre = $pronombre;
         $this->prodetalle = $prodetalle;
         $this->procantstock = $procantstock;
         $this->proprecio = $proprecio;
         $this->prodeshabilitado = $prodeshabilitado;
+        $this->idvideoyt = $idvideoyt;
     }
 
     // Getters
@@ -43,6 +45,10 @@ class Producto {
 
     public function getProdeshabilitado() {
         return $this->prodeshabilitado;
+    } 
+
+    public function getIdvideoyt() {
+        return $this->idvideoyt;
     }
 
     public function getMensajeOperacion() {
@@ -73,18 +79,23 @@ class Producto {
         $this->prodeshabilitado = $prodeshabilitado;
     }
 
+    public function setIdvideoyt($idvideoyt) {
+        $this->idvideoyt = $idvideoyt;
+    }
+
     public function setMensajeOperacion($mensajeOperacion) {
         $this->mensajeOperacion = $mensajeOperacion;
     }
 
     // metodos CRUD
-    public function cargarDatos($idproducto, $pronombre = null, $prodetalle = null, $procantstock = null, $proprecio = null, $prodeshabilitado = null) {
+    public function cargarDatos($idproducto, $pronombre = null, $prodetalle = null, $procantstock = null, $proprecio = null, $prodeshabilitado = null, $idvideoyt = null) {
         $this->setIdproducto($idproducto);
         $this->setPronombre($pronombre);
         $this->setProdetalle($prodetalle);
         $this->setProcantstock($procantstock);
         $this->setProprecio($proprecio);
         $this->setProdeshabilitado($prodeshabilitado);
+        $this->setIdvideoyt($idvideoyt);
     }
 
     /**
@@ -99,7 +110,7 @@ class Producto {
             $consulta = "SELECT * FROM producto WHERE idproducto = $idproducto";
             if ($bd->Ejecutar($consulta)) {
                 if ($row = $bd->Registro()) {
-                    $this->cargarDatos($idproducto, $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['proprecio'], $row['prodeshabilitado']);
+                    $this->cargarDatos($idproducto, $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['proprecio'], $row['prodeshabilitado'], $row['idvideoyt']);
                     $resultado = true;
                 }
             }
@@ -124,7 +135,7 @@ class Producto {
             if ($base->Ejecutar($consulta)) {
                 while ($row = $base->Registro()) {
                     $obj = new Producto();
-                    $obj->cargarDatos($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['proprecio'], $row['prodeshabilitado']);
+                    $obj->cargarDatos($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['proprecio'], $row['prodeshabilitado'], $row['idvideoyt']);
                     array_push($coleccion, $obj);
                 }
             } else {
@@ -155,8 +166,6 @@ class Producto {
         return $resultado;
     }
     
-    
-    
     /**
      * Modificar los datos de un producto con los que tiene el objeto actual 
      * @return boolean
@@ -177,7 +186,8 @@ class Producto {
                 prodetalle = '".$this->getProdetalle()."', 
                 procantstock = ".$this->getProcantstock().", 
                 proprecio = ".$this->getProprecio().", 
-                prodeshabilitado = ".$desha." 
+                prodeshabilitado = ".$desha.",
+                idvideoyt = '".$this->getIdvideoyt()."' 
             WHERE idproducto = ".$this->getIdproducto();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
@@ -220,7 +230,8 @@ class Producto {
             "prodetalle: ".$this->getProdetalle()."\n".
             "procantstock: ".$this->getProcantstock()."\n".
             "proprecio: ".$this->getProprecio()."\n".
-            "prodeshabilitado: ".$this->getProdeshabilitado());
+            "prodeshabilitado: ".$this->getProdeshabilitado())."\n".
+            "idvideoyt: ".$this->getIdvideoyt();
     }
 }
 ?>

@@ -29,6 +29,7 @@ if (empty($menuesFiltrados)) {
                     <th>Stock</th>
                     <th>Estado</th>
                     <th>Precio</th>
+                    <th>IDVideoYT</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -118,8 +119,8 @@ if (empty($menuesFiltrados)) {
                         // Determinar estado y el botón correspondiente
                         const estado = producto.prodeshabilitado ? 'Deshabilitado' : 'Disponible';
                         const botonEstado = producto.prodeshabilitado ?
-                            `<button class="btn btn-success btn-sm" onclick="habilitarProducto(${producto.idproducto})">Habilitar</button>` :
-                            `<button class="btn btn-warning btn-sm" onclick="deshabilitarProducto(${producto.idproducto})">Deshabilitar</button>`;
+                            `<button class="my-1 btn btn-success btn-sm" onclick="habilitarProducto(${producto.idproducto})">Habilitar</button>` :
+                            `<button class="my-1 btn btn-warning btn-sm" onclick="deshabilitarProducto(${producto.idproducto})">Deshabilitar</button>`;
 
                         tableContent += `
                 <tr id="producto-${producto.idproducto}">
@@ -129,9 +130,12 @@ if (empty($menuesFiltrados)) {
                     <td>${producto.procantstock}</td>
                     <td>${estado}</td>
                     <td>${producto.proprecio}</td>
+                    <td>${producto.idvideoyt}</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" onclick="bajaProducto(${producto.idproducto})">Eliminar</button>
-                        ${botonEstado}
+                        <div class="d-flex flex-column"> 
+                            <button class="my-1 btn btn-danger btn-sm" onclick="bajaProducto(${producto.idproducto})">Eliminar</button>
+                            ${botonEstado}
+                        </div>
                     </td>
                 </tr>
                 `;
@@ -165,15 +169,16 @@ if (empty($menuesFiltrados)) {
                 type: 'POST',
                 data: formData,
                 success: function(response) {
-                    if (response.success) {
+                    const res = JSON.parse(response);
+                    if (res.success) {
                         $('#successMessage')
-                            .text(response.message)
+                            .text(res.message)
                             .removeClass('d-none')
                             .addClass('d-block');
                         cargarProductos(); // Recargar la lista de productos
                     } else {
                         $('#errorMessage')
-                            .text(response.message)
+                            .text(res.message)
                             .removeClass('d-none')
                             .addClass('d-block');
                     }
@@ -197,11 +202,12 @@ if (empty($menuesFiltrados)) {
                         idproducto: idproducto
                     },
                     success: function(response) {
-                        if (response.success) {
-                            alert(response.message);
+                        const res = JSON.parse(response);
+                        if (res.success) {
+                            alert(res.message);
                             $('#producto-' + idproducto).remove();
                         } else {
-                            alert(response.message);
+                            alert(res.message);
                         }
                     },
                     error: function() {
@@ -221,7 +227,6 @@ if (empty($menuesFiltrados)) {
                         idproducto: idproducto 
                     },
                     success: function(response) {
-                        
                         if (response.success) {
                             alert(response.message);
                             cargarProductos(); // Recargar la lista de productos
@@ -247,7 +252,7 @@ if (empty($menuesFiltrados)) {
                         idproducto: idproducto // hay que usar si o si idproducto, claro
                     },
                     success: function(response) {
-                        if (response.success) {
+                        if (response) {
                             alert(response.message);
                             cargarProductos(); // Recargar la lista de productos tampoco
                         } else {
@@ -288,16 +293,17 @@ if (empty($menuesFiltrados)) {
                 type: 'POST',
                 data: formData,
                 success: function(response) {
+                    const res = JSON.parse(response);
                     //console.log(res);
-                    if (response.success) {
+                    if (res.success) {
                         $('#successMessageMod')
-                            .text(response.message)
+                            .text(res.message)
                             .removeClass('d-none')
                             .addClass('d-block');
                         cargarProductos(); // Recargar la lista de productos
                     } else {
                         $('#errorMessageMod')
-                            .text(response.message)
+                            .text(res.message)
                             .removeClass('d-none')
                             .addClass('d-block');
                     }

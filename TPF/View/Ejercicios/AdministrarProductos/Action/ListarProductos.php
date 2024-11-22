@@ -12,6 +12,8 @@ if (!empty($data)) {
         $nuevoElem['procantstock'] = $producto->getProcantstock();
         $nuevoElem['proprecio'] = $producto->getProprecio();
         $nuevoElem['prodeshabilitado'] = $producto->getProdeshabilitado();
+        $nuevoElem['idvideoyt'] = $producto->getIdvideoyt();
+        
         array_push($salida, $nuevoElem);
     }
 } 

@@ -15,6 +15,9 @@ if (isset($data['idproducto'])) {
         $param['prodetalle'] = $producto->getProdetalle();
         $param['procantstock'] = $producto->getProcantstock();
         $param['proprecio'] = $producto->getProprecio();
+        $param['idvideoyt'] = $producto->getIdvideoyt();
+        
+        
         $datetime = new DateTime('now');
         $datetime->setTime(0, 0, 0); // Hora: 00:11:12
         $param['prodeshabilitado'] = $datetime->format('Y-m-d H:i:s'); 

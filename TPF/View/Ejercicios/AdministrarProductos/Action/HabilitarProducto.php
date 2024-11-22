@@ -17,6 +17,12 @@ if (isset($data['idproducto'])) {
         $param['proprecio'] = $producto->getProprecio();
         $param['prodeshabilitado'] = null;
 
+        if(isset($data['idvideoyt'])) {
+            $param['idvideoyt'] = $data['idvideoyt'];
+        } else {
+            $param['idvideoyt'] = $producto->getIdvideoyt();
+        }
+
 
         $modificacion = (new ABMProducto())->modificacion($param);
 

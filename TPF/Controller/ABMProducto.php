@@ -5,11 +5,11 @@ Class ABMProducto
     private function cargarObjeto($param)
     {
         $obj = null;
-        if (array_key_exists('proprecio', $param) && array_key_exists('pronombre', $param) && array_key_exists('prodetalle', $param) && array_key_exists('procantstock', $param)) {
+        if (array_key_exists('proprecio', $param) && array_key_exists('pronombre', $param) && array_key_exists('prodetalle', $param) && array_key_exists('procantstock', $param) && array_key_exists('idvideoyt', $param)) {
             $idproducto = array_key_exists('idproducto', $param) ? $param['idproducto'] : null;
             $prodeshabilitado = array_key_exists('prodeshabilitado', $param) ? $param['prodeshabilitado'] : null;
             $obj = new Producto();
-            $obj->cargarDatos($idproducto, $param['pronombre'], $param['prodetalle'], $param['procantstock'], $param['proprecio'], $prodeshabilitado);
+            $obj->cargarDatos($idproducto, $param['pronombre'], $param['prodetalle'], $param['procantstock'], $param['proprecio'], $prodeshabilitado, $param['idvideoyt']);
         }
     
         return $obj;
@@ -108,6 +108,8 @@ Class ABMProducto
                 $where .= " and procantstock >=" . $param['procantstock'];
             if (isset($param['deshabilitado']))
                 $where .= " and prodeshabilitado ='" . $param['prodeshabilitado'] . "'";
+            if (isset($param['idvideoyt']))
+                $where .= " and idvideoyt = '" . $param['idvideoyt'] . "'";
 
         }
         $arreglo = (new Producto())->listar($where);
