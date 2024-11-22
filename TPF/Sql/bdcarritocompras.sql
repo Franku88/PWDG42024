@@ -147,11 +147,11 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`) VALUES
 (1, 'Administrador', '#', NULL),
 (2, 'Deposito', '#', NULL),
 (3, 'Cliente', '#', NULL),
-(4, 'Administrar Usuarios', 'administrarUsuarios', 1),
-(5, 'Administrar Productos', 'administrarProductos', 2),
-(6, 'Administrar Compras', 'administrarCompras', 2),
-(7, 'Carrito', 'carrito', 3),
-(8, 'Mis Compras', 'misCompras', 3);
+(4, 'Administrar Usuarios', 'AdministrarUsuarios', 1),
+(5, 'Administrar Productos', 'AdministrarProductos', 2),
+(6, 'Administrar Compras', 'AdministrarCompras', 2),
+(7, 'Carrito', 'Carrito', 3),
+(8, 'Mis Compras', 'MisCompras', 3);
 -- --------------------------------------------------------
 
 -- Volcado de datos para la tabla `usuario`
