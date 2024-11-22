@@ -17,6 +17,8 @@
             $hijos = (new ABMMenu())->buscar(['padre' => $menu]);
             $menues = array_merge($menues, $hijos);
         }
+    } else {
+        $usuarioRolId = 0;
     }
 
     // if ($usuarioRolId == 3) { //Si es cliente (idrol = 3)
