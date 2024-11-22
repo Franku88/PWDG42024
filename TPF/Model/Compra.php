@@ -118,8 +118,8 @@ class Compra {
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "INSERT INTO compra(idusuario) VALUES
-            (".($this->getObjUsuario())->getIdusuario().")";
+            $consulta = "INSERT INTO compra(idusuario, cofecha) VALUES
+            (".($this->getObjUsuario())->getIdusuario().", '".$this->getCofecha()."')";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {

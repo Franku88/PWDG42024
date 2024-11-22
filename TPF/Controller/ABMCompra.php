@@ -105,13 +105,13 @@ class ABMCompra {
         $where = " true ";
         if ($param != null) {
             if (isset($param['idcompra'])) {
-                $where .= " AND idcompra = '".$param['idcompra']."'";
+                $where .= " AND idcompra = ".$param['idcompra'];
             }
             if (isset($param['cofecha'])) {
                 $where .= " AND cofecha = '".$param['cofecha']."'";
             }
             if (isset($param['usuario'])) {
-                $where .= " AND idusuario = '".($param['usuario'])->getIdusuario()."'";
+                $where .= " AND idusuario = ".($param['usuario'])->getIdusuario();
             }
         }
         $arreglo = (new Compra())->listar($where);

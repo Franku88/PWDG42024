@@ -114,10 +114,20 @@ class ABMCompraEstado {
                 $where .= " AND idcompraestadotipo = ".$param['objCompraEstadoTipo']->getIdcompraestadotipo();
             }
             if (isset($param['cefechaini'])) {
-                $where .= " AND cefechaini = ".$param['cefechaini'];
+                if ($param['cefechaini'] == null) {
+                    $fecha = 'null';
+                } else {
+                    $fecha = "'".$param['cefechaini']."'";
+                }
+                $where .= " AND cefechaini = ".$fecha;
             }
             if (isset($param['cefechafin'])) {
-                $where .= " AND cefechafin = ".$param['cefechafin'];
+                if ($param['cefechafin'] == null) {
+                    $fecha = 'null';
+                } else {
+                    $fecha = "'".$param['cefechaini']."'";
+                }
+                $where .= " AND cefechafin = ".$fecha;
             }
         }
         $arreglo = (new CompraEstado())->listar($where);

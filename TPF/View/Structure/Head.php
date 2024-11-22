@@ -6,6 +6,49 @@
     } else {
         $usuarioRolId = 0;
     }
+
+    if ($usuarioRolId == 3) { //Si es cliente (idrol = 3)
+        $usuario = $session->getUsuario();
+
+        $compras = (new ABMCompra())->buscar(['usuario'=> $usuario]);
+        $compraEstados = (new ABMCompraEstado)->buscar(['idcompraestadotipo' => 1, 'cefechafin' => null]); //Toda compraEstado de la bd
+        
+        $i = 0;
+        $j = 0;
+        $encontrado = false;
+        $compraEstado = null;
+        while (!$encontrado && ($i < count($compraEstados))) {
+            while (!$encontrado && ($j < count($compras))) {
+                $encontrado = ($compraEstados[$i]->getObjCompra()->getIdcompra()) == ($compras[$j]->getIdcompra());
+                if ($encontrado) {
+                    $compraEstado = $compraEstados[$i];
+                }
+                $j++;
+            }
+            $j = 0;
+            $i++;
+        }
+        
+        if ($compraEstado == null) {
+            $param1['cofecha'] = (new DateTime('now'))->setTime(0, 0, 0)->format('Y-m-d H:i:s');
+            $param1['usuario'] = $session->getUsuario();
+            $altaCompra = (new ABMCompra())->alta($param1);
+
+            if ($altaCompra) {
+                $compras = (new ABMCompra)->buscar(['usuario'=> $param1['usuario'], 'cofecha' => $param1['cofecha']]);
+                $compraEstadoTipos = (new ABMCompraEstadoTipo())->buscar(['idcompraestadotipo'=> 1]);
+
+                $altaCompraEstado = (new ABMCompraEstado())->alta([
+                    'objCompra'=> $compras[0], 
+                    'objCompraEstadoTipo'=> $compraEstadoTipos[0], 
+                    'cefechaini' => $compras[0]->getCofecha()]
+                );
+
+                $compraEstado = (new ABMCompraEstado)->buscar(['objCompra'=> $compras[0], 'idcompraestadotipo' => 1, 'cefechafin' => null]); //Toda compraEstado de la bd
+            }
+        }
+        
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
