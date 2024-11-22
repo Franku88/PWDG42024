@@ -7,7 +7,7 @@ $productos = $abmProducto->buscar();
 $roles = ($session)->getRol();
 $esCliente = false;
 if (!empty($roles)) { //Si tiene roles
-    $rolesFiltrados = (array_filter($roles, function($cadaRol) { 
+    $rolesFiltrados = (array_filter($roles, function ($cadaRol) {
         return $cadaRol->getRodescripcion() == 'Cliente'; //filtra array para que tenga solo los que cumplan la condicion
     }));
     $esCliente = !empty($rolesFiltrados); // Si no esta vacio, entonces encontro un rol Cliente
@@ -22,7 +22,7 @@ if (!empty($roles)) { //Si tiene roles
 </div>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
         // Realizar la solicitud AJAX
         $.ajax({
             url: 'Action/ListarProductos.php', // Ruta al script PHP que genera los datos
@@ -53,8 +53,9 @@ if (!empty($roles)) { //Si tiene roles
                             <div class="bg-steam-lightgreen bdr-steam-nofocus  text-center p-2">
                                 <a href='../Producto/Producto.php?idproducto=${producto.idproducto}' class='btn btn-primary btn-steam'>Ver detalles</a>
                                 
-                                <?php if ($usuarioRolId == 3) { //Inserta estos botones si el usuario es un cliente idrol = 3?> 
-                                    <button class="btn btn-primary btn-steam" onclick="agregarAlCarrito(${producto.idproducto})" id="${producto.idproducto}">Agregar al carro</button>
+                                <?php if ($usuarioRolId == 3) { //Inserta estos botones si el usuario es un cliente idrol = 3
+                                ?> 
+                                    <button class="btn btn-primary btn-steam boton_agregar" id="${producto.idproducto}">Agregar al carro</button>
                                 <?php } ?>
 
                             </div>
