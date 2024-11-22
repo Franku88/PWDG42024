@@ -15,7 +15,7 @@ if (isset($data['idproducto'])) {
         $param['prodetalle'] = $producto->getProdetalle();
         $param['procantstock'] = $producto->getProcantstock();
         $param['proprecio'] = $producto->getProprecio();
-        $param['prodeshabilitado'] = null; // dale
+        $param['prodeshabilitado'] = null;
 
 
         $modificacion = (new ABMProducto())->modificacion($param);

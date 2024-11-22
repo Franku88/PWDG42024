@@ -165,14 +165,19 @@ class Producto {
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $desha = $this->getProdeshabilitado() == null ? NULL : "'".$this->getProdeshabilitado()."'";
 
+            if ($this->getProdeshabilitado() == null) {
+                $desha = 'null';
+            } else {
+                $desha = "'".$this->getProdeshabilitado()."'";
+            }
+            
             $consulta = "UPDATE producto 
             SET pronombre = '".$this->getPronombre()."', 
                 prodetalle = '".$this->getProdetalle()."', 
-                procantstock = ".$this->getProcantstock().",
-                proprecio = ".$this->getProprecio().",
-                prodeshabilitado = ".$desha."
+                procantstock = ".$this->getProcantstock().", 
+                proprecio = ".$this->getProprecio().", 
+                prodeshabilitado = ".$desha." 
             WHERE idproducto = ".$this->getIdproducto();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;

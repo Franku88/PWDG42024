@@ -165,16 +165,15 @@ if (empty($menuesFiltrados)) {
                 type: 'POST',
                 data: formData,
                 success: function(response) {
-                    const res = JSON.parse(response);
-                    if (res.success) {
+                    if (response.success) {
                         $('#successMessage')
-                            .text(res.message)
+                            .text(response.message)
                             .removeClass('d-none')
                             .addClass('d-block');
                         cargarProductos(); // Recargar la lista de productos
                     } else {
                         $('#errorMessage')
-                            .text(res.message)
+                            .text(response.message)
                             .removeClass('d-none')
                             .addClass('d-block');
                     }
@@ -198,12 +197,11 @@ if (empty($menuesFiltrados)) {
                         idproducto: idproducto
                     },
                     success: function(response) {
-                        const res = JSON.parse(response);
-                        if (res.success) {
-                            alert(res.message);
+                        if (response.success) {
+                            alert(response.message);
                             $('#producto-' + idproducto).remove();
                         } else {
-                            alert(res.message);
+                            alert(response.message);
                         }
                     },
                     error: function() {
@@ -218,16 +216,17 @@ if (empty($menuesFiltrados)) {
                 $.ajax({
                     url: 'Action/DeshabilitarProducto.php',
                     type: 'POST',
+                    dataType: 'json',
                     data: {
                         idproducto: idproducto 
                     },
                     success: function(response) {
-                        const res = JSON.parse(response);
-                        if (res.success) {
-                            alert(res.message);
+                        
+                        if (response.success) {
+                            alert(response.message);
                             cargarProductos(); // Recargar la lista de productos
                         } else {
-                            alert(res.message);
+                            alert(response.message);
                         }
                     },
                     error: function() {
@@ -239,22 +238,20 @@ if (empty($menuesFiltrados)) {
         }
         // habilitado de producto
         window.habilitarProducto = function(idproducto) {
-            var id = idproducto;
             if (confirm('¿Está seguro que desea habilitar el producto?')) {
                 $.ajax({
                     url: 'Action/HabilitarProducto.php',
                     type: 'POST',
+                    dataType: 'json',
                     data: {
-                        idproducto: id // hay que usar si o si idproducto, claro
+                        idproducto: idproducto // hay que usar si o si idproducto, claro
                     },
-                    
                     success: function(response) {
-                        const res = JSON.parse(response);
-                        if (res.success) {
-                            alert(res.message);
+                        if (response.success) {
+                            alert(response.message);
                             cargarProductos(); // Recargar la lista de productos tampoco
                         } else {
-                            alert(res.message);
+                            alert(response.message);
                         }
                     },
                     error: function() {
@@ -291,17 +288,16 @@ if (empty($menuesFiltrados)) {
                 type: 'POST',
                 data: formData,
                 success: function(response) {
-                    const res = JSON.parse(response);
                     //console.log(res);
-                    if (res) {
+                    if (response.success) {
                         $('#successMessageMod')
-                            .text(res.message)
+                            .text(response.message)
                             .removeClass('d-none')
                             .addClass('d-block');
                         cargarProductos(); // Recargar la lista de productos
                     } else {
                         $('#errorMessageMod')
-                            .text(res.message)
+                            .text(response.message)
                             .removeClass('d-none')
                             .addClass('d-block');
                     }
