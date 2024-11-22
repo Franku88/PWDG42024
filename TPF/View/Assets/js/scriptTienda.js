@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // Función que realiza la llamada AJAX para agregar el producto al carrito
-    $('.boton_agregar').on('click', function () {
+    $(document).on('click', '.boton_agregar', function() {
       // Obtener el id del botón clickeado (id del producto)
       const idProducto = parseInt($(this).attr('id'));
       
