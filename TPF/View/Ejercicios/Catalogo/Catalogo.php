@@ -35,8 +35,8 @@ if (!empty($roles)) { //Si tiene roles
                 // Iterar sobre los productos y construir el HTML
                 $.each(response, function(index, producto) {
                     htmlContent += `
-                    <div class="d-flex p-3 my-3 mx-auto">
-                        <div class="h-100 shadow-sm">
+                    <div class="d-flex w-100">
+                        <div class="h-100 w-100 shadow-sm d-flex">
                             <!-- Product Details -->
                             <div class='card-body bg-steam-darkgreen bdr-steam-focus d-flex'>
                                 <div class='align-self-center bdr-steam-nofocus m-1 p-1'>
@@ -45,19 +45,22 @@ if (!empty($roles)) { //Si tiene roles
                                 </div>
 
                                 <div class='d-flex flex-column justify-content-center items-center mx-5'>
-                                    <h5 class='card-title'> ${producto.pronombre} </h5>
+                                    <h5 class='card-title'> <a href='../Producto/Producto.php?idproducto=${producto.idproducto}'> ${producto.pronombre}</a> </h5>
                                     <p class='card-text'> Precio: $ ${producto.proprecio} </p>
                                 </div>
                             </div>
                             <!-- Product Actions -->
-                            <div class="bg-steam-lightgreen bdr-steam-nofocus  text-center p-2">
-                                <a href='../Producto/Producto.php?idproducto=${producto.idproducto}' class='btn btn-primary btn-steam'>Ver detalles</a>
-                                
-                                <?php if ($usuarioRolId == 3) { //Inserta estos botones si el usuario es un cliente idrol = 3
-                                ?> 
-                                    <button class="btn btn-primary btn-steam boton_agregar" id="${producto.idproducto}">Agregar al carro</button>
-                                <?php } ?>
-
+                            <div class='d-flex bg-steam-lightgreen bdr-steam-nofocus'>
+                                <div class="d-flex flex-column m-auto center text-center p-2">
+                                    <div>
+                                        <a class='btn btn-primary btn-steam w-100' href='../Producto/Producto.php?idproducto=${producto.idproducto}'>Ver detalles</a>
+                                    </div>
+                                    <div>
+                                        <?php if ($usuarioRolId == 3) { //Inserta estos botones si el usuario es un cliente idrol = 3 ?> 
+                                            <button class="btn btn-primary btn-steam boton_agregar w-100" id="${producto.idproducto}">Agregar al carro</button>
+                                        <?php } ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>`;
