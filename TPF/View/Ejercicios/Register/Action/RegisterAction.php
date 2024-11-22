@@ -1,5 +1,5 @@
 <?php
-include_once '../../../configuracion.php';
+include_once '../../../../configuracion.php';
 $roles = (new ABMRol())->buscar(['idrol' => 3]); // Devuelve el objRol de Cliente
 $abmUsuario = new ABMUsuario();
 $data = Funciones::data_submitted();

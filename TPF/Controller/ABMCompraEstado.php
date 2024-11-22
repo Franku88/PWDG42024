@@ -11,10 +11,11 @@ class ABMCompraEstado {
 
     private function cargarObjeto($param) {
         $obj = null;
-        if (array_key_exists('objCompra' , $param) && array_key_exists('objCompraEstadoTipo' , $param) && array_key_exists('cefechaini' , $param) && array_key_exists('cefechafin' , $param)) {
+        if (array_key_exists('objCompra' , $param) && array_key_exists('objCompraEstadoTipo' , $param) && array_key_exists('cefechaini' , $param)) {
             $idcompraestado = array_key_exists('idcompraestado', $param) ? $param['idcompraestado'] : null;
+            $cefechafin = array_key_exists('cefechafin' , $param) ? $param['cefechafin'] : null;
             $obj = new CompraEstado();
-            $obj->cargarDatos($idcompraestado, $param['objCompra'], $param['objCompraEstadoTipo'], $param['cefechaini'], $param['cefechafin']);
+            $obj->cargarDatos($idcompraestado, $param['objCompra'], $param['objCompraEstadoTipo'], $param['cefechaini'], $cefechafin);
         }
         return $obj;
     }
@@ -104,19 +105,19 @@ class ABMCompraEstado {
         $where = " true ";
         if ($param != null) {
             if (isset($param['idcompraestado'])) {
-                $where .= " and idcompraestado = ".$param['idcompraestado'];
+                $where .= " AND idcompraestado = ".$param['idcompraestado'];
             }
-            if (isset($param['idcompra'])) {
-                $where .= " and idcompra = ".$param['idcompra'];
+            if (isset($param['objCompra'])) {
+                $where .= " AND idcompra = ".$param['objCompra']->getIdcompra();
             }
-            if (isset($param['idcompraestadotipo'])) {
-                $where .= " and idcompraestadotipo = ".$param['idcompraestadotipo'];
+            if (isset($param['objCompraEstadoTipo'])) {
+                $where .= " AND idcompraestadotipo = ".$param['objCompraEstadoTipo']->getIdcompraestadotipo();
             }
             if (isset($param['cefechaini'])) {
-                $where .= " and cefechaini = ".$param['cefechaini'];
+                $where .= " AND cefechaini = ".$param['cefechaini'];
             }
             if (isset($param['cefechafin'])) {
-                $where .= " and cefechafin = ".$param['cefechafin'];
+                $where .= " AND cefechafin = ".$param['cefechafin'];
             }
         }
         $arreglo = (new CompraEstado())->listar($where);

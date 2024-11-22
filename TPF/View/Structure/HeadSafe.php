@@ -18,6 +18,50 @@
             $menues = array_merge($menues, $hijos);
         }
     }
+
+    // if ($usuarioRolId == 3) { //Si es cliente (idrol = 3)
+    //     $usuario = $session->getUsuario();
+
+    //     $compras = (new ABMCompra())->buscar(['usuario'=> $usuario]);
+    //     $compraEstados = (new ABMCompraEstado)->buscar(['idcompraestadotipo' => 1, 'cefechafin' => null]); //Toda compraEstado de la bd
+        
+    //     $i = 0;
+    //     $j = 0;
+    //     $encontrado = false;
+    //     $compraEstado = null;
+    //     while (!$encontrado && $i < count($compraEstados)) {
+    //         while (!$encontrado && $j < count($compras)) {
+    //             $encontrado = ($compraEstados[$i]->getObjCompra()->getIdcompra()) == $compras[$j]->getIdcompra();
+    //             if ($encontrado) {
+    //                 $compraEstado = $compraEstados[$i];
+    //             }
+    //             $j++;
+    //         }
+    //         $i++;
+    //     }
+        
+    //     if ($compraEstado == null) {
+    //         $param1['cofecha'] = (new DateTime('now'))->setTime(0, 0, 0)->format('Y-m-d H:i:s');
+    //         $param1['usuario'] = $session->getUsuario();
+    //         $altaCompra = (new ABMCompra())->alta($param1);
+
+    //         if ($altaCompra) {
+    //             $compras = (new ABMCompra)->buscar(['usuario'=> $param1['usuario'], 'cofecha' => $param1['cofecha']]);
+    //             $compraEstadoTipos = (new ABMCompraEstadoTipo())->buscar(['idcompraestadotipo'=> 1]);
+
+    //             $altaCompraEstado = (new ABMCompraEstado())->alta([
+    //                 'objCompra'=> $compras[0], 
+    //                 'objCompraEstadoTipo'=> $compraEstadoTipos[0], 
+    //                 'cefechaini' => $compras[0]->getCofecha()]
+    //             );
+
+    //             $compraEstado = (new ABMCompraEstado)->buscar(['objCompra'=> $compras[0], 'idcompraestadotipo' => 1, 'cefechafin' => null]); //Toda compraEstado de la bd
+    //         }
+    //     } 
+        
+    // } 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -54,15 +98,6 @@
     <!-- js-md5 -->
     <script src="<?php echo BASE_URL; ?>/View/Assets/js/md5.min.js"></script>
 
-    <script> //Crea carrito en sessionStorage si fuese el caso (usuario es Cliente idrol=3)
-        $(document).ready(function(){
-            if (<?php echo $usuarioRolId?> == 3) { //Si es cliente (idrol = 3)
-                if (!sessionStorage.getItem('carrito')) {
-                    sessionStorage.setItem('carrito', JSON.stringify(['PRUEBA']));
-                }
-            }
-        });
-    </script>
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-steam-darkgreen"> <!-- Comienza body !-->
@@ -91,6 +126,7 @@
 
                 <?php if ($usuarioRolId == 3) { ?>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Carrito/Carrito.php">Carrito</a>
+                    <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/MisCompras/MisCompras.php">Mis Compras</a>
                 <?php } ?>
             </div>
 

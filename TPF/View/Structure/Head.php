@@ -79,6 +79,7 @@
 
                 <?php if ($usuarioRolId == 3) { ?>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Carrito/Carrito.php">Carrito</a>
+                    <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/MisCompras/MisCompras.php">Mis Compras</a>
                 <?php } ?>
             </div>
 
