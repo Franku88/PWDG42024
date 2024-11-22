@@ -42,7 +42,7 @@
         }
         
         if ($compraEstado == null) {
-            $param1['cofecha'] = (new DateTime('now'))->setTime(0, 0, 0)->format('Y-m-d H:i:s');
+            $param1['cofecha'] = (new DateTime('now', (new DateTimeZone('-03:00'))))->format('Y-m-d H:i:s');
             $param1['usuario'] = $session->getUsuario();
             $altaCompra = (new ABMCompra())->alta($param1);
 
@@ -111,7 +111,7 @@
 <body class="d-flex flex-column min-vh-100 bg-steam-darkgreen"> <!-- Comienza body saludos YT!-->
     <header>
         <!-- Barra de navegación -->
-        <nav class="navbar navbar-expand-sm bg-steam-lightgreen bdr-steam-nofocus justify-content-between" id="navbar">
+        <nav class="navbar navbar-expand-sm bg-steam-lightgreen bdr-steam-nofocus justify-content-between">
             <div class="d-flex text-center mx-1 ">
                 <img src="<?php echo(BASE_URL);?>/View/Media/Site/logo.png" height="50" width="50"> </img>
             
@@ -120,7 +120,10 @@
                 </div>
             </div>
             
-            <div class="mx-3">
+
+            
+            <div class="mx-3" id="menuDiv">
+                <?php ?>
                 <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Catalogo/Catalogo.php"> Catalogo </a>
                 
                 <?php if ($usuarioRolId == 1) { ?>
@@ -155,7 +158,7 @@
         // $(document).ready(function() {
         //     Realizar la solicitud AJAX
         //     $.ajax({
-        //         url: 'Action.php', // Ruta al script PHP que genera los datos
+        //         url: 'Action/ListarMenues.php', // Ruta al script PHP que genera los datos
         //         method: 'POST',
         //         data: 'todo',
         //         dataType: 'json',

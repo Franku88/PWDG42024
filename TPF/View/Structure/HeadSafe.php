@@ -43,7 +43,7 @@
         }
         
         if ($compraEstado == null) {
-            $param1['cofecha'] = (new DateTime('now'))->setTime(0, 0, 0)->format('Y-m-d H:i:s');
+            $param1['cofecha'] = (new DateTime('now', (new DateTimeZone('-03:00'))))->format('Y-m-d H:i:s');
             $param1['usuario'] = $session->getUsuario();
             $altaCompra = (new ABMCompra())->alta($param1);
 
