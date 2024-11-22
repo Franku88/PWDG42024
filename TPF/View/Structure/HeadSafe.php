@@ -69,8 +69,12 @@
     <header>
         <!-- Barra de navegación -->
         <nav class="navbar navbar-expand-sm bg-steam-lightgreen bdr-steam-nofocus justify-content-between">
-            <div class="mx-2 my-1">
-                <a class="btn btn-primary btn-steam3 mx-2" href="<?php echo BASE_URL; ?>/index.php">Inicio</a> <!-- Index button -->
+            <div class="d-flex text-center mx-1 ">
+                <img src="<?php echo(BASE_URL);?>/View/Media/Site/logo.png" height="50" width="50"> </img>
+            
+                <div class="mx-2 my-1">
+                    <a class="btn btn-primary btn-steam3 mx-2" href="<?php echo BASE_URL; ?>/index.php">Inicio</a> <!-- Index button -->
+                </div>
             </div>
             
             <div class="mx-3">
