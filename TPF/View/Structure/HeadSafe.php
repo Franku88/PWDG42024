@@ -2,13 +2,12 @@
     //Verificacion de sesion valida (para mostrar pagina segura)
     $session = new Session();
     $sessionValida = $session->validar();
+    $menues = []; //Array con menues permitidos para dicho rol
     if ($sessionValida) {
         $objRol = $session->getRol()[0];
         $usuarioRolId = $objRol->getIdrol();
         
         $menuRoles = (new ABMMenuRol())->buscar(['rol'=> $objRol]); // [objMenuRol($objmenu, $objrol),objMenuRol($objmenu2, $objrol),...]
-
-        $menues = []; //Array con menues permitidos para dicho rol
         foreach($menuRoles as $menuRol) {
             array_push($menues, ($menuRol->getObjMenu()));
         }

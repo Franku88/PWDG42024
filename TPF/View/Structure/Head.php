@@ -1,8 +1,20 @@
 <?php
     $session = new Session();
     $sessionValida = $session->validar();
+    $menues = []; //Array con menues permitidos para dicho rol
     if ($sessionValida) {
-        $usuarioRolId = $session->getRol()[0]->getIdrol();
+        $objRol = $session->getRol()[0];
+        $usuarioRolId = $objRol->getIdrol();
+        
+        $menuRoles = (new ABMMenuRol())->buscar(['rol'=> $objRol]); // [objMenuRol($objmenu, $objrol),objMenuRol($objmenu2, $objrol),...]
+
+        foreach($menuRoles as $menuRol) {
+            array_push($menues, ($menuRol->getObjMenu()));
+        }
+        foreach($menues as $menu) { //Busca menues hijos y los agrega al array de menues
+            $hijos = (new ABMMenu())->buscar(['padre' => $menu]);
+            $menues = array_merge($menues, $hijos);
+        }
     } else {
         $usuarioRolId = 0;
     }
@@ -99,7 +111,7 @@
 <body class="d-flex flex-column min-vh-100 bg-steam-darkgreen"> <!-- Comienza body saludos YT!-->
     <header>
         <!-- Barra de navegación -->
-        <nav class="navbar navbar-expand-sm bg-steam-lightgreen bdr-steam-nofocus justify-content-between">
+        <nav class="navbar navbar-expand-sm bg-steam-lightgreen bdr-steam-nofocus justify-content-between" id="navbar">
             <div class="d-flex text-center mx-1 ">
                 <img src="<?php echo(BASE_URL);?>/View/Media/Site/logo.png" height="50" width="50"> </img>
             
@@ -138,3 +150,29 @@
             
         </nav>
     </header>
+
+    <script>
+        // $(document).ready(function() {
+        //     Realizar la solicitud AJAX
+        //     $.ajax({
+        //         url: 'Action/ListarNavbar.php', // Ruta al script PHP que genera los datos
+        //         method: 'POST',
+        //         data: 'todo',
+        //         dataType: 'json',
+        //         success: function(response) {
+        //             console.log(response);
+        //             var htmlContent = '';
+        //             Iterar sobre los productos y construir el HTML
+        //             $.each(response, function(index, producto) {
+        //                 htmlContent += `
+        //                 `;
+        //             });
+        //             Insertar el HTML generado en el contenedor
+        //             $('#catalogo').html(htmlContent);
+        //         },
+        //         error: function() {
+        //             alert('Error al cargar el catálogo.');
+        //         }
+        //     });
+        // });
+    </script>
