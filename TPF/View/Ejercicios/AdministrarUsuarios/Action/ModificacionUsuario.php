@@ -5,34 +5,48 @@ $data = Funciones::data_submitted();  // Obtener los datos enviados
 // Verificar que todos los campos necesarios están presentes
 if (isset($data['usuarioID'])) {
     // buscar el usuario
-    $usuarios = (new ABMProducto())->buscar(['idproducto' => $data['usuarioID']]);
+    $usuarios = (new ABMUsuario())->buscar(['idusuario' => $data['usuarioID']]);
     
     if (!empty($usuarios)) {
         $usuario = $usuarios[0];
-        $param['idusuario'] = $usuario->getIdproducto();
+        $param['idusuario'] = $usuario->getIdusuario();
         if (isset($data['modNombre'])) {
             $param['usnombre'] = $data['modNombre'];
         } else {
-            $param['usnombre'] = $usuario->getUsNombre();
+            $param['usnombre'] = $usuario->getUsnombre();
         }
         if (isset($data['modEmail'])) {
             $param['usmail'] = $data['modEmail'];
         } else {
-            $param['usmail'] = $usuario->getUsMail();
+            $param['usmail'] = $usuario->getUsmail();
         }
-        // 1.deberiamos tener construido el usuario con idusuario, usnombre, usmail a actualizar
-        // 2.actualizar el idrol de la tabla usuarioRol con el rol seleccionado
-        $abmUsuarioRol = new ABMUsuarioRol();
-        $abmRol = new ABMRol();
-        // 3. buscar el objRol  con el nombre del rol seleccionado
-        $rol = $abmRol->buscar(['rodescripcion' => $data['rol']]);
-        // 3. actualizar el usuarioRol utilizando el objUsuario y el objRol
-        $modificacionUsuarioRol = $abmUsuarioRol->modificacion(['usuario' => $usuario, 'rol' => $rol[0]]);
+        if (isset($data['modPass'])) {
+            $param['uspass'] = $data['modPass'];
+        } else {
+            $param['uspass'] = $usuario->getUspass();
+        }
+        if (isset($data['modUsdeshabilitado'])) {
+            $param['usdeshabilitado'] = $data['modUsdeshabilitado'];
+        } else {
+            $param['usdeshabilitado'] = $usuario->getUsdeshabilitado();
+        }
+
+        $subaRol = true;
+        $bajaRol = true;
+        if (isset($data['modRol'])) {
+            $roles = (new ABMRol())->buscar(['rodescripcion' => $data['modRol']]);
+            $usuarioRoles = (new ABMUsuarioRol())->buscar(['usuario' => $usuario]);
+
+            $subaRol = (new ABMUsuarioRol())->alta(['usuario' => $usuario, 'rol' => $roles[0]]); //Sube nuevo rol
+            $bajaRol = (new ABMUsuarioRol())->baja(['usuario' => $usuario, 'rol' => $usuarioRoles[0]->getObjRol()]); //Baja rol anterior
+        }
+
+        $modificacion = (new ABMUsuario())->modificacion($param); //Modifica otros datos
         
-        if ($modificacion) {
+        if ($modificacion && $subaRol && $bajaRol) {
             echo json_encode(['success' => true, 'message' => 'usuario modificado exitosamente.']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Error al modificar el producto.']);
+            echo json_encode(['success' => false, 'message' => 'Error al modificar el producto.', 'datos' => $data]);
         }
     } else {
         echo json_encode(['success' => false, 'message' => 'Producto no encontrado.']);

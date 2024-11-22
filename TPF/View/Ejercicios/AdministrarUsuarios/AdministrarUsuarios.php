@@ -18,7 +18,7 @@ if (empty($menuesFiltrados)) {
 <div class="d-flex justify-content-center align-items-start gap-3">
 
     <!-- Tabla de Usuarios -->
-    <div class="mt-5" style="max-width: 45%; padding: 20px;">
+    <div class="mt-5" style="max-width: 65%; padding: 20px;">
         <h1>Administrar Usuarios</h1>
         <table class="table table-bordered table-striped" id="usuariosTable" style="width: 100%;">
             <thead class="thead-dark">
@@ -186,7 +186,7 @@ if (empty($menuesFiltrados)) {
                     },
                     dataType: 'json',
                     success: function(response) {
-                        if (response.success) {
+                        if (response) {
                             alert(response.message);
                             // Eliminar la fila de la tabla
                             $('#usuario-' + id).remove();
@@ -263,13 +263,14 @@ if (empty($menuesFiltrados)) {
                 formData['modRol'] = $('#modRol').val();
             }
 
+            console.log(formData);
             $.ajax({
                 url: 'Action/ModificacionUsuario.php',
                 type: 'POST',
                 data: formData,
                 success: function(response) {
-                    const res = JSON.parse(response);
-                    console.log(res);
+                    var res = JSON.parse(response);
+                    //console.log(res);
                     if (res.success) {
                         $('#successMessageMod')
                             .text(res.message)

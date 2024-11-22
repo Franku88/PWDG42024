@@ -155,11 +155,17 @@ class Usuario {
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
+            if ($this->getUsdeshabilitado() == null) {
+                $desha = 'null';
+            } else {
+                $desha = "'".$this->getUsdeshabilitado()."'";
+            }
+            
             $consulta = "UPDATE usuario 
                          SET usnombre = '".$this->getUsnombre()."', 
                              uspass = '".$this->getUspass()."', 
                              usmail = '".$this->getUsmail()."', 
-                             usdeshabilitado = '".$this->getUsdeshabilitado()."'
+                             usdeshabilitado = ".$desha."
                          WHERE idusuario = ".$this->getIdusuario();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
