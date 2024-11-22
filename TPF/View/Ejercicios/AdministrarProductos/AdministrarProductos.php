@@ -59,6 +59,10 @@ if (empty($menuesFiltrados)) {
                 <label for="precioAlta" class="text-white">Precio</label>
                 <input type="number" class="form-control" id="precioAlta" name="precioAlta" required>
             </div>
+            <div class="form-group">
+                <label for="idvideoytAlta" class="text-white">Id Youtube</label>
+                <input type="text" class="form-control" id="idvideoytAlta" name="idvideoytAlta" default="dQw4w9WgXcQ">
+            </div>
 
             <button type="submit" class="btn btn-success mt-3">Crear producto</button>
         </form>
@@ -74,7 +78,7 @@ if (empty($menuesFiltrados)) {
         <form id="modificarProductoForm">
             <div class="form-group">
                 <label for="idproducto" class="text-white">Id</label>
-                <input type="number" class="form-control" id="idproducto" name="idproducto">
+                <input type="number" class="form-control" id="idproducto" name="idproducto" required>
             </div>
             <div class="form-group">
                 <label for="nombre" class="text-white">Nombre</label>
@@ -91,6 +95,10 @@ if (empty($menuesFiltrados)) {
             <div class="form-group">
                 <label for="precio" class="text-white">Precio</label>
                 <input type="number" class="form-control" id="precio" name="precio">
+            </div>
+            <div class="form-group">
+                <label for="idvideoyt" class="text-white">Id Youtube</label>
+                <input type="text" class="form-control" id="idvideoyt" name="idvideoyt">
             </div>
 
             <button type="submit" class="btn btn-primary mt-3">Actualizar producto</button>
@@ -160,7 +168,8 @@ if (empty($menuesFiltrados)) {
                 nombre: $('#nombreAlta').val(),
                 detalle: $('#detalleAlta').val(),
                 stock: $('#stockAlta').val(),
-                precio: $('#precioAlta').val()
+                precio: $('#precioAlta').val(),
+                idvideoyt: $('#idvideoytAlta').val()
             };
 
             // Envío de los datos a través de Ajax
@@ -288,6 +297,10 @@ if (empty($menuesFiltrados)) {
             if (!isNaN(parseFloat($('#precio').val()))) {
                 formData.precio = parseFloat($('#precio').val()); // Validar si es NaN
             }
+            if ($('#idvideoyt').val().trim() != "") {
+                formData.idvideoyt = $('#idvideoyt').val().trim();
+            }
+            
             $.ajax({
                 url: 'Action/ModificacionProductos.php',
                 type: 'POST',
