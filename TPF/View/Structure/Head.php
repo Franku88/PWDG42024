@@ -155,7 +155,7 @@
         // $(document).ready(function() {
         //     Realizar la solicitud AJAX
         //     $.ajax({
-        //         url: 'Action/ListarNavbar.php', // Ruta al script PHP que genera los datos
+        //         url: 'Action.php', // Ruta al script PHP que genera los datos
         //         method: 'POST',
         //         data: 'todo',
         //         dataType: 'json',
