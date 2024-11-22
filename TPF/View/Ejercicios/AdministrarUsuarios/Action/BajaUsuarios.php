@@ -3,7 +3,7 @@ include_once "../../../../configuracion.php";
 
 $data = Funciones::data_submitted();
 
-if (isset($data['accion']) && $data['accion'] === 'baja' && isset($data['idusuario']) && isset($data['rol'])) {
+if (isset($data['idusuario']) && isset($data['rol'])) {
     $idUsuario = $data['idusuario'];
     $rolDescripcion = $data['rol'];
 

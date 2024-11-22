@@ -180,7 +180,6 @@ if (empty($menuesFiltrados)) {
                     url: 'Action/BajaUsuarios.php',
                     method: 'POST',
                     data: {
-                        accion: 'baja',
                         idusuario: id,
                         rol: rol
                     },
