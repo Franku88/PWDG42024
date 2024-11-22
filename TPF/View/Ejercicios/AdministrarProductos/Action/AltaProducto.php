@@ -10,7 +10,11 @@ if (isset($data['nombre']) && isset($data['stock']) && isset($data['detalle']) &
     $param['proprecio'] = $data['precio'];
 
     if(isset($data['idvideoyt'])) {
-        $param['idvideoyt'] = $data['idvideoyt'];
+        if ($data['idvideoyt'] != "null") {
+            $param['idvideoyt'] = $data['idvideoyt'];
+        } else {
+            $param['idvideoyt'] = "dQw4w9WgXcQ";
+        }
     } else {
         $param['idvideoyt'] = 'dQw4w9WgXcQ';
     }

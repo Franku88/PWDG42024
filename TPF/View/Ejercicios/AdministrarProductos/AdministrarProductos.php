@@ -61,7 +61,7 @@ if (empty($menuesFiltrados)) {
             </div>
             <div class="form-group">
                 <label for="idvideoytAlta" class="text-white">Id Youtube</label>
-                <input type="text" class="form-control" id="idvideoytAlta" name="idvideoytAlta" default="dQw4w9WgXcQ">
+                <input type="text" class="form-control" id="idvideoytAlta" name="idvideoytAlta">
             </div>
 
             <button type="submit" class="btn btn-success mt-3">Crear producto</button>
@@ -178,6 +178,7 @@ if (empty($menuesFiltrados)) {
                 type: 'POST',
                 data: formData,
                 success: function(response) {
+                    //console.log(response);
                     const res = JSON.parse(response);
                     if (res.success) {
                         $('#successMessage')

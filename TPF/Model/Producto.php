@@ -152,8 +152,8 @@ class Producto {
         $bd = new BaseDatos();
     
         if ($bd->Iniciar()) {
-            $consulta = "INSERT INTO producto (pronombre, prodetalle, procantstock, proprecio) VALUES 
-            ('".$this->getPronombre()."','".$this->getProdetalle()."',".$this->getProcantstock().",".$this->getProprecio().")";
+            $consulta = "INSERT INTO producto (pronombre, prodetalle, procantstock, proprecio, idvideoyt) VALUES 
+            ('".$this->getPronombre()."','".$this->getProdetalle()."',".$this->getProcantstock().",".$this->getProprecio().", '".$this->getIdvideoyt()."')";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
