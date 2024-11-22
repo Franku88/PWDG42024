@@ -1,8 +1,7 @@
 <?php
-
 include_once '../../../../configuracion.php';
+$data = Funciones::data_submitted();
 
-$data = Funciones::data_submitted(); 
 $salida = [];
 if (!empty($data)) {
     $usuario = (new ABMUsuario())->buscar(['idusuario' => $data['usuarioid']])[0];

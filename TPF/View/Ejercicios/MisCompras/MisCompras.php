@@ -1,6 +1,17 @@
 <?php
 include_once '../../../configuracion.php';
 include STRUCTURE_PATH . '/HeadSafe.php';
+//ESTE BLOQUE DEBE SER PERSONALIZADO PARA CADA PAGINA CON HEAD SAFE (ESTABLECER SU ID)
+$menuesFiltrados = array_filter($menues, function($menu) {
+    return ($menu->getIdmenu()) == 8; //8 es el id del menu MisCompras
+});
+
+if (empty($menuesFiltrados)) {
+    echo("Sesión inválida"); //Puede embellecerse un poco más
+    //header("Location: ".ROOT_PATH."/index.php");
+    exit();
+}
+//-------------------------------------------------------------------------------------
 ?>
 
 <div class="d-flex justify-content-center align-items-start gap-3">
@@ -30,7 +41,7 @@ include STRUCTURE_PATH . '/HeadSafe.php';
             $.ajax({
                 url: 'Action/ListarCompras.php', // Archivo PHP backend
                 method: 'POST', // Método HTTP
-                data: { usuarioid: <?php echo $usuarioId; ?> }, // Datos a enviar
+                data: { usuarioid: <?php echo $session->getUsuario()->getIdusuario(); ?> }, // Datos a enviar
                 dataType: 'json', // Esperamos una respuesta JSON
                 success: function (response) {
                    console.log(response)
