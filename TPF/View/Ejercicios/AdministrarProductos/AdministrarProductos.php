@@ -1,6 +1,18 @@
 <?php
 include_once "../../../configuracion.php";
-include STRUCTURE_PATH . "/Head.php";
+include STRUCTURE_PATH . "/HeadSafe.php"; 
+
+//ESTE BLOQUE DEBE SER PERSONALIZADO PARA CADA PAGINA CON HEAD SAFE (ESTABLECER SU ID)
+$menuesFiltrados = array_filter($menues, function($menu) {
+    return ($menu->getIdmenu()) == 5; //5 es el id del menu AdminsitrarProductos
+});
+
+if (empty($menuesFiltrados)) {
+    echo("Sesión inválida"); //Puede embellecerse un poco más
+    //header("Location: ".ROOT_PATH."/index.php");
+    exit();
+}
+//-------------------------------------------------------------------------------------
 ?>
 
 <div class="d-flex justify-content-center align-items-start gap-3">
