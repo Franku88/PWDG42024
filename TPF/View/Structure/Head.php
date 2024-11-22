@@ -80,7 +80,7 @@
 
             <div class="mx-3">
                 <?php if ($sessionValida) { ?>
-                    <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Perfil/Perfil.php">Perfil?</a>
+                    <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Perfil/Perfil.php">Perfil</a>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Logout/Logout.php">Logout</a>
                 <?php } else { ?>
                     <a class="btn btn-primary btn-steam my-1" href="<?php echo BASE_URL; ?>/View/Ejercicios/Login/Login.php">Login</a>
