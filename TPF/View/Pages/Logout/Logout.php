@@ -1,5 +1,5 @@
 <?php 
 include_once '../../../configuracion.php';
-$session = new Session();
-$session->cerrar();
-header('Location: ../../Ejercicios/Catalogo/Catalogo.php');
+$sesion = new Session();
+$sesion->cerrar();
+header('Location: ../../Pages/Catalogo/Catalogo.php');
