@@ -121,6 +121,7 @@ class Compra {
             $consulta = "INSERT INTO compra(idusuario, cofecha) VALUES
             (".($this->getObjUsuario())->getIdusuario().", '".$this->getCofecha()."')";
             if ($bd->Ejecutar($consulta)) {
+                $this->setIdcompra($bd->lastInsertId());
                 $resultado = true;
             } else {
                 $this->setMensajeOperacion($bd->getError());
