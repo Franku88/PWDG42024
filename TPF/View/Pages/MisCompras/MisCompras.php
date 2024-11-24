@@ -41,7 +41,7 @@ if (empty($menuesFiltrados)) {
             $.ajax({
                 url: 'Action/ListarCompras.php', // Archivo PHP backend
                 method: 'POST', // Método HTTP
-                data: { usuarioid: <?php echo $session->getUsuario()->getIdusuario(); ?> }, // Datos a enviar
+                data: { usuarioid: <?php echo $sesion->getUsuario()->getIdusuario(); ?> }, // Datos a enviar
                 dataType: 'json', // Esperamos una respuesta JSON
                 success: function (response) {
                    console.log(response)
