@@ -98,6 +98,7 @@ class Session {
             $encontrado = $roles[$i]->getIdrol() == 3; //En este caso 3 es el id del rol cliente
             $i++;
         }
+        return $encontrado;
     }
 
     /**
