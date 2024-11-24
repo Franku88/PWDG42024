@@ -71,7 +71,7 @@ if ($sesion->validar()) { //Si ya tiene una sesion, redirige a Catalogo
                                 .removeClass('d-none')
                                 .addClass('d-block');
                             setTimeout(function() {
-                                window.location.href = <?php echo BASE_URL?>.'/View/Pages/Login/Login.php';
+                                window.location.href = "<?php echo BASE_URL?>/View/Pages/Login/Login.php";
                             }, 2000);
                         } else {
                             $('#errorMessage')
