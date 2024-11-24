@@ -3,6 +3,12 @@
     $session = new Session();
     $sessionValida = $session->validar();
     $menues = []; //Array con menues permitidos para dicho rol
+
+    if (!$sessionValida) {
+        header("Location: ".BASE_URL."/View/Pages/SesionInvalida/SesionInvalida.php");
+        exit();
+    }
+
     if ($sessionValida) {
         $objRol = $session->getRol()[0];
         $usuarioRolId = $objRol->getIdrol();
@@ -141,12 +147,4 @@
             </div>
             
         </nav>
-    </header>
-    <?php  
-        if (!$sessionValida) {
-            echo "Sesión inválida";
-            //header("Location: ".ROOT_PATH."/index.php");
-            exit();
-        }
-    ?>
-    
+    </header>  

@@ -2,6 +2,7 @@
     $session = new Session();
     $sessionValida = $session->validar();
     $menues = []; //Array con menues permitidos para dicho rol
+    
     if ($sessionValida) {
         $objRol = $session->getRol()[0];
         $usuarioRolId = $objRol->getIdrol();
@@ -108,7 +109,7 @@
     </script>
 </head>
 
-<body class="d-flex flex-column min-vh-100 bg-steam-darkgreen"> <!-- Comienza body saludos YT!-->
+<body class="d-flex flex-column min-vh-100 bg-steam-darkgreen"> <!-- Comienza body!-->
     <header>
         <!-- Barra de navegación -->
         <nav class="navbar navbar-expand-sm bg-steam-lightgreen bdr-steam-nofocus justify-content-between">
@@ -153,29 +154,3 @@
             
         </nav>
     </header>
-
-    <script>
-        // $(document).ready(function() {
-        //     Realizar la solicitud AJAX
-        //     $.ajax({
-        //         url: 'Action/ListarMenues.php', // Ruta al script PHP que genera los datos
-        //         method: 'POST',
-        //         data: 'todo',
-        //         dataType: 'json',
-        //         success: function(response) {
-        //             console.log(response);
-        //             var htmlContent = '';
-        //             Iterar sobre los productos y construir el HTML
-        //             $.each(response, function(index, producto) {
-        //                 htmlContent += `
-        //                 `;
-        //             });
-        //             Insertar el HTML generado en el contenedor
-        //             $('#catalogo').html(htmlContent);
-        //         },
-        //         error: function() {
-        //             alert('Error al cargar el catálogo.');
-        //         }
-        //     });
-        // });
-    </script>
