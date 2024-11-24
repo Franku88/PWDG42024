@@ -71,7 +71,7 @@ class Session {
     /**
      * Devuelve lista de roles del usuario logeado. Necesario en session por seguridad.
      */
-    public function getRol() {
+    public function getRoles() {
         $arreglo = [];
         if ($this->validar()) {
             $usuarios = (new ABMUsuario())->buscar(['idusuario' => $_SESSION['idusuario']]);
@@ -85,6 +85,19 @@ class Session {
             }
         } 
         return $arreglo;
+    }
+
+    /**
+     * Devuelve verdadero si un usuario es cliente (VERIFICAR QUE ID TIENE EL ROL CLIENTE EN LA BD)
+     */
+    public function esCliente() {
+        $roles = $this->getRoles();
+        $i = 0;
+        $encontrado = false;;
+        while (!$encontrado && $i < count($roles)) {
+            $encontrado = $roles[$i]->getIdrol() == 3; //En este caso 3 es el id del rol cliente
+            $i++;
+        }
     }
 
     /**
