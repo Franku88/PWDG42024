@@ -10,13 +10,13 @@ class ABMMenu {
      */
     private function cargarObjeto($param) {
         $obj = null;
-        if (array_key_exists('menombre', $param) AND array_key_exists('medescripcion', $param)) {
+        if (array_key_exists('menombre', $param) AND array_key_exists('medescripcion', $param) AND array_key_exists('meurl', $param)) {
             // Solo asignamos 'idmenu' si está definido y es distinto de null
             $idmenu = array_key_exists('idmenu', $param) ? $param['idmenu'] : null;
             $objPadre = array_key_exists('padre', $param) ? $param['padre'] : null;
             $medeshabilitado = array_key_exists('medeshabilitado', $param) ? $param['medeshabilitado'] : '0000-00-00 00:00:00';
             $obj = new Menu();
-            $obj->cargarDatos($idmenu, $param['menombre'], $param['medescripcion'], $objPadre, $medeshabilitado);
+            $obj->cargarDatos($idmenu, $param['menombre'], $param['medescripcion'], $param['meurl'], $objPadre, $medeshabilitado);
         }
         return $obj;
     }
@@ -112,6 +112,9 @@ class ABMMenu {
             }
             if (isset($param["medescripcion"])) {
                 $where .= " AND medescripcion = ".$param["medescripcion"];
+            }
+            if (isset($param["meurl"])) {
+                $where .= " AND meurl = ".$param["meurl"];
             }
             if (isset($param["padre"])) {
                 $where .= " AND idpadre = ".($param["padre"])->getIdmenu();

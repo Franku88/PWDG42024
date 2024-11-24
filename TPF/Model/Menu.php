@@ -5,14 +5,16 @@ class Menu {
     private $idmenu;
     private $menombre;
     private $medescripcion;
+    private $meurl;
     private $objPadre;
     private $medeshabilitado;
     private $mensajeOperacion;
 
-    public function __construct($idmenu = null, $menombre = null, $medescripcion = null, $objPadre = null, $medeshabilitado = null) {
+    public function __construct($idmenu = null, $menombre = null, $medescripcion = null, $meurl = null, $objPadre = null, $medeshabilitado = null) {
         $this->idmenu = $idmenu;
         $this->menombre = $menombre;
         $this->medescripcion = $medescripcion;
+        $this->meurl = $meurl;
         $this->objPadre = $objPadre;
         $this->medeshabilitado = $medeshabilitado;
     }
@@ -28,6 +30,10 @@ class Menu {
 
     public function getMedescripcion() {
         return $this->medescripcion;
+    }
+
+    public function getMeurl() {
+        return $this->meurl;
     }
 
     public function getPadre() {
@@ -55,6 +61,10 @@ class Menu {
         $this->medescripcion = $medescripcion;
     }
 
+    public function setMeurl($meurl) {
+        $this->meurl = $meurl;
+    }
+
     public function setPadre($objPadre) {
         $this->objPadre = $objPadre;
     }
@@ -68,10 +78,11 @@ class Menu {
     }
     
     // metodos CRUD
-    public function cargarDatos($idmenu, $menombre = null, $medescripcion = null, $objPadre = null, $medeshabilitado = null) {
+    public function cargarDatos($idmenu, $menombre = null, $medescripcion = null, $meurl = null, $objPadre = null, $medeshabilitado = null) {
         $this->setIdmenu($idmenu);
         $this->setMenombre($menombre);
         $this->setMedescripcion($medescripcion);
+        $this->setMeurl($meurl);
         $this->setPadre($objPadre);
         $this->setMedeshabilitado($medeshabilitado);
     }
@@ -93,7 +104,7 @@ class Menu {
                         $objPadre = new Menu();
                         $objPadre->buscarDatos($row['idpadre']);
                     }
-                    $this->cargarDatos($idmenu, $row['menombre'], $row['medescripcion'], $objPadre, $row['medeshabilitado']);
+                    $this->cargarDatos($idmenu, $row['menombre'], $row['medescripcion'], $row['meurl'], $objPadre, $row['medeshabilitado']);
                     $resultado = true;
                 }
             }
@@ -123,7 +134,7 @@ class Menu {
                         $objPadre->buscarDatos($row['idpadre']);
                     }
                     $obj = new Menu();
-                    $obj->cargarDatos($row['idmenu'], $row['menombre'], $row['medescripcion'], $objPadre, $row['medeshabilitado']);
+                    $obj->cargarDatos($row['idmenu'], $row['menombre'], $row['medescripcion'], $row['meurl'], $objPadre, $row['medeshabilitado']);
                     array_push($coleccion, $obj);
                 }
             } else {
@@ -148,8 +159,8 @@ class Menu {
                 $idpadre = ($this->getPadre())->getIdmenu();
             }
 
-            $consulta = "INSERT INTO menu(menombre, medescripcion, idpadre) VALUES 
-            ('".$this->getMenombre()."', '".$this->getMedescripcion()."', $idpadre)" ;
+            $consulta = "INSERT INTO menu(menombre, medescripcion, meurl, idpadre) VALUES 
+            ('".$this->getMenombre()."', '".$this->getMedescripcion()."', '".$this->getMeurl()."', $idpadre)" ;
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -176,6 +187,7 @@ class Menu {
             $consulta = "UPDATE menu 
                         SET menombre = '".$this->getMenombre()."',
                         medescripcion = '".$this->getMedescripcion()."' ,
+                        meurl = '".$this->getMeurl()."',
                         idpadre = $idpadre,
                         medeshabilitado = '".$this->getMedeshabilitado()."'
                         WHERE idmenu = ".$this->getIdmenu();
@@ -218,6 +230,7 @@ class Menu {
         return ("idmenu: " . $this->getIdmenu() . " \n 
         menombre: " . $this->getMenombre() . " \n 
         medescripcion: " . $this->getMedescripcion() . " \n 
+        meurl: " . $this->getMeurl() . " \n 
         idpadre: " . $this->getPadre() . " \n 
         medeshabilitado: " . $this->getMedeshabilitado());
     }
