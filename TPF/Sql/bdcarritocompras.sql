@@ -21,34 +21,34 @@ USE `bdcarritocompras`;
 
 -- Estructura de tabla para la tabla `usuario`
 CREATE TABLE `usuario` (
-  `idusuario` bigint(20) NOT NULL AUTO_INCREMENT,
+  `idusuario` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `usnombre` varchar(50) NOT NULL,
   `uspass` varchar(32) NOT NULL,
   `usmail` varchar(256) NOT NULL,
   `usdeshabilitado` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idusuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 -- Estructura de tabla para la tabla `producto`
 CREATE TABLE `producto` (
-  `idproducto` bigint(20) NOT NULL AUTO_INCREMENT,
+  `idproducto` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `pronombre` varchar(50) NOT NULL,
   `prodetalle` varchar(1024) NOT NULL,
   `procantstock` int(11) NOT NULL,
   `proprecio` DECIMAL(10, 2) NOT NULL,
   `prodeshabilitado` timestamp NULL DEFAULT NULL,
-  `idvideoyt` varchar(11) NOT NULL DEFAULT 'dQw4w9WgXcQ',
+  `idvideoyt` varchar(12) NOT NULL DEFAULT '',
   PRIMARY KEY (`idproducto`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 -- Estructura de tabla para la tabla `rol`
 CREATE TABLE `rol` (
-  `idrol` bigint(20) NOT NULL AUTO_INCREMENT,
+  `idrol` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `rodescripcion` varchar(50) NOT NULL,
   PRIMARY KEY (`idrol`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 -- Estructura de tabla para la tabla `compraestadotipo`
@@ -57,82 +57,94 @@ CREATE TABLE `compraestadotipo` (
   `cetdescripcion` varchar(50) NOT NULL,
   `cetdetalle` varchar(256) NOT NULL,
   PRIMARY KEY (`idcompraestadotipo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 -- Estructura de tabla para la tabla `compra`
 CREATE TABLE `compra` (
-  `idcompra` bigint(20) NOT NULL AUTO_INCREMENT,
+  `idcompra` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `cofecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `idusuario` bigint(20) NOT NULL,
+  `idusuario` bigint UNSIGNED NOT NULL,
   PRIMARY KEY(`idcompra`),
   FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 -- Estructura de tabla para la tabla `compraestado`
 CREATE TABLE `compraestado` (
-  `idcompraestado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `idcompra` bigint(11) NOT NULL,
+  `idcompraestado` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idcompra` bigint UNSIGNED NOT NULL,
   `idcompraestadotipo` int(11) NOT NULL,
   `cefechaini` timestamp NOT NULL DEFAULT current_timestamp(),
   `cefechafin` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idcompraestado`),
-  FOREIGN KEY (`idcompra`) REFERENCES `compra` (`idcompra`) ON UPDATE CASCADE,
+  FOREIGN KEY (`idcompra`) REFERENCES `compra` (`idcompra`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`idcompraestadotipo`) REFERENCES `compraestadotipo` (`idcompraestadotipo`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 -- Estructura de tabla para la tabla `compraitem`
 CREATE TABLE `compraitem` (
-  `idcompraitem` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `idproducto` bigint(20) NOT NULL,
-  `idcompra` bigint(20) NOT NULL,
+  `idcompraitem` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idproducto` bigint UNSIGNED NOT NULL,
+  `idcompra` bigint UNSIGNED NOT NULL,
   `cicantidad` int(11) NOT NULL,
   PRIMARY KEY (`idcompraitem`),
-  FOREIGN KEY (`idcompra`) REFERENCES `compra` (`idcompra`) ON UPDATE CASCADE,
+  FOREIGN KEY (`idcompra`) REFERENCES `compra` (`idcompra`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`idproducto`) REFERENCES `producto` (`idproducto`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 -- Estructura de tabla para la tabla `menu`
 CREATE TABLE `menu` (
-  `idmenu` bigint(20) NOT NULL AUTO_INCREMENT,
+  `idmenu` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `menombre` varchar(50) NOT NULL COMMENT 'Nombre del item del menu',
   `medescripcion` varchar(128) NOT NULL COMMENT 'Descripcion mas detallada del item del menu',
-  `idpadre` bigint(20) DEFAULT NULL COMMENT 'Referencia al id del menu que es subitem',
+  `meurl` varchar(2000) NOT NULL DEFAULT '#' COMMENT 'Ubicacion donde redirecciona item del menu (Desde BASE_URL)',
+  `idpadre` bigint UNSIGNED DEFAULT NULL COMMENT 'Referencia al id del menu que es subitem',
   `medeshabilitado` timestamp NULL DEFAULT NULL COMMENT 'Fecha en la que el menu fue deshabilitado por ultima vez',
   PRIMARY KEY (`idmenu`),
   FOREIGN KEY (`idpadre`) REFERENCES `menu` (`idmenu`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 -- Estructura de tabla para la tabla `menurol`
 CREATE TABLE `menurol` (
-  `idmenu` bigint(20) NOT NULL,
-  `idrol` bigint(20) NOT NULL,
+  `idmenu` bigint UNSIGNED NOT NULL,
+  `idrol` bigint UNSIGNED NOT NULL,
   PRIMARY KEY (`idmenu`,`idrol`),
-  FOREIGN KEY (`idmenu`) REFERENCES `menu` (`idmenu`) ON UPDATE CASCADE,
+  FOREIGN KEY (`idmenu`) REFERENCES `menu` (`idmenu`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 -- Estructura de tabla para la tabla `usuariorol`
 CREATE TABLE `usuariorol` (
-  `idusuario` bigint(20) NOT NULL,
-  `idrol` bigint(20) NOT NULL,
+  `idusuario` bigint UNSIGNED NOT NULL,
+  `idrol` bigint UNSIGNED NOT NULL,
   PRIMARY KEY (`idusuario`,`idrol`),
   FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON UPDATE CASCADE,
-  FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
--- Volcado de datos para la tabla `compraestadotipo`
-INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdetalle`) VALUES
-(1, 'iniciada', 'cuando el usuario : cliente inicia la compra de uno o mas productos del carrito'),
-(2, 'aceptada', 'cuando el usuario administrador da ingreso a uno de las compras en estado = 1 '),
-(3, 'enviada', 'cuando el usuario administrador envia a uno de las compras en estado =2 '),
-(4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1');
+-- Volcado de datos para la tabla `menu`
+INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `meurl`, `idpadre`) VALUES
+(1, 'Administrador', '#', '#', NULL),
+(2, 'Deposito', '#', '#', NULL),
+(3, 'Cliente', '#', '#', NULL),
+(4, 'Administrar Usuarios', 'AdministrarUsuarios', '/View/Ejercicios/AdministrarUsuarios/AdministrarUsuarios.php', 1),
+(5, 'Administrar Productos', 'AdministrarProductos', '/View/Ejercicios/AdministrarProductos/AdministrarProductos.php', 2),
+(6, 'Administrar Compras', 'AdministrarCompras', '/View/Ejercicios/AdministrarCompras/AdministrarCompras.php', 2),
+(7, 'Carrito', 'Carrito', '/View/Ejercicios/Carrito/Carrito.php', 3),
+(8, 'Mis Compras', 'MisCompras', '/View/Ejercicios/MisCompras/MisCompras.php', 3);
+-- --------------------------------------------------------
+
+-- Volcado de datos para la tabla `usuario`
+INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
+(1, 'admin', MD5('password'), 'admin@example.com', NULL),
+(2, 'deposito', MD5('password'), 'deposito1@example.com', NULL),
+(3, 'cliente', MD5('password'), 'cliente1@example.com', NULL);
 -- --------------------------------------------------------
 
 -- Volcado de datos para la tabla `rol`
@@ -142,23 +154,19 @@ INSERT INTO `rol` (`idrol`, `rodescripcion`) VALUES
 (3, 'Cliente');
 -- --------------------------------------------------------
 
--- Volcado de datos para la tabla `menu`
-INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`) VALUES
-(1, 'Administrador', '#', NULL),
-(2, 'Deposito', '#', NULL),
-(3, 'Cliente', '#', NULL),
-(4, 'Administrar Usuarios', 'AdministrarUsuarios', 1),
-(5, 'Administrar Productos', 'AdministrarProductos', 2),
-(6, 'Administrar Compras', 'AdministrarCompras', 2),
-(7, 'Carrito', 'Carrito', 3),
-(8, 'Mis Compras', 'MisCompras', 3);
+-- Volcado de datos para la tabla `usuariorol`
+INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
+(1, 1), -- Admin
+(2, 2), -- Deposito
+(3, 3); -- Cliente
 -- --------------------------------------------------------
 
--- Volcado de datos para la tabla `usuario`
-INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
-(1, 'admin', MD5('password'), 'admin@example.com', NULL),
-(2, 'deposito1', MD5('password'), 'deposito1@example.com', NULL),
-(3, 'cliente1', MD5('password'), 'cliente1@example.com', NULL);
+-- Volcado de datos para la tabla `menurol`
+INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
+(1, 1), -- Administrador
+(2, 2), -- Depósito
+(3, 3); -- Cliente
+-- --------------------------------------------------------
 
 -- Volcado de datos para la tabla `producto`
 INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`, `proprecio`, `prodeshabilitado`, `idvideoyt`) VALUES
@@ -194,27 +202,27 @@ INSERT INTO `producto` (`idproducto`, `pronombre`, `prodetalle`, `procantstock`,
 5, 19.99, NULL, 'JSRtYpNRoN0'),
 (16, 'The Binding of Isaac: Rebirth', 'Cuando la madre de Isaac comienza a escuchar la voz de Dios exiguiendole que haga un sacrificio para probar su fe, Isaac escapa al sótano y se enfrenta a multitudes de enemigos trastornados, hermanos y hermanas perdidos, sus miedos y, finalmente, a su madre.', 
 6, 14.99, NULL, 'j7yPmbNCP4I');
+-- --------------------------------------------------------
+
+-- Volcado de datos para la tabla `compraestadotipo`
+INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdetalle`) VALUES
+(1, 'Iniciada', 'Cliente inicia la compra de uno o mas productos del carrito'),
+(2, 'Aceptada', 'Deposito da ingreso a una de las compras en estado = 1'),
+(3, 'Enviada', 'Deposito envia a uno de las compras en estado = 2'),
+(4, 'Cancelada', 'Deposito podra cancelar una compra en cualquier estado y un usuario cliente solo en estado = 1');
+-- --------------------------------------------------------
 
 -- Volcado de datos para la tabla `compra`
 INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`) VALUES
 (1, NOW(), 3);
+-- --------------------------------------------------------
 
 -- Volcado de datos para la tabla `compraestado`
 INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, `cefechaini`, `cefechafin`) VALUES
 (1, 1, 1, NOW(), NULL);
+-- --------------------------------------------------------
 
 -- Volcado de datos para la tabla `compraitem`
 INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`) VALUES
 (1, 1, 1, 2);
-
--- Volcado de datos para la tabla `menurol`
-INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
-(1, 1), -- Administrador
-(2, 2), -- Depósito
-(3, 3); -- Cliente
-
--- Volcado de datos para la tabla `usuariorol`
-INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
-(1, 1), -- Admin
-(2, 2), -- Depósito 1
-(3, 3); -- Cliente 1
+-- --------------------------------------------------------
