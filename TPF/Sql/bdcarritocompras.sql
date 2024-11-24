@@ -133,11 +133,11 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `meurl`, `idpadre`) V
 (1, 'Administrador', '#', '#', NULL),
 (2, 'Deposito', '#', '#', NULL),
 (3, 'Cliente', '#', '#', NULL),
-(4, 'Administrar Usuarios', 'AdministrarUsuarios', '/View/Ejercicios/AdministrarUsuarios/AdministrarUsuarios.php', 1),
-(5, 'Administrar Productos', 'AdministrarProductos', '/View/Ejercicios/AdministrarProductos/AdministrarProductos.php', 2),
-(6, 'Administrar Compras', 'AdministrarCompras', '/View/Ejercicios/AdministrarCompras/AdministrarCompras.php', 2),
-(7, 'Carrito', 'Carrito', '/View/Ejercicios/Carrito/Carrito.php', 3),
-(8, 'Mis Compras', 'MisCompras', '/View/Ejercicios/MisCompras/MisCompras.php', 3);
+(4, 'Administrar Usuarios', 'AdministrarUsuarios', '/View/Pages/AdministrarUsuarios/AdministrarUsuarios.php', 1),
+(5, 'Administrar Productos', 'AdministrarProductos', '/View/Pages/AdministrarProductos/AdministrarProductos.php', 2),
+(6, 'Administrar Compras', 'AdministrarCompras', '/View/Pages/AdministrarCompras/AdministrarCompras.php', 2),
+(7, 'Carrito', 'Carrito', '/View/Pages/Carrito/Carrito.php', 3),
+(8, 'Mis Compras', 'MisCompras', '/View/Pages/MisCompras/MisCompras.php', 3);
 -- --------------------------------------------------------
 
 -- Volcado de datos para la tabla `usuario`
