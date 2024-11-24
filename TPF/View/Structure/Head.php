@@ -41,20 +41,11 @@
             
             if ($compraEstado == null) {
                 $param1['cofecha'] = (new DateTime('now', (new DateTimeZone('-03:00'))))->format('Y-m-d H:i:s');
-                $param1['usuario'] = $sesion->getUsuario();
-                $altaCompra = (new ABMCompra())->alta($param1);
+                $param1['usuario'] = $usuario;
     
-                if ($altaCompra) {
-                    $compras = (new ABMCompra)->buscar(['usuario'=> $param1['usuario'], 'cofecha' => $param1['cofecha']]);
-                    $compraEstadoTipos = (new ABMCompraEstadoTipo())->buscar(['idcompraestadotipo'=> 1]);
-    
-                    $altaCompraEstado = (new ABMCompraEstado())->alta([
-                        'objCompra'=> $compras[0], 
-                        'objCompraEstadoTipo'=> $compraEstadoTipos[0], 
-                        'cefechaini' => $compras[0]->getCofecha()]
-                    );
-    
-                    $compraEstado = (new ABMCompraEstado)->buscar(['objCompra'=> $compras[0], 'idcompraestadotipo' => 1, 'cefechafin' => null]); //Toda compraEstado de la bd
+                if ((new ABMCompra())->alta($param1)) {
+                    $compras = (new ABMCompra)->buscar(['usuario'=> $usuario, 'cofecha' => $param1['cofecha']]);
+                    $compraEstado = (new ABMCompraEstado)->buscar(['objCompra'=> $compras[0], 'cefechafin' => null]); //Toda compraEstado de la bd
                 }
             }   
         }

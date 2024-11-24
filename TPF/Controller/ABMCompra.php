@@ -57,7 +57,12 @@ class ABMCompra {
         $resp = false;
         $obj = $this->cargarObjeto($param);
         if ($obj != null && $obj->insertar()) {
-            $resp = true;
+            $compraestadotipos = (new ABMCompraEstadoTipo())->buscar(['idcompraestadotipo'=> 1]); //Busca estadotipo
+            $resp = !empty($compraestadotipos);
+            if ($resp) { 
+                // Compra se crea por default con compraestado en compraestadotipo == 1
+                $resp = (new ABMCompraEstado())->alta(['objCompra' => $obj, 'objCompraEstadoTipo'=>$compraestadotipos[0], 'cefechaini'=> $obj->getCofecha()]);
+            }
         }
         return $resp;
     }
