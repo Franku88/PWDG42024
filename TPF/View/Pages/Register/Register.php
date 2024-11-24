@@ -1,6 +1,10 @@
 <?php
 include_once '../../../configuracion.php';
 include STRUCTURE_PATH . '/Head.php';
+
+if ($sesion->validar()) { //Si ya tiene una sesion, redirige a Catalogo
+    header('Location: '.BASE_URL.'/View/Pages/Catalogo/Catalogo.php');
+}
 ?>
 
 <div class="container my-auto ">
@@ -67,7 +71,7 @@ include STRUCTURE_PATH . '/Head.php';
                                 .removeClass('d-none')
                                 .addClass('d-block');
                             setTimeout(function() {
-                                window.location.href = '../../Ejercicios/Login/Login.php';
+                                window.location.href = <?php echo BASE_URL?>.'/View/Pages/Login/Login.php';
                             }, 2000);
                         } else {
                             $('#errorMessage')
