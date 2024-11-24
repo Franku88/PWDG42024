@@ -1,17 +1,8 @@
 <?php
 include_once '../../../configuracion.php';
 include STRUCTURE_PATH . '/Head.php';
-$abmProducto = new ABMProducto();
-$productos = $abmProducto->buscar();
 
-$roles = ($session)->getRol();
-$esCliente = false;
-if (!empty($roles)) { //Si tiene roles
-    $rolesFiltrados = (array_filter($roles, function ($cadaRol) {
-        return $cadaRol->getRodescripcion() == 'Cliente'; //filtra array para que tenga solo los que cumplan la condicion
-    }));
-    $esCliente = !empty($rolesFiltrados); // Si no esta vacio, entonces encontro un rol Cliente
-}
+$esCliente = $sesion->esCliente();
 ?>
 
 <div class="container py-4">
@@ -41,11 +32,13 @@ if (!empty($roles)) { //Si tiene roles
                             <div class='card-body bg-steam-darkgreen bdr-steam-focus d-flex'>
                                 <div class='align-self-center bdr-steam-nofocus m-1 p-1'>
                                     <!-- Product Image -->
-                                    <img src='${producto.icon}'  width='100' height='100' alt='...'>
+                                    <a class='link-light text-decoration-none' href='<?php echo BASE_URL ?>/View/Pages/Producto/Producto.php?idproducto=${producto.idproducto}'>
+                                        <img src='${producto.icon}'  width='100' height='100' alt='...'>
+                                    </a>
                                 </div>
 
                                 <div class='d-flex flex-column justify-content-center items-center mx-5'>
-                                    <h5 class='card-title'> <a href='../Producto/Producto.php?idproducto=${producto.idproducto}'> ${producto.pronombre}</a> </h5>
+                                    <h5 class='card-title'> <a class='link-light text-decoration-none' href='<?php echo BASE_URL ?>/View/Pages/Producto/Producto.php?idproducto=${producto.idproducto}'> ${producto.pronombre}</a> </h5>
                                     <p class='card-text'> Precio: $ ${producto.proprecio} </p>
                                     <p class='card-text'> Stock: ${producto.procantstock} </p>
                                 </div>
@@ -54,10 +47,10 @@ if (!empty($roles)) { //Si tiene roles
                             <div class='d-flex bg-steam-lightgreen bdr-steam-nofocus'>
                                 <div class="d-flex flex-column m-auto center text-center p-2">
                                     <div>
-                                        <a class='btn btn-primary btn-steam w-100' href='../Producto/Producto.php?idproducto=${producto.idproducto}'>Ver detalles</a>
+                                        <a class='btn btn-primary btn-steam w-100' href='<?php echo BASE_URL ?>/View/Pages/Producto/Producto.php?idproducto=${producto.idproducto}'>Ver detalles</a>
                                     </div>
                                     <div>
-                                        <?php if ($usuarioRolId == 3) { //Inserta estos botones si el usuario es un cliente idrol = 3 ?> 
+                                        <?php if ($esCliente) { //Inserta estos botones si el usuario es un cliente idrol = 3 ?> 
                                             <button class="btn btn-primary btn-steam boton_agregar w-100" id="${producto.idproducto}">Agregar al carro</button>
                                         <?php } ?>
                                     </div>
