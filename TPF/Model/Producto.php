@@ -182,12 +182,12 @@ class Producto {
             }
             
             $consulta = "UPDATE producto 
-            SET pronombre = '".$this->getPronombre()."', 
-                prodetalle = '".$this->getProdetalle()."', 
+            SET pronombre = '".addslashes($this->getPronombre())."', 
+                prodetalle = '".addslashes($this->getProdetalle())."', 
                 procantstock = ".$this->getProcantstock().", 
                 proprecio = ".$this->getProprecio().", 
                 prodeshabilitado = ".$desha.",
-                idvideoyt = '".$this->getIdvideoyt()."' 
+                idvideoyt = '".addslashes($this->getIdvideoyt())."' 
             WHERE idproducto = ".$this->getIdproducto();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
