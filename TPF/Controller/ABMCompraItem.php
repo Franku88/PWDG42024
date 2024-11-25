@@ -118,5 +118,109 @@ class ABMCompraItem {
         $arreglo = (new CompraItem())->listar($where);
         return $arreglo;
     }
+
+    /**
+     * Agrega CompraItem a la bd segun parametros
+     */
+    public function agregarCompraItem($param) {
+        $idproducto = intval($param['idproducto']);
+        $idcompra = intval($param['idcompra']); 
+        $cicantidad = intval($param['cicantidad']);
+
+        $producto = (new ABMProducto)->buscar(['idproducto' => $idproducto])[0]; // Busca producto (por id producto ingresado)
+        
+        $exito = $producto->getProcantstock() >= $cicantidad; // Verifica que haya suficiente stock
+        if ($exito) {
+            $nuevoStock = ($producto->getProcantstock() - $cicantidad);
+            $producto->setProcantstock($nuevoStock);
+            $producto->modificar(); // Disminuye stock del producto agregado
+
+            $compra = (new ABMCompra)->buscar(['idcompra' => $idcompra])[0]; // Busca compra (por id compra ingresado)
+            $compraItems = $this->buscar(['producto'=> $producto, 'compra' => $compra]); // Verificar que el carrito posee previamente el producto 
+
+            if(empty($compraItems)) {  //Si dicho producto no esta en el carro, agrega CompraItem
+                $exito = $this->alta(['producto'=> $producto, 'compra' => $compra, 'cicantidad' => $cicantidad]);
+                $msj = "Producto agregado al carro.";
+            } else { //Si dicho producto ya esta en el carro, modifica CompraItem
+                $compraItem = $compraItems[0];
+                $nuevaCicantidad = ($compraItem->getCicantidad() + $cicantidad);
+                $exito = $this->modificacion(['idcompraitem' => $compraItem->getIdcompraitem(), 'producto'=> $producto, 'compra' => $compra, 'cicantidad' => $nuevaCicantidad]);
+                $msj = "Se aumento cantidad del producto al carro.";
+            }
+        } else {
+            $msj = "No hay stock suficiente.";
+        }
+        return ['success'=> $exito, 'message'=> $msj];
+    }
+
+    /**
+     * Quita CompraItem a la bd segun parametros
+     */
+    public function quitarCompraItem($param) {
+        $idproducto = intval($param['idproducto']);
+        $idcompra = intval($param['idcompra']); 
+        $cicantidad = intval($param['cicantidad']);
+
+        $producto = (new ABMProducto)->buscar(['idproducto' => $idproducto])[0]; // Busca producto (por id producto ingresado)
+
+        $compra = (new ABMCompra)->buscar(['idcompra' => $idcompra])[0]; // Busca compra (por id compra ingresado)
+        $compraItems = $this->buscar(['producto'=> $producto, 'compra' => $compra]); // Busca CompraItem a modificar
+
+        $exito = !empty($compraItems);
+        if ($exito) { //Solo aumenta stock si antes estaba en el carro
+            $nuevoStock = ($producto->getProcantstock() + $cicantidad);
+            $producto->setProcantstock($nuevoStock);
+            $producto->modificar(); // Disminuye stock del producto agregado
+
+            $compraItem = $compraItems[0];
+            $nuevaCicantidad = ($compraItem->getCicantidad() - $cicantidad);
+            if ($nuevaCicantidad > 0) { // Si al disminuir cicantidad es mayor a 0 (sigue estando item en carro)
+                $exito = $this->modificacion(['idcompraitem' => $compraItem->getIdcompraitem(), 'producto'=> $producto, 'compra' => $compra, 'cicantidad' => $nuevaCicantidad]);
+                $msj = "Se disminuyo cantidad del producto.";
+            } else {
+                $exito = $compraItem->eliminar();
+                $msj = "Item eliminado del carrito.";
+            }
+        } else {
+            $msj = "Item no se encuentra en el carrito";
+        }
+        
+        return ['success'=> $exito, 'message'=> $msj];
+    }
+
+    
+    /**
+     * Quita todo compraItem para un idcompra dado (reestockea)
+     */
+    public function vaciarCarrito($param) {
+        $compra = (new ABMCompra())->buscar($param)[0]; //Busco compra con idcompra en $param
+        $compraItems = $this->buscar(['compra' => $compra]); //Obtiene todo compraItem de dicha compra
+
+        $msj = 'Carrito vaciado con exito.';
+        $exito = true;
+        if(!empty($compraItems)) {
+            $respuestas = [];
+            foreach($compraItems as $compraItem) {
+                $idprod = $compraItem->getObjProducto()->getIdproducto();
+                $idcomp = $compraItem->getObjCompra()->getIdcompra();
+                $cicant = $compraItem->getCicantidad();
+                $rta = $this->quitarCompraItem(['idproducto' => $idprod, 'idcompra' => $idcomp, 'cicantidad'=> $cicant]); //Quita toda cicant
+                array_push($respuestas, $rta);
+            }
+
+            $i = 0;
+            while ($exito && $i < count($respuestas)) {
+                $exito = $respuestas[$i]['success'];
+                if (!$exito) {
+                    $msj = "Hubo un problema al eliminar un item del carro.";
+                }
+                $i++;
+            }
+        } else {
+            $msj = 'No hay items en el carrito.';
+        }
+        return ['success' => $exito, 'message'=> $msj];
+    }
+
 }
 ?>

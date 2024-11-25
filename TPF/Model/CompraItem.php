@@ -1,20 +1,15 @@
 <?php
-
 include_once 'BaseDatos.php';
-
 // idcompraitem(bigint) idproducto(obj) idcompra(obj) cicantidad(int)
-include_once 'BaseDatos.php';
 
-class CompraItem
-{
+class CompraItem {
     private $idcompraitem;
     private $objProducto;
     private $objCompra;
     private $cicantidad;
     private $mensajeOperacion;
 
-    public function __construct($idcompraitem = null, $objProducto = null, $objCompra = null, $cicantidad = null)
-    {
+    public function __construct($idcompraitem = null, $objProducto = null, $objCompra = null, $cicantidad = null) {
         $this->idcompraitem  =$idcompraitem;
         $this->objProducto = $objProducto;
         $this->objCompra = $objCompra;
@@ -22,116 +17,80 @@ class CompraItem
     }
 
     // Getters
-    public function getIdcompraitem()
-    {
+    public function getIdcompraitem() {
         return $this->idcompraitem;
     }
 
-    public function getObjProducto()
-    {
+    public function getObjProducto() {
         return $this->objProducto;
     }
 
-    public function getObjCompra()
-    {
+    public function getObjCompra() {
         return $this->objCompra;
     }
 
-    public function getCicantidad()
-    {
+    public function getCicantidad() {
         return $this->cicantidad;
     }
 
-    public function getMensajeOperacion()
-    {
+    public function getMensajeOperacion() {
         return $this->mensajeOperacion;
     }
 
     // Setters
-    public function setIdcompraitem($idcompraitem)
-    {
+    public function setIdcompraitem($idcompraitem) {
         $this->idcompraitem = $idcompraitem;
     }
 
-    public function setObjProducto($objProducto)
-    {
+    public function setObjProducto($objProducto) {
         $this->objProducto = $objProducto;
     }
 
-    public function setObjCompra($objCompra)
-    {
+    public function setObjCompra($objCompra) {
         $this->objCompra = $objCompra;
     }
 
-    public function setCicantidad($cicantidad)
-    {
+    public function setCicantidad($cicantidad) {
         $this->cicantidad = $cicantidad;
     }
 
-    public function setMensajeOperacion($mensajeOperacion)
-    {
+    public function setMensajeOperacion($mensajeOperacion) {
         $this->mensajeOperacion = $mensajeOperacion;
     }
 
     // Métodos CRUD
 
-    public function cargarDatos($idcompraitem = null, $objProducto = null, $objCompra = null, $cicantidad = null)
-    {
+    public function cargarDatos($idcompraitem = null, $objProducto = null, $objCompra = null, $cicantidad = null) {
         $this->setIdcompraitem($idcompraitem);
         $this->setObjProducto($objProducto);
         $this->setObjCompra($objCompra);
         $this->setCicantidad($cicantidad);
     }
 
-
-
     /**
      * Buscar datos de una compra por su id
      * @param int $id
      * @return boolean
      */
-    public function buscarDatos($id)
-    {
+    public function buscarDatos($id) {
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
             $consulta = "SELECT * FROM compraitem WHERE idcompraitem = $id";
             if ($bd->Ejecutar($consulta)) {
                 if ($row = $bd->Registro()) {
-                    $this->cargarDatos($row['idcompraitem'], $row['idproducto'], $row['idcompra'], $row['cicantidad']);
+                    $objProducto = new Producto();
+                    $objProducto->buscarDatos($row['idproducto']);
+
+                    $objCompra = new Compra();
+                    $objCompra->buscarDatos($row['idcompra']);
+
+                    $this->cargarDatos($row['idcompraitem'], $objProducto, $objCompra, $row['cicantidad']);
                     $resultado = true;
                 }
             }
         }
         return $resultado;
-    }
-
-
-    public function cargar()
-    {
-        $resp = false;
-        $base = new BaseDatos();
-        $sql = "SELECT * FROM compraitem WHERE idcompraitem = " .$this->getIdcompraitem();
-
-        if ($base->Iniciar()) {
-            $res = $base->Ejecutar($sql);
-            if ($res > -1) {
-                if ($res > 0) {
-                    $row = $base->Registro();
-                    $this->cargarDatos(
-                        $row['idcompraitem'],
-                        $row['idprocuto'],
-                        $row['idcompra'],
-                        $row['cicantidad']
-
-                    );
-                }
-            }
-        } else {
-            $this->setMensajeOperacion("Tabla->listar: " . $base->getError());
-        }
-
-        return $resp;
     }
 
     /**
@@ -150,8 +109,14 @@ class CompraItem
             $consulta .= " order by idcompraitem";
             if ($bd->Ejecutar($consulta)) {
                 while ($row = $bd->Registro()) {
+                    $objProducto = new Producto();
+                    $objProducto->buscarDatos($row['idproducto']);
+
+                    $objCompra = new Compra();
+                    $objCompra->buscarDatos($row['idcompra']);
+
                     $compraitem = new CompraItem();
-                    $compraitem->cargarDatos($row['idcompraitem'], $row['idproducto'], $row['idcompra'], $row['cicantidad']);
+                    $compraitem->cargarDatos($row['idcompraitem'], $objProducto, $objCompra, $row['cicantidad']);
                     array_push($coleccion, $compraitem);
                 }
             } else {
