@@ -1,22 +1,9 @@
 <?php
 include_once "../../../configuracion.php";
 include STRUCTURE_PATH . "/HeadSafe.php";
-
-//ESTE BLOQUE DEBE SER PERSONALIZADO PARA CADA PAGINA CON HEAD SAFE (ESTABLECER SU ID)
-$menuesFiltrados = array_filter($menues, function ($menu) {
-    return ($menu->getIdmenu()) == 7; //7 es el id del menu Carrito
-});
-
-if (empty($menuesFiltrados)) {
-    echo ("Sesión inválida"); //Puede embellecerse un poco más
-    //header("Location: ".ROOT_PATH."/index.php");
-    exit();
-}
-//-------------------------------------------------------------------------------------
 ?>
 
 <div class="bg-steam-lightgreen bdr-steam-nofocus w-75 mx-auto my-5">
-
     <div class="bdr-steam-nofocus px-5">
         <div class="m-3"> 
             <h1> Carro </h1>
