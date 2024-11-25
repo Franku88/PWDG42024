@@ -26,7 +26,7 @@ Para instalar el proyecto, seguir los siguientes pasos:
 2. Acceder al directorio del proyecto:
 
     ```bash
-    cd TP4
+    cd TPF
     ```
 
 3. Instalar las dependencias con Composer:
@@ -37,6 +37,7 @@ Para instalar el proyecto, seguir los siguientes pasos:
     
 4. Instalar las clases utilizadas con Composer:
     ```bash
-    composer require fzaninotto/faker
     composer require nesbot/carbon
+    composer require phpmailer/phpmailer
+    composer require tecnickcom/tcpdf
     ```

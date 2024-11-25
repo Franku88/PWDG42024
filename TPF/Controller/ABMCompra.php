@@ -1,4 +1,7 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 
 class ABMCompra {
     
@@ -99,6 +102,81 @@ class ABMCompra {
         }
         return $resp;
     }
+
+
+    /**
+     * Realiza cambio del estado de una compra y lo notifica por correo al usuario
+     * @param array $param ['idcompraestado'=>$idce, 'idnuevoestadotipo'=>$idcet]
+     */
+    public function cambiarEstado($param) {
+        $compraEstados = (new ABMCompraEstado())->buscar(['idcompraestado'=> $param['idcompraestado']]);
+        $exito = !empty($compraEstados);
+        if ($exito) {
+            $compraEstado = $compraEstados[0];
+
+            $exito = $compraEstado->getObjCompraEstadoTipo()->getIdcompraestadotipo() != $param['idnuevoestadotipo'];            
+            if ($exito) { //Si el estado tipo es diferente
+
+                $estadoTipos = (new ABMCompraEstadoTipo())->buscar(['idcompraestadotipo'=>$param['idnuevoestadotipo']]);
+                $exito = !empty($estadoTipos);
+                if ($exito) {
+                    $nuevoObjEstadoTipo = $estadoTipos[0];
+                    $timestampActual = (new DateTime('now', (new DateTimeZone('-03:00'))))->format('Y-m-d H:i:s');
+
+                    // Nuevo CompraEstado para la compra, con cefechaini = cefechafin (del estado anterior)
+                    $exito = (new ABMCompraEstado())->alta(['objCompra' => $compraEstado->getObjCompra(), 'objCompraEstadoTipo'=> $nuevoObjEstadoTipo, 'cefechaini'=> $timestampActual]);
+
+                    if ($exito) { // Si pudo crear nuevo compraestado
+                        $compraEstado->setCefechafin($timestampActual); // Establezco fechafin de estado actual
+                        $compraEstado->modificar(); //Modifico en la bd (DEJA DE SER CARRITO)
+
+                        $usuario = $compraEstado->getObjCompra()->getObjUsuario();
+
+                        // Crear una instancia de PHPMailer
+                        $mailer = new PHPMailer(true);
+                        try {
+                            // Configuración del servidor SMTP
+                            $mailer->isSMTP();
+                            $mailer->Host = 'smtp.gmail.com'; // Servidor SMTP (Gmail)
+                            $mailer->SMTPAuth = true;
+                            $mailer->Username = ''; // Correo Origen
+                            $mailer->Password = ''; // Contraseña de aplicación (Generada en Google)
+                            $mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                            $mailer->Port = 587; // Puerto SMTP (Gmail)
+
+                            // Configuración del correo
+                            $mailer->setFrom('', 'PWDG42024'); // Remitente
+                            $mailer->addAddress($usuario->getUsmail()); // Destinatario
+                            $mailer->Subject = 'Cambio de estado de tu compra.'; // Asunto
+                            $mailer->Body = 'mensaje sobre tu compra'; // Mensaje en texto plano
+
+                            // Habilitar formato HTML (opcional)
+                            $mailer->isHTML(true);
+                            $mailer->Body = "<h1>" . 'Cambio de estado de tu compra.' . "</h1><p>" . 'mensaje sobre tu compra' . "</p>";
+
+                            // Enviar el correo
+                            $mailer->send();
+
+                            $msj = 'Correo enviado exitosamente.';
+                        } catch (Exception $e) {
+                            $exito = false;
+                            $msj = "Error al enviar el correo: {$mailer->ErrorInfo}";
+                        }
+                    } else {
+                        $msj = 'Error al crear nuevo estado.';
+                    }
+                } else {
+                    $msj = 'El nuevo estado tipo no existe.';
+                }
+            } else {
+                $msj = 'La compra ya se encuentra en el estado especificado.';
+            }
+        } else {
+            $msj = 'Idcompraestado no encontrado.';
+        }
+        return ['success'=> $exito, 'message'=> $msj];
+    }
+
 
     /**
      * Busca compras en la BD

@@ -22,33 +22,29 @@
         // Crea compra en estadotipo 1 (carrito) si no lo tiene, (SOLO PARA CLIENTES)
         if ($sesion->esCliente()) { //Si es cliente (idrol = 3)
             $compras = (new ABMCompra())->buscar(['usuario'=> $usuario]);
-            $compraEstados = (new ABMCompraEstado)->buscar(['idcompraestadotipo' => 1, 'cefechafin' => null]); //Toda compraEstado de la bd
-            
-            $i = 0;
-            $j = 0;
+            $compraEstadoTipos = (new ABMCompraEstadoTipo())->buscar(['idcompraestadotipo' => 1]); //Busca estadotipo 1 (carrito)
+
             $encontrado = false;
-            $compraEstado = null;
-            while (!$encontrado && ($i < count($compraEstados))) {
-                while (!$encontrado && ($j < count($compras))) {
-                    $encontrado = ($compraEstados[$i]->getObjCompra()->getIdcompra()) == ($compras[$j]->getIdcompra());
-                    if ($encontrado) {
-                        $compraEstado = $compraEstados[$i];
-                    }
-                    $j++;
-                }
-                $j = 0;
+            $i = 0;
+            while (!$encontrado && $i < count($compras)) {
+                $compraEstados = (new ABMCompraEstado())->buscar(['objCompra'=> $compras[$i], 'objCompraEstadoTipo' => $compraEstadoTipos[0], 'cefechafin' => null]); //compraEstado de la compra (carrito)
+                $encontrado = !empty($compraEstados);
                 $i++;
+            }
+
+            if ($encontrado) {
+                $compraEstado = $compraEstados[0];
             }
             
             if ($compraEstado == null) {
-                $param1['cofecha'] = (new DateTime('now', (new DateTimeZone('-03:00'))))->format('Y-m-d H:i:s');
-                $param1['usuario'] = $usuario;
+                $param['cofecha'] = (new DateTime('now', (new DateTimeZone('-03:00'))))->format('Y-m-d H:i:s');
+                $param['usuario'] = $usuario;
     
-                if ((new ABMCompra())->alta($param1)) {
-                    $compras = (new ABMCompra)->buscar(['usuario'=> $usuario, 'cofecha' => $param1['cofecha']]);
-                    $compraEstado = (new ABMCompraEstado)->buscar(['objCompra'=> $compras[0], 'cefechafin' => null]); //Toda compraEstado de la bd
+                if ((new ABMCompra())->alta($param)) {
+                    $compras = (new ABMCompra())->buscar(['usuario'=> $usuario, 'cofecha' => $param['cofecha']]);
+                    $compraEstado = (new ABMCompraEstado())->buscar(['objCompra'=> $compras[0], 'cefechafin' => null]); //Toda compraEstado de la bd
                 }
-            }   
+            }
         }
     }
 

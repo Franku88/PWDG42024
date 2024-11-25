@@ -147,7 +147,33 @@ include STRUCTURE_PATH . "/HeadSafe.php";
                 alert('Error al realizar operacion.');
             },
         });
+    }
 
+    function comprarCarrito() {
+        if (confirm("¿Deseas realizar el pago?")) {
+            console.log("Pagando...");
+            $.ajax({
+                url: 'Action/CompraCarrito.php',
+                method: 'POST',
+                data: {
+                    idcompraestado: <?php echo $compraEstado ? $compraEstado->getObjCompra()->getIdcompra(): 0;?>,
+                    idnuevoestadotipo: 2 // Pasa a estado 2 (Aceptado) pues se confirma el pago automaticamente
+                },
+                dataType: 'json',
+                success: function(response) {
+                    alert(response.message);
+                    if (response.success) {
+                        location.reload(true); //Recarga pagina si fue exitoso el cambio de estado y envio de mail
+                    }
+                },
+                error: function() {
+                    alert('Error al realizar operacion.');
+                },
+            });
+        } else {
+            // El usuario hizo clic en "Cancelar"
+            console.log("Compra cancelada.");
+        }
     }
 
 

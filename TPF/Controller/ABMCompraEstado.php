@@ -115,24 +115,22 @@ class ABMCompraEstado {
             }
             if (isset($param['cefechaini'])) {
                 if ($param['cefechaini'] == null) {
-                    $fecha = 'null';
+                    $where .= " AND cefechaini IS NULL";
                 } else {
-                    $fecha = "'".$param['cefechaini']."'";
+                    $where .= " AND cefechaini = '".$param['cefechaini']."'";
                 }
-                $where .= " AND cefechaini = ".$fecha;
             }
             if (isset($param['cefechafin'])) {
-                if ($param['cefechafin'] != "notnull") {
-                    if ($param['cefechafin'] == null) {
-                        $fecha = 'null';
-                    } else {
-                        $fecha = "'".$param['cefechaini']."'";
-                    }
-                    $where .= " AND cefechafin = ".$fecha;
-                } else {
+                if ($param['cefechafin'] == "notnull") {
                     $where .= " AND cefechafin IS NOT NULL";
-                }
-               
+                } else {
+                    if ($param['cefechafin'] == null) {
+                        $where .= " AND cefechafin IS NULL";
+                    } else {
+                        $where .= " AND cefechafin = '".$param['cefechaini']."'";
+                    }
+                    
+                }              
             }
         }
         $arreglo = (new CompraEstado())->listar($where);
