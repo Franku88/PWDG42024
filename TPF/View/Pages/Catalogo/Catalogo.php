@@ -51,7 +51,7 @@ $esCliente = $sesion->esCliente();
                                     </div>
                                     <div>
                                         <?php if ($esCliente) { //Inserta estos botones si el usuario es un cliente idrol = 3 ?> 
-                                            <button class="btn btn-primary btn-steam boton_agregar w-100" id="${producto.idproducto}">Agregar al carro</button>
+                                            <button class="btn btn-primary btn-steam w-100" id="${producto.idproducto}" onclick="agregarItemCarrito(${producto.idproducto})">Agregar al carro</button>
                                         <?php } ?>
                                     </div>
                                 </div>
@@ -67,6 +67,29 @@ $esCliente = $sesion->esCliente();
             }
         });
     });
+
+
+    function agregarItemCarrito(idprod) {
+        $.ajax({
+            url: 'Action/AgregarCompraItem.php',
+            method: 'POST',
+            data: {
+                idproducto: idprod,
+                idcompra: <?php echo $compraEstado->getObjCompra()->getIdcompra();?>, 
+                cicantidad: 1,
+            },
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    alert('Producto agregado al carrito.');
+                }
+            },
+            error: function() {
+                alert('Error al agregar al carrito.');
+            },
+        });
+    }
 </script>
 
 <?php include STRUCTURE_PATH . '/Foot.php'; ?>

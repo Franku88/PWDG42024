@@ -106,13 +106,13 @@ class ABMCompraItem {
                 $where .= " AND idcompraitem = ".$param['idcompraitem'];
             }
             if (isset($param['producto'])) {
-                $where .= " AND idproducto = '".$param['producto']->getIdproducto()."'";
+                $where .= " AND idproducto = ".$param['producto']->getIdproducto();
             }
             if (isset($param['compra'])) {
-                $where .= " AND idcompra = '".$param['compra']->getIdcompra()."'";
+                $where .= " AND idcompra = ".$param['compra']->getIdcompra();
             }
             if (isset($param['cicantidad'])) {
-                $where .= " AND cicantidad = '".$param['cicantidad']."'";
+                $where .= " AND cicantidad = ".$param['cicantidad'];
             }
         }
         $arreglo = (new CompraItem())->listar($where);

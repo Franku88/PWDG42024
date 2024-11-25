@@ -139,8 +139,7 @@ class CompraItem
      * @param $condicion // WHERE de sql
      * @return array // items de compra que cumplieron la condicion
      */
-    public function listar($condicion = "")
-    {
+    public function listar($condicion = "") {
         $coleccion = [];
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
@@ -163,19 +162,17 @@ class CompraItem
         }
         return $coleccion;
     }
+    
     /**
      * Insertar los datos de un item de compra a la bd
      * @return boolean
      */
-    public function insertar()
-    {
+    public function insertar() {
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
-            $consulta = "INSERT INTO compraitem(idproducto, idcompra, cicantidad) 
-                            VALUES ('" .($this->getObjProducto())->getIdproducto(). "',
-                                    '" .($this->getObjCompra())->getIdcompra(). "',
-                                    '" . $this->getCicantidad(). "')";
+            $consulta = "INSERT INTO compraitem(idproducto, idcompra, cicantidad) VALUES 
+                (".($this->getObjProducto())->getIdproducto().", ".($this->getObjCompra())->getIdcompra().", ".$this->getCicantidad().")";
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -191,15 +188,15 @@ class CompraItem
      * Modificar los datos de un item de compra en la bd
      * @return boolean
      */
-    public function modificar()
-    {
+    public function modificar() {
         $resultado = false;
         $bd = new BaseDatos();
         if ($bd->Iniciar()) {
             $consulta = "UPDATE compraitem 
-                            SET idproducto = '" .($this->getObjProducto())->getIdproducto(). "', 
-                            idcompra = '" .($this->getObjCompra())->getIdcompra(). "', 
-                            cicantidad = '" .$this->getCicantidad(). "' WHERE idcompraitem = " .$this->getIdcompraitem();
+                            SET idproducto = ".($this->getObjProducto())->getIdproducto().",
+                            idcompra = ".($this->getObjCompra())->getIdcompra().", 
+                            cicantidad = ".$this->getCicantidad()."
+                        WHERE idcompraitem = ".$this->getIdcompraitem();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -215,12 +212,11 @@ class CompraItem
      * Eliminar un item de compra de la bd
      * @return boolean
      */
-    public function eliminar()
-    {
+    public function eliminar() {
         $bd = new BaseDatos();
         $resultado = false;
         if ($bd->Iniciar()) {
-            $consulta = "DELETE FROM compraitem WHERE idcompraitem = " .$this->getIdcompraitem();
+            $consulta = "DELETE FROM compraitem WHERE idcompraitem = ".$this->getIdcompraitem();
             if ($bd->Ejecutar($consulta)) {
                 $resultado = true;
             } else {
@@ -234,13 +230,12 @@ class CompraItem
 
     /**
      * Retorna un string con los datos del item de compra
-     * @return string
+     * @return String
      */
-    public function __tostring()
-    {
-        return ("Id Compra Item : " .$this->getIdcompraitem(). " \n
-        Productos: " .$this->getObjProducto(). " \n
-        Compra: " .$this->getObjCompra(). " \n
+    public function __toString() {
+        return ("Id Compra Item : ".$this->getIdcompraitem()."\n
+        Productos: ".$this->getObjProducto(). "\n
+        Compra: ".$this->getObjCompra(). "\n
         Cantidad: " .$this->getCicantidad());
     }
 }

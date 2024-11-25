@@ -5,6 +5,7 @@
     $menues = []; //Array con menues permitidos para rol actual
 
     if ($sesionValida) {
+        $usuario = $sesion->getUsuario();
         $objRol = $sesion->getRoles()[0];
         $menuRoles = (new ABMMenuRol())->buscar(['rol'=> $objRol]); // [objMenuRol($objmenu, $objrol),objMenuRol($objmenu2, $objrol),...]
 
@@ -18,8 +19,6 @@
 
         // Crea compra en estadotipo 1 (carrito) si no lo tiene, (SOLO PARA CLIENTES)
         if ($sesion->esCliente()) { //Si es cliente (idrol = 3)
-            $usuario = $sesion->getUsuario();
-    
             $compras = (new ABMCompra())->buscar(['usuario'=> $usuario]);
             $compraEstados = (new ABMCompraEstado)->buscar(['idcompraestadotipo' => 1, 'cefechafin' => null]); //Toda compraEstado de la bd
             
@@ -68,7 +67,7 @@
         <div class='mx-3'>";
 
     if ($sesionValida) { 
-        $menuHtml .=  "<a class='btn btn-primary btn-steam my-1' href='".BASE_URL."/View/Pages/Perfil/Perfil.php'>Perfil</a>
+        $menuHtml .=  "<a class='btn btn-primary btn-steam my-1' href='".BASE_URL."/View/Pages/Perfil/Perfil.php'>".$usuario->getUsnombre()."</a>
         <a class='btn btn-primary btn-steam my-1' href='".BASE_URL."/View/Pages/Logout/Logout.php'>Logout</a>";
     } else { 
         $menuHtml .= "<a class='btn btn-primary btn-steam my-1' href='".BASE_URL."/View/Pages/Login/Login.php'>Login</a>
