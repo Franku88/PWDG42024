@@ -3,12 +3,14 @@
     $sesion = new Session();
     $sesionValida = $sesion->validar();
     $menues = []; //Array con menues permitidos para rol actual
+    $compraEstado = null;
 
     if ($sesionValida) {
         $usuario = $sesion->getUsuario();
         $objRol = $sesion->getRoles()[0];
         $menuRoles = (new ABMMenuRol())->buscar(['rol'=> $objRol]); // [objMenuRol($objmenu, $objrol),objMenuRol($objmenu2, $objrol),...]
 
+        // Obtiene menues para dicho rol
         foreach($menuRoles as $menuRol) {
             array_push($menues, ($menuRol->getObjMenu()));
         }
@@ -52,17 +54,16 @@
 
     // Opciones a mostrar en header (dinamicamente)
     $menuHtml = "<div class='mx-3'>
-        <a class='btn btn-primary btn-steam my-1' href='".BASE_URL."/View/Pages/Catalogo/Catalogo.php'> Catalogo </a>";
+        <a class='btn btn-primary btn-steam m-1' href='".BASE_URL."/View/Pages/Catalogo/Catalogo.php'> Catalogo </a>";
     
     foreach ($menues as $cadaMenu) {
         if ($cadaMenu->getPadre() != null) {
-            $menuHtml .= "<a class='btn btn-primary btn-steam my-1' href='".BASE_URL.$cadaMenu->getMeurl()."'> ".$cadaMenu->getMenombre()." </a>";
+            $menuHtml .= "<a class='btn btn-primary btn-steam m-1' href='".BASE_URL.$cadaMenu->getMeurl()."'> ".$cadaMenu->getMenombre()." </a>";
         }
     }
 
     $menuHtml .= "</div>
         <div class='mx-3'>";
-
     if ($sesionValida) { 
         $menuHtml .=  "<a class='btn btn-primary btn-steam my-1' href='".BASE_URL."/View/Pages/Perfil/Perfil.php'>".$usuario->getUsnombre()."</a>
         <a class='btn btn-primary btn-steam my-1' href='".BASE_URL."/View/Pages/Logout/Logout.php'>Logout</a>";

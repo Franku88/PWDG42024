@@ -3,18 +3,31 @@
     $sesion = new Session();
     $sesionValida = $sesion->validar();
     $menues = []; //Array con menues permitidos para rol actual
+    $compraEstado = null;
 
     if ($sesionValida) {
         $usuario = $sesion->getUsuario();
         $objRol = $sesion->getRoles()[0];
         $menuRoles = (new ABMMenuRol())->buscar(['rol'=> $objRol]); // [objMenuRol($objmenu, $objrol),objMenuRol($objmenu2, $objrol),...]
 
+        // Obtiene menues para dicho rol
         foreach($menuRoles as $menuRol) {
             array_push($menues, ($menuRol->getObjMenu()));
         }
         foreach($menues as $menu) { //Busca menues hijos y los agrega al array de menues
             $hijos = (new ABMMenu())->buscar(['padre' => $menu]);
             $menues = array_merge($menues, $hijos);
+        }
+
+        // Verifica que pagina actual este permitida por menues obtenidos (DIFERENCIA CON Head.php)
+        $menuesFiltrados = array_filter($menues, function ($menu) {
+            return (BASE_URL.$menu->getMeurl()) == CURRENT_URL;
+        });
+    
+        if (empty($menuesFiltrados)) {
+            // Si no tiene menu permitido, redirige
+            header("Location: ".BASE_URL."/View/Pages/SesionInvalida/SesionInvalida.php");
+            exit();
         }
 
         // Crea compra en estadotipo 1 (carrito) si no lo tiene, (SOLO PARA CLIENTES)
@@ -25,7 +38,6 @@
             $i = 0;
             $j = 0;
             $encontrado = false;
-            $compraEstado = null;
             while (!$encontrado && ($i < count($compraEstados))) {
                 while (!$encontrado && ($j < count($compras))) {
                     $encontrado = ($compraEstados[$i]->getObjCompra()->getIdcompra()) == ($compras[$j]->getIdcompra());
@@ -48,18 +60,20 @@
                 }
             }
         }
-    } else { //Redirige a pagina no segura (UNICA DIFERENCIA CON Head.php)
+    } else { //Redirige a pagina no segura (DIFERENCIA CON Head.php)
         header("Location: ".BASE_URL."/View/Pages/SesionInvalida/SesionInvalida.php");
         exit();
     }
 
+    
+
     // Opciones a mostrar en header (dinamicamente)
     $menuHtml = "<div class='mx-3'>
-        <a class='btn btn-primary btn-steam my-1' href='".BASE_URL."/View/Pages/Catalogo/Catalogo.php'> Catalogo </a>";
+        <a class='btn btn-primary btn-steam m-1' href='".BASE_URL."/View/Pages/Catalogo/Catalogo.php'> Catalogo </a>";
     
     foreach ($menues as $cadaMenu) {
         if ($cadaMenu->getPadre() != null) {
-            $menuHtml .= "<a class='btn btn-primary btn-steam my-1' href='".BASE_URL.$cadaMenu->getMeurl()."'> ".$cadaMenu->getMenombre()." </a>";
+            $menuHtml .= "<a class='btn btn-primary btn-steam m-1' href='".BASE_URL.$cadaMenu->getMeurl()."'> ".$cadaMenu->getMenombre()." </a>";
         }
     }
 
