@@ -17,5 +17,5 @@ $_SERVER["ROOT"] = ROOT_PATH; //Establece directorio raiz en array
 
 // Global includes
 include_once(ROOT_PATH.'/Util/autoloader.php'); // Funciones usadas en toda la sesion
-// require_once 'vendor/autoload.php'; // Con Composer
+require_once 'vendor/autoload.php'; // Con Composer
 ?>
