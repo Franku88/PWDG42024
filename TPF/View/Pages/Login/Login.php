@@ -3,7 +3,7 @@ include_once '../../../configuracion.php';
 include STRUCTURE_PATH . '/Head.php';
 
 if ($sesion->validar()) { //Si ya tiene una sesion, redirige a Catalogo
-    header('Location: '.BASE_URL.'/View/Pages/Catalogo/Catalogo.php');
+    header('Location: '.BASE_URL.'/index.php');
 }
 ?>
 
@@ -42,7 +42,7 @@ if ($sesion->validar()) { //Si ya tiene una sesion, redirige a Catalogo
                     if (response) {
                         messageContainer.addClass('bg-success').text('Inicio de sesión exitoso. Redirigiendo...');
                         setTimeout(function() {
-                            window.location.href = "<?php echo BASE_URL?>/View/Pages/Catalogo/Catalogo.php";
+                            window.location.href = "<?php echo BASE_URL?>/index.php";
                         }, 2000);
                     } else {
                         messageContainer.addClass('bg-danger').text('Datos incorrectos.');
