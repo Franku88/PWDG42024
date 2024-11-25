@@ -13,6 +13,7 @@ $esCliente = $sesion->esCliente();
 </div>
 
 <script>
+    
     $(document).ready(function() {
         // Realizar la solicitud AJAX
         $.ajax({
@@ -27,20 +28,22 @@ $esCliente = $sesion->esCliente();
                 $.each(response, function(index, producto) {
                     htmlContent += `
                     <div class="d-flex w-100">
-                        <div class="h-100 w-100 shadow-sm d-flex">
+                        <div class="h-100 w-100 shadow-sm d-flex bg-steam-darkgreen bdr-steam-focus">
                             <!-- Product Details -->
-                            <div class='card-body bg-steam-darkgreen bdr-steam-focus d-flex'>
-                                <div class='align-self-center bdr-steam-nofocus m-1 p-1'>
-                                    <!-- Product Image -->
-                                    <a class='link-light text-decoration-none' href='<?php echo BASE_URL ?>/View/Pages/Producto/Producto.php?idproducto=${producto.idproducto}'>
-                                        <img src='${producto.icon}'  width='100' height='100' alt='...'>
-                                    </a>
-                                </div>
+                            <div class = 'me-auto' id='detailsProducto${producto.idproducto}'>
+                                <div class='card-body d-flex'>
+                                    <div class='align-self-center bdr-steam-nofocus m-1 p-1'>
+                                        <!-- Product Image -->
+                                        <a class='link-light text-decoration-none' href='<?php echo BASE_URL ?>/View/Pages/Producto/Producto.php?idproducto=${producto.idproducto}'>
+                                            <img src='${producto.icon}'  width='100' height='100' alt='...'>
+                                        </a>
+                                    </div>
 
-                                <div class='d-flex flex-column justify-content-center items-center mx-5'>
-                                    <h5 class='card-title'> <a class='link-light text-decoration-none' href='<?php echo BASE_URL ?>/View/Pages/Producto/Producto.php?idproducto=${producto.idproducto}'> ${producto.pronombre}</a> </h5>
-                                    <p class='card-text'> Precio: $ ${producto.proprecio} </p>
-                                    <p class='card-text'> Stock: ${producto.procantstock} </p>
+                                    <div class='d-flex flex-column justify-content-center items-center mx-5'>
+                                        <h5 class='card-title'> <a class='link-light text-decoration-none' href='<?php echo BASE_URL ?>/View/Pages/Producto/Producto.php?idproducto=${producto.idproducto}'> ${producto.pronombre}</a> </h5>
+                                        <p class='card-text'> Precio: $ ${producto.proprecio} </p>
+                                        <p class='card-text'> Stock: ${producto.procantstock} </p>
+                                    </div>
                                 </div>
                             </div>
                             <!-- Product Actions -->
@@ -50,7 +53,7 @@ $esCliente = $sesion->esCliente();
                                         <a class='btn btn-primary btn-steam w-100' href='<?php echo BASE_URL ?>/View/Pages/Producto/Producto.php?idproducto=${producto.idproducto}'>Ver detalles</a>
                                     </div>
                                     <div>
-                                        <?php if ($esCliente) { //Inserta estos botones si el usuario es un cliente idrol = 3 ?> 
+                                        <?php if ($esCliente) { ?> 
                                             <button class="btn btn-primary btn-steam w-100" id="${producto.idproducto}" onclick="agregarItemCarrito(${producto.idproducto})">Agregar al carro</button>
                                         <?php } ?>
                                     </div>
@@ -75,19 +78,57 @@ $esCliente = $sesion->esCliente();
             method: 'POST',
             data: {
                 idproducto: idprod,
-                idcompra: <?php echo $compraEstado->getObjCompra()->getIdcompra();?>, 
+                idcompra: <?php echo $compraEstado ? $compraEstado->getObjCompra()->getIdcompra(): 0;?>, 
                 cicantidad: 1,
             },
             dataType: 'json',
             success: function(response) {
-                console.log(response);
                 if (response.success) {
-                    alert('Producto agregado al carrito.');
+                    actualizarProducto(idprod);
                 }
+                alert(response.message);
             },
             error: function() {
-                alert('Error al agregar al carrito.');
+                alert('Error al realizar operacion.');
             },
+        });
+    }
+
+    function actualizarProducto(idprod) {
+        $.ajax({
+            url: 'Action/ObtenerProducto.php', // Ruta al script PHP que genera los datos
+            method: 'POST',
+            data: {
+                idproducto: idprod
+            },
+            dataType: 'json',
+            success: function(response) {
+                //console.log(response);
+                // Iterar sobre los productos y construir el HTML
+                var htmlContent = '';
+                $.each(response, function(index, producto) {
+                    htmlContent += `
+                        <div class='card-body d-flex'>
+                            <div class='align-self-center bdr-steam-nofocus m-1 p-1'>
+                                <!-- Product Image -->
+                                <a class='link-light text-decoration-none' href='<?php echo BASE_URL ?>/View/Pages/Producto/Producto.php?idproducto=${producto.idproducto}'>
+                                    <img src='${producto.icon}'  width='100' height='100' alt='...'>
+                                </a>
+                            </div>
+
+                            <div class='d-flex flex-column justify-content-center items-center mx-5'>
+                                <h5 class='card-title'> <a class='link-light text-decoration-none' href='<?php echo BASE_URL ?>/View/Pages/Producto/Producto.php?idproducto=${producto.idproducto}'> ${producto.pronombre}</a> </h5>
+                                <p class='card-text'> Precio: $ ${producto.proprecio} </p>
+                                <p class='card-text'> Stock: ${producto.procantstock} </p>
+                            </div>
+                        </div>`;
+                });
+                // Insertar el HTML generado en el contenedor
+                $('#detailsProducto'+idprod).html(htmlContent);
+            },
+            error: function() {
+                alert('Error al cargar el catálogo.');
+            }
         });
     }
 </script>
