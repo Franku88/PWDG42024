@@ -11,6 +11,5 @@
 
         <!-- Rutas de scripts a usar (ej. validaciones) -->
         <script src="<?php echo BASE_URL; ?>/View/Assets/js/validacionesTPF.js"></script>
-        <script src="<?php echo BASE_URL; ?>/View/Assets/js/scriptTienda.js"></script>
     </body>
 </html>
