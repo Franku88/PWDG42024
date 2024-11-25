@@ -122,12 +122,17 @@ class ABMCompraEstado {
                 $where .= " AND cefechaini = ".$fecha;
             }
             if (isset($param['cefechafin'])) {
-                if ($param['cefechafin'] == null) {
-                    $fecha = 'null';
+                if ($param['cefechafin'] != "notnull") {
+                    if ($param['cefechafin'] == null) {
+                        $fecha = 'null';
+                    } else {
+                        $fecha = "'".$param['cefechaini']."'";
+                    }
+                    $where .= " AND cefechafin = ".$fecha;
                 } else {
-                    $fecha = "'".$param['cefechaini']."'";
+                    $where .= " AND cefechafin IS NOT NULL";
                 }
-                $where .= " AND cefechafin = ".$fecha;
+               
             }
         }
         $arreglo = (new CompraEstado())->listar($where);

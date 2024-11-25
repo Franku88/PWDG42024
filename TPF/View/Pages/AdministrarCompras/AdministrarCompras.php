@@ -33,7 +33,7 @@ if (empty($menuesFiltrados)) {
 <div class="d-flex justify-content-center align-items-start gap-3">
 
     <!-- Tabla de compras -->
-    <div class="mt-5 text-center" style="max-width: 65%; padding: 20px;">
+    <div class="mt-5 text-center" style="max-width: 75%; padding: 20px;">
         <h1>Administrar Compras</h1>
         <table class="table table-bordered table-striped" id="comprasTable" style="width: 100%;">
             <thead class="thead-dark">
@@ -66,24 +66,22 @@ if (empty($menuesFiltrados)) {
                 success: function(response) {
                     var tableContent = '';
                     $.each(response, function(index, compra) {
-                        const accion = compra.estado === 'iniciada' ?
-                            `
-    <button class="btn btn-success btn-sm" onclick="gestionarCompra(${compra.idcompra}, 'aprobar')">Aprobar</button>
-    <button class="btn btn-primary btn-sm" onclick="gestionarCompra(${compra.idcompra}, 'enviar')">Enviar</button>
-    <button class="btn btn-danger btn-sm" onclick="gestionarCompra(${compra.idcompra}, 'cancelar')">Cancelar</button>
-  ` :
-                            `<button class="btn btn-danger btn-sm" onclick="gestionarCompra(${compra.idcompra}, 'cancelar')">Cancelar</button>`;
+                            // en base al estado de la compra cambiamos los botones de la accion
 
 
                         tableContent += `
-            <tr id="compra-${compra.idcompra}">
-                <td>${compra.idcompra}</td>
-                <td>${compra.estado}</td>
-                <td>${compra.fechaInicio}</td>
-                <td>${compra.fechaFin ?? 'N/A'}</td>
-                <td>${compra.usuario}</td>
-                <td>${accion}</td>
-            </tr>
+                            <tr id="compra-${compra.idcompra}">
+                                <td>${compra.idcompra}</td>
+                                <td>${compra.estado}</td>
+                                <td>${compra.fechaInicio}</td>
+                                <td>${compra.fechaFin ?? 'N/A'}</td>
+                                <td>${compra.usuario}</td>
+                                <td>
+                                    <button class="btn btn-success" onclick="gestionarCompra(${compra.idcompra}, 2)">Aceptar</button>
+                                    <button class="btn btn-danger" onclick="gestionarCompra(${compra.idcompra}, 3)">Cancelar</button>
+
+                                </td>
+                            </tr>
         `;
                     });
                     $('#comprasTable tbody').html(tableContent);
@@ -116,16 +114,6 @@ if (empty($menuesFiltrados)) {
             });
         };
 
-
-        function generarAcciones(compra) {
-            return compra.estado === 'iniciada' ?
-                `
-            <button class="btn btn-success btn-sm" onclick="gestionarCompra(${compra.idcompra}, 'aprobar')">Aprobar</button>
-            <button class="btn btn-primary btn-sm" onclick="gestionarCompra(${compra.idcompra}, 'enviar')">Enviar</button>
-            <button class="btn btn-danger btn-sm" onclick="gestionarCompra(${compra.idcompra}, 'cancelar')">Cancelar</button>
-          ` :
-                `<button class="btn btn-danger btn-sm" onclick="gestionarCompra(${compra.idcompra}, 'cancelar')">Cancelar</button>`;
-        }
 
 
 
