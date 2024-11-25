@@ -4,10 +4,10 @@ include_once '../../../../configuracion.php';
 $data = Funciones::data_submitted(); 
 $salida = [];
 if (!empty($data)) {
-    $productos = (new ABMProducto())->buscar();
+    $productos = (new ABMProducto())->buscar($data);
     foreach($productos as $producto) {
         if ($producto->getProdeshabilitado() == null) {
-            $nuevoElem['icon'] = BASE_URL."/View/Media/Product/".$producto->getIdproducto()."/icon.png";
+            $nuevoElem['icon'] = "../../Media/Product/".$producto->getIdproducto()."/icon.png";
             $nuevoElem['idproducto'] = $producto->getIdproducto();
             $nuevoElem['pronombre'] = $producto->getPronombre();
             $nuevoElem['prodetalle'] = $producto->getProdetalle();
