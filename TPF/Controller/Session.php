@@ -117,7 +117,26 @@ class Session {
                 $encontrado = false;
                 $i = 0;
                 while (!$encontrado && $i < count($compras)) {
-                    $compraEstados = (new ABMCompraEstado())->buscar(['objCompra'=> $compras[$i], 'objCompraEstadoTipo' => $compraEstadoTipos[0], 'cefechafin' => "null"]); //compraEstado de la compra (carrito)
+                    $compraEstados = (new ABMCompraEstado())->buscar([
+                        'objCompra'=> $compras[$i] 
+                    ]); //Obtiene todo estado de la compra
+                    
+                    //Busca CompraEstado mas actual (sin considerar fechafin ni tipo)
+                    $ceMasActual = new CompraEstado(null, null, null, '1970-01-01 00:00:01'); //Establezco un nulo
+                    foreach($compraEstados as $cadaCe) {
+                        if((new DateTime($cadaCe->getCefechaini())) > (new DateTime($ceMasActual->getCefechaini()))) {
+                            $ceMasActual = $cadaCe; //Lo guarda si es más actual
+                        }
+                    }
+
+                    //Busca compraEstados ahora con fechaini maxima encontrada y tipo 1
+                    $compraEstados = (new ABMCompraEstado())->buscar([
+                        'objCompra' => $compras[$i], 
+                        'objCompraEstadoTipo' => $compraEstadoTipos[0], 
+                        'cefechaini' => $ceMasActual->getCefechaini(), 
+                        'cefechafin' => "null"
+                    ]); 
+
                     $encontrado = !empty($compraEstados);
                     $i++;
                 }

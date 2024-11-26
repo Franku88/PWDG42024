@@ -6,63 +6,18 @@
     $compraEstado = null;
 
     if ($sesionValida) {
-        $usuario = $sesion->getUsuario();
-        $objRol = $sesion->getRoles()[0];
-        $menuRoles = (new ABMMenuRol())->buscar(['rol'=> $objRol]); // [objMenuRol($objmenu, $objrol),objMenuRol($objmenu2, $objrol),...]
+        $usuario = $sesion->getUsuario(); //Se usara en scripts que llamen a este head
+        $compraEstado = $sesion->crearCarrito(); //Obtiene compraEstado del carrito actual (si no lo tiene, lo crea)
+        $menues = $sesion->getMenues(); //Obtiene menues para el usuario actual
 
-        // Obtiene menues para dicho rol
-        foreach($menuRoles as $menuRol) {
-            array_push($menues, ($menuRol->getObjMenu()));
-        }
-        foreach($menues as $menu) { //Busca menues hijos y los agrega al array de menues
-            $hijos = (new ABMMenu())->buscar(['padre' => $menu]);
-            $menues = array_merge($menues, $hijos);
-        }
-
-        // Verifica que pagina actual este permitida por menues obtenidos (DIFERENCIA CON Head.php)
-        $menuesFiltrados = array_filter($menues, function ($menu) {
-            return (BASE_URL.$menu->getMeurl()) == CURRENT_URL;
-        });
-    
-        if (empty($menuesFiltrados)) {
-            // Si no tiene menu permitido, redirige
+        if (!$sesion->validarPagina($menues)) { // Si no tiene menu permitido, redirige (DIFERENCIA CON Head.php)
             header("Location: ".BASE_URL."/View/Pages/SesionInvalida/SesionInvalida.php");
             exit();
-        }
-
-        // Crea compra en estadotipo 1 (carrito) si no lo tiene, (SOLO PARA CLIENTES)
-        if ($sesion->esCliente()) { //Si es cliente (idrol = 3)
-            $compras = (new ABMCompra())->buscar(['usuario'=> $usuario]);
-            $compraEstadoTipos = (new ABMCompraEstadoTipo())->buscar(['idcompraestadotipo' => 1]); //Busca estadotipo 1 (carrito)
-
-            $encontrado = false;
-            $i = 0;
-            while (!$encontrado && $i < count($compras)) {
-                $compraEstados = (new ABMCompraEstado())->buscar(['objCompra'=> $compras[$i], 'objCompraEstadoTipo' => $compraEstadoTipos[0], 'cefechafin' => "null"]); //compraEstado de la compra (carrito)
-                $encontrado = !empty($compraEstados);
-                $i++;
-            }
-
-            if ($encontrado) {
-                $compraEstado = $compraEstados[0];
-            }
-            
-            if ($compraEstado == null) {
-                $param['cofecha'] = (new DateTime('now', (new DateTimeZone('-03:00'))))->format('Y-m-d H:i:s');
-                $param['usuario'] = $usuario;
-    
-                if ((new ABMCompra())->alta($param)) {
-                    $compras = (new ABMCompra())->buscar(['usuario'=> $usuario, 'cofecha' => $param['cofecha']]);
-                    $compraEstado = (new ABMCompraEstado())->buscar(['objCompra'=> $compras[0], 'cefechafin' => "null"]); //Toda compraEstado de la bd
-                }
-            }
         }
     } else { //Redirige a pagina no segura (DIFERENCIA CON Head.php)
         header("Location: ".BASE_URL."/View/Pages/SesionInvalida/SesionInvalida.php");
         exit();
     }
-
-    
 
     // Opciones a mostrar en header (dinamicamente)
     $menuHtml = "<div class='mx-3'>
