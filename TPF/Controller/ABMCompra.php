@@ -135,17 +135,21 @@ class ABMCompra {
                         // Crear una instancia de PHPMailer
                         $mailer = new PHPMailer(true);
                         try {
+                            //MODIFICAR PARA TESTEOS
+                            $emailOrigen = ''; // Correo Origen
+                            $passOrigen = ''; // Contraseña de aplicación (Generada en Google)
+
                             // Configuración del servidor SMTP
                             $mailer->isSMTP();
                             $mailer->Host = 'smtp.gmail.com'; // Servidor SMTP (Gmail)
                             $mailer->SMTPAuth = true;
-                            $mailer->Username = ''; // Correo Origen
-                            $mailer->Password = ''; // Contraseña de aplicación (Generada en Google)
+                            $mailer->Username = $emailOrigen; // Correo Origen
+                            $mailer->Password = $passOrigen; // Contraseña
                             $mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                             $mailer->Port = 587; // Puerto SMTP (Gmail)
 
                             // Configuración del correo
-                            $mailer->setFrom('', 'PWDG42024'); // Remitente
+                            $mailer->setFrom($emailOrigen, 'PWDG42024'); // Remitente
                             $mailer->addAddress($usuario->getUsmail()); // Destinatario
                             $mailer->Subject = 'Cambio de estado de tu compra.'; // Asunto
                             $mailer->Body = 'mensaje sobre tu compra'; // Mensaje en texto plano
@@ -157,7 +161,7 @@ class ABMCompra {
                             // Enviar el correo
                             $mailer->send();
 
-                            $msj = 'Correo enviado exitosamente.';
+                            $msj = '¡Gracias por la compra! Recibiras un correo a la brevedad.';
                         } catch (Exception $e) {
                             $exito = false;
                             $msj = "Error al enviar el correo: {$mailer->ErrorInfo}";
@@ -177,6 +181,28 @@ class ABMCompra {
         return ['success'=> $exito, 'message'=> $msj];
     }
 
+    /**
+     * Metodo que realiza la compra del carrito (si compra tiene estado 1) y tiene compraItems
+     */
+    public function comprarCarrito($param) {
+        $compraEstados = (new ABMCompraEstado())->buscar($param);
+        $exito = !empty($compraEstados);
+        if ($exito) {
+            $compraEstado = $compraEstados[0];
+            $compraItems = (new ABMCompraItem())->buscar(['compra'=> $compraEstado->getObjCompra()]);
+            $exito = !empty($compraItems);
+            if ($exito) {
+                $rta = $this->cambiarEstado(['idcompraestado'=>$param['idcompraestado'], 'idnuevoestadotipo' => 2]); //Pasa a aceptado
+                $msj = $rta['message'];
+                $exito = $rta['success'];
+            } else {
+                $msj = "El carrito esta vacio.";
+            }
+        } else {
+            $msj = 'No existe idcompraestado especificado.';
+        }
+        return ['success'=>$exito, 'message'=>$msj];
+    }
 
     /**
      * Busca compras en la BD
