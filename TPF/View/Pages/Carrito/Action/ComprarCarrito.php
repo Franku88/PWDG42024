@@ -2,7 +2,7 @@
 include_once '../../../../configuracion.php';
 $data = Funciones::data_submitted();
 
-$respuesta = (new ABMCompra())->cambiarEstado($data); //['idcompraestado(ESTADO ACTUAL)', 'idnuevoestadotipo']
+$respuesta = (new ABMCompra())->comprarCarrito($data); //['idcompraestado(ESTADO ACTUAL)']
 
 echo json_encode($respuesta);
 ?>

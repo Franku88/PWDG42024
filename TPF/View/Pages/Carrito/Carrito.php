@@ -151,12 +151,11 @@ include STRUCTURE_PATH . "/HeadSafe.php";
 
     function comprarCarrito() {
         if (confirm("¿Deseas realizar el pago?")) {
-            console.log("Pagando...");
             $.ajax({
-                url: 'Action/CompraCarrito.php',
+                url: 'Action/ComprarCarrito.php',
                 method: 'POST',
                 data: {
-                    idcompraestado: <?php echo $compraEstado ? $compraEstado->getObjCompra()->getIdcompra(): 0;?>,
+                    idcompraestado: <?php echo $compraEstado ? $compraEstado->getIdcompraestado(): 0;?>,
                     idnuevoestadotipo: 2 // Pasa a estado 2 (Aceptado) pues se confirma el pago automaticamente
                 },
                 dataType: 'json',

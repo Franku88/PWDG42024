@@ -102,6 +102,80 @@ class Session {
     }
 
     /**
+     * Crea carrito (compra con estado tipo 1) si fuese el caso
+     * retorna $compraEstado del carrito
+     */
+    public function crearCarrito() {
+        $compraEstado = null;
+        if ($this->validar()) {
+            // Crea compra en estadotipo 1 (carrito) si no lo tiene, (SOLO PARA CLIENTES)
+            if ($this->esCliente()) { //Si es cliente (idrol = 3)
+                $usuario = $this->getUsuario();
+                $compras = (new ABMCompra())->buscar(['usuario'=> $usuario]);
+                $compraEstadoTipos = (new ABMCompraEstadoTipo())->buscar(['idcompraestadotipo' => 1]); //Busca estadotipo 1 (carrito)
+
+                $encontrado = false;
+                $i = 0;
+                while (!$encontrado && $i < count($compras)) {
+                    $compraEstados = (new ABMCompraEstado())->buscar(['objCompra'=> $compras[$i], 'objCompraEstadoTipo' => $compraEstadoTipos[0], 'cefechafin' => "null"]); //compraEstado de la compra (carrito)
+                    $encontrado = !empty($compraEstados);
+                    $i++;
+                }
+
+                if ($encontrado) {
+                    $compraEstado = $compraEstados[0];
+                }
+                
+                if ($compraEstado == null) {
+                    $param['cofecha'] = (new DateTime('now', (new DateTimeZone('-03:00'))))->format('Y-m-d H:i:s');
+                    $param['usuario'] = $usuario;
+        
+                    if ((new ABMCompra())->alta($param)) {
+                        $compras = (new ABMCompra())->buscar(['usuario'=> $usuario, 'cofecha' => $param['cofecha']]);
+                        $compraEstado = (new ABMCompraEstado())->buscar(['objCompra'=> $compras[0], 'cefechafin' => "null"]); //Toda compraEstado de la bd
+                    }
+                }
+            }
+        }
+        return $compraEstado;
+    }
+
+    /**
+     * Obtiene todos los menues para el usuario actual segun su rol
+     * Retorna un array
+     */
+    public function getMenues() {
+        $menues = [];
+        if ($this->validar()) {
+            $objRol = $this->getRoles()[0];
+            $menuRoles = (new ABMMenuRol())->buscar(['rol'=> $objRol]); // [objMenuRol($objmenu, $objrol),objMenuRol($objmenu2, $objrol),...]
+
+            // Obtiene menues para dicho rol
+            foreach($menuRoles as $menuRol) {
+                array_push($menues, ($menuRol->getObjMenu()));
+            }
+            foreach($menues as $menu) { //Busca menues hijos y los agrega al array de menues
+                $hijos = (new ABMMenu())->buscar(['padre' => $menu]);
+                $menues = array_merge($menues, $hijos);
+            }
+        }
+        return $menues;
+    }
+
+    /**
+     * Verifica si la pagina actual puede ser mostrada
+     * Retorna un booleano
+     */
+    public function validarPagina($menues = []) {
+        // Verifica que pagina actual este permitida por menues obtenidos (DIFERENCIA CON Head.php)
+        $menuesFiltrados = array_filter($menues, function ($menu) {
+            return (BASE_URL.$menu->getMeurl()) == CURRENT_URL;
+        });
+        //Si no esta vacio, entonces encontro la pagina actual en sus posibles menues
+        return !empty($menuesFiltrados);
+    }
+
+    /**
      * Cierra la sesión actual.
      */
     public function cerrar() {
