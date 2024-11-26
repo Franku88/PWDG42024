@@ -211,18 +211,3 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 (3, 'Enviada', 'Deposito envia a uno de las compras en estado = 2'),
 (4, 'Cancelada', 'Deposito podra cancelar una compra en cualquier estado y un usuario cliente solo en estado = 1');
 -- --------------------------------------------------------
-
--- Volcado de datos para la tabla `compra`
-INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`) VALUES
-(1, NOW(), 3);
--- --------------------------------------------------------
-
--- Volcado de datos para la tabla `compraestado`
-INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, `cefechaini`, `cefechafin`) VALUES
-(1, 1, 1, NOW(), NULL);
--- --------------------------------------------------------
-
--- Volcado de datos para la tabla `compraitem`
-INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`) VALUES
-(1, 1, 1, 2);
--- --------------------------------------------------------
