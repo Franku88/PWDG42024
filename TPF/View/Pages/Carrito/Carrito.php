@@ -162,7 +162,7 @@ include STRUCTURE_PATH . "/HeadSafe.php";
                 success: function(response) {
                     alert(response.message);
                     if (response.success) {
-                        location.reload(true); //Recarga pagina si fue exitoso el cambio de estado y envio de mail
+                        window.location.href = "<?php echo BASE_URL?>/View/Pages/MisCompras/MisCompras.php";
                     }
                 },
                 error: function() {
