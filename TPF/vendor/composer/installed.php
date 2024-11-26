@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'f66d1aa92ea5be26cd479a30f930fb16919c6edd',
+        'reference' => 'b7793fefa5c957bb01638ce9d3f13c1858afaf4a',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'f66d1aa92ea5be26cd479a30f930fb16919c6edd',
+            'reference' => 'b7793fefa5c957bb01638ce9d3f13c1858afaf4a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -111,6 +111,15 @@
             'provided' => array(
                 0 => '2.3|3.0',
             ),
+        ),
+        'tecnickcom/tcpdf' => array(
+            'pretty_version' => '6.7.7',
+            'version' => '6.7.7.0',
+            'reference' => 'cfbc0028cc23f057f2baf9e73bdc238153c22086',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../tecnickcom/tcpdf',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
     ),
 );

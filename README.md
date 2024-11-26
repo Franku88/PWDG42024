@@ -41,3 +41,9 @@ Para instalar el proyecto, seguir los siguientes pasos:
     composer require phpmailer/phpmailer
     composer require tecnickcom/tcpdf
     ```
+
+## Aclaración
+- La funcion cambiarEstado() del archivo /Controller/ABMCompra.php usa PHPMailer
+- Esto implica que si no estableces las variables $emailOrigen y $passOrigen (Correo y contraseña del Emisor), no funcionara como corresponde
+- Una forma segura, es utilizando una Contraseña de Aplicacion, la misma se puede generar con tu cuenta de Gmail (Tu Gmail debe tener verificaion de dos pasos, Googlea al respecto)
+- Valores predeterminados $emailOrigen='' y $passOrigen='',
