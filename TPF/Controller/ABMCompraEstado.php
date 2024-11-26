@@ -114,7 +114,7 @@ class ABMCompraEstado {
                 $where .= " AND idcompraestadotipo = ".$param['objCompraEstadoTipo']->getIdcompraestadotipo();
             }
             if (isset($param['cefechaini'])) {
-                if ($param['cefechaini'] == null) {
+                if ($param['cefechaini'] == "null") {
                     $where .= " AND cefechaini IS NULL";
                 } else {
                     $where .= " AND cefechaini = '".$param['cefechaini']."'";
@@ -124,7 +124,7 @@ class ABMCompraEstado {
                 if ($param['cefechafin'] == "notnull") {
                     $where .= " AND cefechafin IS NOT NULL";
                 } else {
-                    if ($param['cefechafin'] == null) {
+                    if ($param['cefechafin'] == "null") {
                         $where .= " AND cefechafin IS NULL";
                     } else {
                         $where .= " AND cefechafin = '".$param['cefechaini']."'";

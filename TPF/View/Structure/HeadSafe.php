@@ -38,7 +38,7 @@
             $encontrado = false;
             $i = 0;
             while (!$encontrado && $i < count($compras)) {
-                $compraEstados = (new ABMCompraEstado())->buscar(['objCompra'=> $compras[$i], 'objCompraEstadoTipo' => $compraEstadoTipos[0], 'cefechafin' => null]); //compraEstado de la compra (carrito)
+                $compraEstados = (new ABMCompraEstado())->buscar(['objCompra'=> $compras[$i], 'objCompraEstadoTipo' => $compraEstadoTipos[0], 'cefechafin' => "null"]); //compraEstado de la compra (carrito)
                 $encontrado = !empty($compraEstados);
                 $i++;
             }
@@ -53,7 +53,7 @@
     
                 if ((new ABMCompra())->alta($param)) {
                     $compras = (new ABMCompra())->buscar(['usuario'=> $usuario, 'cofecha' => $param['cofecha']]);
-                    $compraEstado = (new ABMCompraEstado())->buscar(['objCompra'=> $compras[0], 'cefechafin' => null]); //Toda compraEstado de la bd
+                    $compraEstado = (new ABMCompraEstado())->buscar(['objCompra'=> $compras[0], 'cefechafin' => "null"]); //Toda compraEstado de la bd
                 }
             }
         }
