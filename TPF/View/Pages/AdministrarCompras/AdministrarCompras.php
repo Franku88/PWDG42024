@@ -12,64 +12,85 @@ if (empty($menuesFiltrados)) {
     exit();
 }
 
-// $compras = (new ABMCompraEstado())->buscar();
-// echo '<pre>';
-// // print_r($compras[0]);
-// print_r($compras[0]->getObjCompra()->getIdcompra());
-// echo "<br>";
-// print_r($compras[0]->getObjCompraEstadoTipo()->getCetdescripcion());
-// echo "<br>";
-// print_r($compras[0]->getObjCompra()->getObjUsuario()->getUsnombre());
-// echo "<br>";
-// print_r($compras[0]->getCefechaini());
-// echo "<br>";
-// print_r($compras[0]->getCefechafin()); // es null, hasta que se cierre la compra. seria idcompraestadotipo = 3
-// echo '</pre>';
-
-
 
 ?>
 
 <div class="d-flex justify-content-center align-items-start gap-3">
 
     <!-- Tabla de compras -->
-    <div class="mt-5 text-center" style="max-width: 75%; padding: 20px;">
-        <h1>Administrar Compras</h1>
-        <table class="table table-bordered table-striped" id="comprasTable" style="width: 100%;">
-            <thead class="thead-dark">
-                <tr>
-                    <th>ID</th> <!-- id de compraestado -->
-                    <th>Estado</th> <!-- idcompraestadotipo en compraestado -->
-                    <th>Fecha Inicio</th> <!-- fechaInicio en compraestado -->
-                    <th>Fecha Fin</th> <!-- fechaFin en compraestado -->
-                    <th>Usuario</th> <!-- usuario relacionado con la compra -->
-                    <th>Acción</th> <!-- Botones de acción -->
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Las compras serán cargadas dinámicamente aquí -->
-            </tbody>
-        </table>
+    <div class="mt-5 text-center d-flex flex gap-5" style="max-width: 100%; padding: 20px;">
+        <div>
+            <h1>Compras Entrantes</h1>
+            <table class="table table-bordered table-striped" id="comprasEntrantesTable" style="width: 100%;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th> <!-- id de compraestado -->
+                        <th>Estado</th> <!-- idcompraestadotipo en compraestado -->
+                        <th>Fecha Inicio</th> <!-- fechaInicio en compraestado -->
+                        <th>Fecha Fin</th> <!-- fechaFin en compraestado -->
+                        <th>Usuario</th> <!-- usuario relacionado con la compra -->
+                        <th>Acción</th> <!-- Botones de acción -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las compras serán cargadas dinámicamente aquí -->
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h1>Compras concretadas</h1>
+            <table class="table table-bordered table-striped" id="comprasConcretadasTable" style="width: 100%;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th> <!-- id de compraestado -->
+                        <th>Estado</th> <!-- idcompraestadotipo en compraestado -->
+                        <th>Fecha Inicio</th> <!-- fechaInicio en compraestado -->
+                        <th>Fecha Fin</th> <!-- fechaFin en compraestado -->
+                        <th>Usuario</th> <!-- usuario relacionado con la compra -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las compras serán cargadas dinámicamente aquí -->
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h1>Compras canceladas</h1>
+            <table class="table table-bordered table-striped" id="comprasCanceladasTable" style="width: 100%;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th> <!-- id de compraestado -->
+                        <th>Estado</th> <!-- idcompraestadotipo en compraestado -->
+                        <th>Fecha Inicio</th> <!-- fechaInicio en compraestado -->
+                        <th>Fecha Fin</th> <!-- fechaFin en compraestado -->
+                        <th>Usuario</th> <!-- usuario relacionado con la compra -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las compras serán cargadas dinámicamente aquí -->
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 <script>
     $(document).ready(function() {
-        cargarCompras();
+        cargarComprasEntrantes();
+        cargarComprasConcretadas();
+        cargarComprasCanceladas();
+    });
 
-        function cargarCompras() {
-            $.ajax({
-                url: 'Action/ListarCompras.php',
-                method: 'GET',
-                data: 'todo',
-                dataType: 'json',
-                success: function(response) {
-                    var tableContent = '';
-                    $.each(response, function(index, compra) {
-                            // en base al estado de la compra cambiamos los botones de la accion
-
-
-                        tableContent += `
+    function cargarComprasEntrantes() {
+        $.ajax({
+            url: 'Action/ListarEntrantes.php',
+            method: 'GET',
+            data: 'todo',
+            dataType: 'json',
+            success: function(response) {
+                var tableContent = '';
+                $.each(response, function(index, compra) {
+                    tableContent += `
                             <tr id="compra-${compra.idcompra}">
                                 <td>${compra.idcompra}</td>
                                 <td>${compra.estado}</td>
@@ -77,47 +98,112 @@ if (empty($menuesFiltrados)) {
                                 <td>${compra.fechaFin ?? 'N/A'}</td>
                                 <td>${compra.usuario}</td>
                                 <td>
-                                    <button class="btn btn-success" onclick="gestionarCompra(${compra.idcompra}, 2)">Aceptar</button>
-                                    <button class="btn btn-danger" onclick="gestionarCompra(${compra.idcompra}, 3)">Cancelar</button>
-
+                                    <button class="btn btn-success" onclick="enviarCompra(${compra.idcompraEstado})">Enviar</button>
+                                    <button class="btn btn-danger" onclick="cancelarCompra(${compra.idcompraEstado})">Cancelar</button>
                                 </td>
                             </tr>
-        `;
-                    });
-                    $('#comprasTable tbody').html(tableContent);
-                }
+                        `;
+                });
+                $('#comprasEntrantesTable tbody').html(tableContent);
+            }
 
-            });
-        }
+        });
+    }
 
-        window.gestionarCompra = function(idcompra, accion) {
+    function cargarComprasConcretadas() {
+        $.ajax({
+            url: 'Action/ListarConcretadas.php',
+            method: 'GET',
+            data: 'todo',
+            dataType: 'json',
+
+            success: function(response) {
+                var tableContent = '';
+                $.each(response, function(index, compra) {
+                    tableContent += `
+                            <tr id="compra-${compra.idcompra}">
+                                <td class="bg-success text-white" >${compra.idcompra}</td>
+                                <td class="bg-success text-white" >${compra.estado}</td>
+                                <td class="bg-success text-white" >${compra.fechaInicio}</td>
+                                <td class="bg-success text-white" >${compra.fechaFin ?? 'N/A'}</td>
+                                <td class="bg-success text-white" >${compra.usuario}</td>
+                            </tr>
+                        `;
+                });
+                $('#comprasConcretadasTable tbody').html(tableContent);
+            }
+        })
+    }
+
+    function cargarComprasCanceladas() {
+        $.ajax({
+            url: 'Action/ListarCanceladas.php',
+            method: 'GET',
+            data: 'todo',
+            dataType: 'json',
+
+            success: function(response) {
+                var tableContent = '';
+                $.each(response, function(index, compra) {
+                    tableContent += `
+                            <tr id="compra-${compra.idcompra}">
+                                <td class="bg-danger text-white">${compra.idcompra}</td>
+                                <td class="bg-danger text-white">${compra.estado}</td>
+                                <td class="bg-danger text-white">${compra.fechaInicio}</td>
+                                <td class="bg-danger text-white">${compra.fechaFin ?? 'N/A'}</td>
+                                <td class="bg-danger text-white">${compra.usuario}</td>
+                            </tr>
+                        `;
+                });
+                $('#comprasCanceladasTable tbody').html(tableContent);
+            }
+        })
+    }
+
+    function cancelarCompra(idcompraEstado) {
+        if (confirm("¿Desea cancelar la compra?")) {
             $.ajax({
-                url: 'Action/EstadoCompra.php',
+                url: 'Action/CambiarEstado.php',
                 method: 'POST',
                 data: {
-                    idcompra: idcompra,
-                    accion: accion
+                    accion: 'cancelar',
+                    idcompraestado: idcompraEstado,
+                    idnuevoestadotipo: 4
                 },
                 dataType: 'json',
                 success: function(response) {
-                    console.log(response);
                     if (response.success) {
-                        alert(response.message);
-                        cargarCompras();
-                    } else {
-                        alert(response.message);
+                        cargarComprasEntrantes();
+                        cargarComprasConcretadas();
+                        cargarComprasCanceladas();
                     }
-                },
-                error: function() {
-                    alert("Ocurrió un error al realizar la acción.");
                 }
             });
-        };
+        }
 
+    }
 
-
-
-    });
+    function enviarCompra(idcompraEstado) {
+        if (confirm("¿Desea enviar la compra?")) {
+            $.ajax({
+                url: 'Action/CambiarEstado.php',
+                method: 'POST',
+                data: {
+                    accion: 'enviar',
+                    idcompraestado: idcompraEstado,
+                    idnuevoestadotipo: 3
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        cargarComprasEntrantes();
+                        cargarComprasConcretadas();
+                        cargarComprasCanceladas();
+                    }
+                }
+            });
+        }
+    }
 </script>
 
 

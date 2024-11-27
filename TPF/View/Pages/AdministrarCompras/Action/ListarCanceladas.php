@@ -4,7 +4,8 @@ include_once '../../../../configuracion.php';
 $data = Funciones::data_submitted(); 
 $salida = [];
 if (!empty($data)) {
-    $compras = (new ABMCompraEstado())->buscar(['idcompraestadotipo' => 1 , 'cefechafin' => 'notnull']);
+    $objCompraEstadoTipo = (new ABMCompraEstadoTipo())->buscar(['idcompraestadotipo' => 4])[0];
+    $compras = (new ABMCompraEstado())->buscar([ 'objCompraEstadoTipo' => $objCompraEstadoTipo , 'cefechafin' => null]);
     foreach($compras as $compra) {
         $nuevoElem['idcompra'] = $compra->getObjCompra()->getIdcompra();
         $nuevoElem['estado'] = $compra->getObjCompraEstadoTipo()->getCetdescripcion();
