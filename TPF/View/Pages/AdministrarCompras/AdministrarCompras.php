@@ -115,8 +115,8 @@ include STRUCTURE_PATH . "/HeadSafe.php";
                             <tr id="compra-${compra.idcompra}">
                                 <td class="bg-success text-white" >${compra.idcompra}</td>
                                 <td class="bg-success text-white" >${compra.estado}</td>
-                                <td class="bg-success text-white" >${compra.fechaInicio}</td>
-                                <td class="bg-success text-white" >${compra.fechaFin ?? 'N/A'}</td>
+                                <td class="bg-success text-white" >${compra.cefechaini}</td>
+                                <td class="bg-success text-white" >${compra.cefechafin ?? 'N/A'}</td>
                                 <td class="bg-success text-white" >${compra.usuario}</td>
                             </tr>
                         `;
@@ -141,8 +141,8 @@ include STRUCTURE_PATH . "/HeadSafe.php";
                             <tr id="compra-${compra.idcompra}">
                                 <td class="bg-danger text-white">${compra.idcompra}</td>
                                 <td class="bg-danger text-white">${compra.estado}</td>
-                                <td class="bg-danger text-white">${compra.fechaInicio}</td>
-                                <td class="bg-danger text-white">${compra.fechaFin ?? 'N/A'}</td>
+                                <td class="bg-danger text-white">${compra.cefechaini}</td>
+                                <td class="bg-danger text-white">${compra.cefechafin ?? 'N/A'}</td>
                                 <td class="bg-danger text-white">${compra.usuario}</td>
                             </tr>
                         `;
