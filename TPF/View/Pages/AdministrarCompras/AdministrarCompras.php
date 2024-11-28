@@ -71,9 +71,11 @@ include STRUCTURE_PATH . "/HeadSafe.php";
 
     function cargarComprasEntrantes() {
         $.ajax({
-            url: 'Action/ListarEntrantes.php',
+            url: 'Action/ListarCompraEstados.php',
             method: 'GET',
-            data: 'todo',
+            data: {
+                idcompraestadotipo: 2
+            },
             dataType: 'json',
             success: function(response) {
                 var tableContent = '';
@@ -82,12 +84,12 @@ include STRUCTURE_PATH . "/HeadSafe.php";
                             <tr id="compra-${compra.idcompra}">
                                 <td>${compra.idcompra}</td>
                                 <td>${compra.estado}</td>
-                                <td>${compra.fechaInicio}</td>
-                                <td>${compra.fechaFin ?? 'N/A'}</td>
+                                <td>${compra.cefechaini}</td>
+                                <td>${compra.cefechafin ?? 'N/A'}</td>
                                 <td>${compra.usuario}</td>
                                 <td>
-                                    <button class="btn btn-success" onclick="enviarCompra(${compra.idcompraEstado})">Enviar</button>
-                                    <button class="btn btn-danger" onclick="cancelarCompra(${compra.idcompraEstado})">Cancelar</button>
+                                    <button class="btn btn-success" onclick="enviarCompra(${compra.idcompraestado})">Enviar</button>
+                                    <button class="btn btn-danger" onclick="cancelarCompra(${compra.idcompraestado})">Cancelar</button>
                                 </td>
                             </tr>
                         `;
@@ -100,11 +102,12 @@ include STRUCTURE_PATH . "/HeadSafe.php";
 
     function cargarComprasConcretadas() {
         $.ajax({
-            url: 'Action/ListarConcretadas.php',
+            url: 'Action/ListarCompraEstados.php',
             method: 'GET',
-            data: 'todo',
+            data: {
+                idcompraestadotipo: 3
+            },
             dataType: 'json',
-
             success: function(response) {
                 var tableContent = '';
                 $.each(response, function(index, compra) {
@@ -125,11 +128,12 @@ include STRUCTURE_PATH . "/HeadSafe.php";
 
     function cargarComprasCanceladas() {
         $.ajax({
-            url: 'Action/ListarCanceladas.php',
+            url: 'Action/ListarCompraEstados.php',
             method: 'GET',
-            data: 'todo',
+            data: {
+                idcompraestadotipo: 4
+            },
             dataType: 'json',
-
             success: function(response) {
                 var tableContent = '';
                 $.each(response, function(index, compra) {
@@ -148,13 +152,33 @@ include STRUCTURE_PATH . "/HeadSafe.php";
         })
     }
 
+    function enviarCompra(idcompraEstado) {
+        if (confirm("¿Desea enviar la compra?")) {
+            $.ajax({
+                url: 'Action/CambiarEstado.php',
+                method: 'POST',
+                data: {
+                    idcompraestado: idcompraEstado,
+                    idnuevoestadotipo: 3
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        cargarComprasEntrantes();
+                        cargarComprasConcretadas();
+                        cargarComprasCanceladas();
+                    }
+                }
+            });
+        }
+    }
+
     function cancelarCompra(idcompraEstado) {
         if (confirm("¿Desea cancelar la compra?")) {
             $.ajax({
                 url: 'Action/CambiarEstado.php',
                 method: 'POST',
                 data: {
-                    accion: 'cancelar',
                     idcompraestado: idcompraEstado,
                     idnuevoestadotipo: 4
                 },
@@ -170,29 +194,6 @@ include STRUCTURE_PATH . "/HeadSafe.php";
         }
 
     }
-
-    function enviarCompra(idcompraEstado) {
-        if (confirm("¿Desea enviar la compra?")) {
-            $.ajax({
-                url: 'Action/CambiarEstado.php',
-                method: 'POST',
-                data: {
-                    accion: 'enviar',
-                    idcompraestado: idcompraEstado,
-                    idnuevoestadotipo: 3
-                },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        cargarComprasEntrantes();
-                        cargarComprasConcretadas();
-                        cargarComprasCanceladas();
-                    }
-                }
-            });
-        }
-    }
 </script>
-
 
 <?php include STRUCTURE_PATH . "/Foot.php"; ?>

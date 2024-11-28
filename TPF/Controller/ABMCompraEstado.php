@@ -122,6 +122,27 @@ class ABMCompraEstado {
     }
 
     /**
+     * Lista las compras estados del tipo ingresado.
+     * Retorna un array de compras (en forma de array) que cumplan $param
+     * @param array $param ['idcompraestadotipo'] (1: Iniciadas, 2: Aceptadas, 3: Enviadas, 4: Canceladas)
+     */
+    public function listarCompraEstados($param) {
+        $respuesta = [];        
+        $objCompraEstadoTipo = (new ABMCompraEstadoTipo())->buscar(['idcompraestadotipo' => $param['idcompraestadotipo']])[0];
+        $compras = (new ABMCompraEstado())->buscar([ 'objCompraEstadoTipo' => $objCompraEstadoTipo , 'cefechafin' => 'null']);
+        foreach($compras as $compra) {
+            $nuevoElem['idcompra'] = $compra->getObjCompra()->getIdcompra();
+            $nuevoElem['estado'] = $compra->getObjCompraEstadoTipo()->getCetdescripcion();
+            $nuevoElem['cefechaini'] = $compra->getCefechaini();
+            $nuevoElem['cefechafin'] = $compra->getCefechafin();
+            $nuevoElem['usuario'] = $compra->getObjCompra()->getObjUsuario()->getUsnombre();
+            $nuevoElem['idcompraestado'] = $compra->getIdcompraestado();
+            array_push($respuesta, $nuevoElem);
+        }
+        return $respuesta;
+    }
+
+    /**
      * Busca un compraestado en la BD 
      * Si $param es vacio, trae todos los compraestados 
      * @param array $param
