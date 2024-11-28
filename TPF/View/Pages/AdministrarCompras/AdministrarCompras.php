@@ -1,18 +1,6 @@
 <?php
 include_once "../../../configuracion.php";
 include STRUCTURE_PATH . "/HeadSafe.php";
-
-// FILTRO DE PERMISOS: Verifica que el usuario tenga acceso al menú correspondiente
-$menuesFiltrados = array_filter($menues, function ($menu) {
-    return ($menu->getIdmenu()) == 5; // 5 es el ID del menú AdministrarProductos
-});
-
-if (empty($menuesFiltrados)) {
-    echo ("<div class='alert alert-danger text-center mt-5'>Sesión inválida. Acceso denegado.</div>");
-    exit();
-}
-
-
 ?>
 
 <div class="d-flex justify-content-center align-items-start gap-3">
