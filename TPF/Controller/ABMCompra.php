@@ -329,6 +329,53 @@ class ABMCompra {
         return $pdfOutput;
     }
 
+
+    /**
+     * Devuelve un array con todas las compras relacionadas a un usuario.
+     * @param array $param ['usuario'=>$usuario]
+     * @return array
+     */
+    public function listarMisCompras($param) {
+        $resultado = [];
+        // 1. Recibimos $param['idusuario']. Con esto realizamos la busqueda del usuario
+        $objUsuario = (new ABMUsuario())->buscar(['idusuario'=>$param['idusuario']])[0];
+        // 2. Buscamos todas las compras relacionadas al usuario
+        $compras = $this->buscar(['usuario'=>$objUsuario]);
+        $abmCompraEstado = new ABMCompraEstado();
+        $abmCompraItem = new ABMCompraItem();
+        foreach ($compras as $compra) {
+            $compraEstados = $abmCompraEstado->buscar(['objCompra'=>$compra , 'cefechafin'=> 'null'])[0];
+            $itemsCompra = $abmCompraItem->buscar(['compra' => $compra]);
+            $items = [];
+            foreach ($itemsCompra as $item) {
+                $objProducto = $item->getObjProducto();
+                $prod['pronombre'] = $objProducto->getPronombre();
+                $prod['procantidad'] = $item->getCicantidad();
+                $prod['proprecio'] = $objProducto->getProprecio();
+                $prod['icon'] = BASE_URL.'/View/Media/Product/' . $objProducto->getIdproducto() . '/icon.jpg';
+                array_push($items, $prod);
+            }
+            $comp = [
+                'idcompra' => $compra->getIdcompra(),
+                'cofecha' => $compra->getCofecha(),
+                'items' => $items,
+                'estado' => $compraEstados->getObjCompraEstadoTipo()->getCetdescripcion()
+            ];
+            array_push($resultado, $comp);
+        }
+
+        return $resultado;
+    }
+
+
+
+
+
+
+
+
+
+
     /**
      * Busca compras en la BD
      * Si $param es vacío, trae todos las compras
