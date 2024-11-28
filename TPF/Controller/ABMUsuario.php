@@ -99,6 +99,56 @@ class ABMUsuario {
     }
 
     /**
+     * Realiza el alta de un usuario a la bd
+     * @param array $param ['usnombre'=> $nombre, 'uspass'=> $pass , 'usmail'=> $mail, 'idrol'=> $idrol]
+     */
+    public function registrarUsuario($param) {
+        // Verifica rol existente
+        $roles = (new ABMRol())->buscar(['idrol' => intval($param['idrol'])]);
+        $exito = !empty($roles);
+        if ($exito) {
+            //Verifica datos de entrada completos
+            $exito = isset($param['usnombre']) && isset($param['uspass']) && isset($param['usmail']);
+            if ($exito) {
+                //Verifica que usnombre no se repita
+                $usuarios = $this->buscar(['usnombre' => $param['usnombre']]); 
+                $exito = empty($usuarios);
+                if ($exito) { 
+                    //Verifica que usmail no se repita
+                    $usuarios = $this->buscar(['usmail' => $param['usmail']]);
+                    $exito = empty($usuarios);
+                    if ($exito) { 
+                        //Intenta dar de alta el usuario
+                        $exito = $this->alta($param);
+                        if ($exito) { 
+                            //Obtiene usuario dado de alta para darle rol
+                            $usuario = $this->buscar(['usnombre' => $param['usnombre']])[0]; 
+                            //Intenta asignar rol
+                            $exito = (new ABMUsuarioRol())->alta(['usuario' => $usuario, 'rol' => $roles[0]]); 
+                            if ($exito) { 
+                                $respuesta = 'success';
+                            } else {
+                                $respuesta = 'Error en la asignación del rol al usuario.';
+                            }
+                        } else {
+                            $respuesta = 'Error al registrar el usuario.';
+                        }
+                    } else {
+                        $respuesta = 'Este email ya se encuentra en uso.';    
+                    }
+                } else{
+                    $respuesta = 'Este nombre usuario ya se encuentra en uso.';        
+                }
+            } else {
+                $respuesta = 'Datos incompletos.';
+            }
+        } else {
+            $respuesta = 'Idrol no existe.';
+        }
+        return $respuesta;
+    }
+
+    /**
      * Busca usuarios en la BD
      * si $param == null, trae todos los usuarios
      * @param array $param

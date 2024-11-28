@@ -1,6 +1,6 @@
 <?php
 include_once '../../../configuracion.php';
-include STRUCTURE_PATH . '/Head.php';
+include STRUCTURE_PATH.'/Head.php';
 
 if ($sesion->validar()) { //Si ya tiene una sesion, redirige a Catalogo
     header('Location: '.BASE_URL.'/View/Pages/Catalogo/Catalogo.php');
@@ -41,8 +41,6 @@ if ($sesion->validar()) { //Si ya tiene una sesion, redirige a Catalogo
             <div id="errorMessage" class="text text-center mt-3 p-2 bg-danger rounded-3 w-100 text-white d-none"></div>
             <div id="successMessage" class="text text-center mt-3 p-2 bg-success rounded-3 w-100 text-white d-none"></div>
         </div>
-
-
     </div>
 
     <script>
@@ -56,9 +54,10 @@ if ($sesion->validar()) { //Si ya tiene una sesion, redirige a Catalogo
                 passMD5  = md5(pass)
                 console.log(passMD5)
                 const formData = {
-                    user: $('#user').val(),
-                    email: $('#email').val(),
-                    password: passMD5
+                    usnombre: $('#user').val(),
+                    usmail: $('#email').val(),
+                    uspass: passMD5,
+                    idrol: 3 //Crea Cliente por este medio, los demas roles los crea un admin
                 };
                 $.ajax({
                     url: 'Action/RegisterAction.php',
@@ -90,9 +89,6 @@ if ($sesion->validar()) { //Si ya tiene una sesion, redirige a Catalogo
             });
         });
     </script>
-
-
-
 </div>
 
 <?php include STRUCTURE_PATH . '/Foot.php'; ?>
