@@ -2,18 +2,7 @@
 include_once '../../../../configuracion.php';
 $data = Funciones::data_submitted();
 
-print_r($data);
+$resultado = (new ABMCompra())->listarMisCompras($data);
 
-
-// $salida = (new ABMCompra())->listarMisCompras($data);
-// echo json_encode($salida);
-
-
+echo json_encode($resultado);
 ?>
-
-<!-- $comp = [
-                'idcompra' => $compra->getIdcompra(),
-                'cofecha' => $compra->getCofecha(),
-                'items' => $items,
-                'estado' => $compraEstados->getObjCompraEstadoTipo()->getCetdescripcion()
-]; -->

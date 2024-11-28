@@ -136,8 +136,8 @@ class ABMCompra {
                         $mailer = new PHPMailer(true);
                         try {
                             //MODIFICAR PARA TESTEOS
-                            $emailOrigen = 'niicoph@gmail.com'; // Correo Origen
-                            $passOrigen = 'oyar wtdg xmrs czyr '; // Contraseña de aplicación (Generada en Google)
+                            $emailOrigen = ''; // Correo Origen
+                            $passOrigen = ''; // Contraseña de aplicación (Generada en Google)
 
                             // Configuración del servidor SMTP
                             $mailer->isSMTP();
@@ -241,7 +241,7 @@ class ABMCompra {
         $tituloPDF = "Factura_Compra_N°".$usuario->getIdusuario().$compra->getIdcompra();
 
         // Crear una instancia de TCPDF
-        $pdf = new TCPDF();
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // Configurar el PDF
         $pdf->SetCreator('PWDG42024/TPF');
@@ -254,7 +254,7 @@ class ABMCompra {
         $pdf->AddPage();
 
         // Asegurarse de que la imagen exista
-        $imagePath = BASE_URL.'/View/Media/Site/logo.png';
+        $imagePath = ROOT_PATH.'/View/Media/Site/logo.png';
         if (file_exists($imagePath)) {
             $pdf->Image($imagePath, 15, 10, 40, 20);
         } else {
@@ -350,12 +350,13 @@ class ABMCompra {
             foreach ($itemsCompra as $item) {
                 $objProducto = $item->getObjProducto();
                 $prod['pronombre'] = $objProducto->getPronombre();
-                $prod['procantidad'] = $item->getCicantidad();
+                $prod['cicantidad'] = $item->getCicantidad();
                 $prod['proprecio'] = $objProducto->getProprecio();
                 $prod['icon'] = BASE_URL.'/View/Media/Product/' . $objProducto->getIdproducto() . '/icon.jpg';
                 array_push($items, $prod);
             }
             $comp = [
+                'idusuario'=> $param['idusuario'],
                 'idcompra' => $compra->getIdcompra(),
                 'cofecha' => $compra->getCofecha(),
                 'items' => $items,

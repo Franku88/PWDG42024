@@ -1,21 +1,6 @@
 <?php
 include_once '../../../configuracion.php';
 include STRUCTURE_PATH . '/HeadSafe.php';
-//ESTE BLOQUE DEBE SER PERSONALIZADO PARA CADA PAGINA CON HEAD SAFE (ESTABLECER SU ID)
-$menuesFiltrados = array_filter($menues, function ($menu) {
-    return ($menu->getIdmenu()) == 8; //8 es el id del menu MisCompras
-});
-
-if (empty($menuesFiltrados)) {
-    echo ("Sesión inválida"); //Puede embellecerse un poco más
-    //header("Location: ".ROOT_PATH."/index.php");
-    exit();
-}
-
-$usuarioID = 'hola';
-
-
-//-------------------------------------------------------------------------------------
 ?>
 
 <div class="d-flex justify-content-center align-items-start gap-3">
@@ -45,18 +30,28 @@ $usuarioID = 'hola';
     function listarComprasPersonales() {
         $.ajax({
             url: 'Action/ListarCompras.php',
-            method: 'GET',
+            method: 'POST',
             data: {
-                usuarioID: '<?php echo $usuarioID; ?>'
+                idusuario: <?php echo $usuario->getIdusuario()?>
             },
             dataType: 'json',
             success: function(response) {
-                console.log(response);
-            }
+               var tableContent = '';
+               $.each(response , function(index, compra) {
+                     tableContent += `<tr> <td> ${compra.cofecha} </td> <td>`;
+                     $.each(compra.items, function(index, item){
+                          tableContent += `${item.pronombre} x ${item.cicantidad} <br>`;
+                     });
+                     tableContent += `</td> <td> ${compra.estado} </td> </tr>`;
+               })
+               $('#comprasPersonalesTable tbody').append(tableContent);
 
-        });
+            },
+            error: function() {
+                alert('Error al cargar compras.');
+            }
+        });    
     }
 </script>
-
 
 <?php include STRUCTURE_PATH . '/Foot.php'; ?>

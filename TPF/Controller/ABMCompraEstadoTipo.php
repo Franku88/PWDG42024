@@ -108,7 +108,7 @@ class ABMCompraEstadoTipo {
             $nuevoElem['fechaInicio'] = $compra->getCefechaini();
             $nuevoElem['fechaFin'] = $compra->getCefechafin();
             $nuevoElem['usuario'] = $compra->getObjCompra()->getObjUsuario()->getUsnombre();
-            array_push($salida, $nuevoElem);
+            array_push($respuesta, $nuevoElem);
         }
         
         return $respuesta;
