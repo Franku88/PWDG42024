@@ -160,8 +160,8 @@ class ABMCompra {
                                     break;
                                 case 2:
                                     $mensajeCompra = '¡Tu pago ha sido aceptado! Se te comunicara por este medio cuando se despache el pedido.';
-                                    //$pdfOutput = $this->generarFacturaCompra(['compra'=> $compra, 'usuario'=> $usuario]);
-                                    //$mailer->addStringAttachment($pdfOutput, 'factura.pdf');
+                                    $pdfOutput = $this->generarFacturaCompra(['compra'=> $compra, 'usuario'=> $usuario]);
+                                    $mailer->addStringAttachment($pdfOutput, 'factura.pdf');
                                     break;
                                 case 3:
                                     $mensajeCompra = '¡Tu pedido ha sido despachado! Esperamos disfrutes tu compra.';
@@ -254,9 +254,9 @@ class ABMCompra {
         $pdf->AddPage();
 
         // Asegurarse de que la imagen exista
-        $imagePath = ROOT_PATH.'/View/Media/Site/logo.png';
+        $imagePath = ROOT_PATH.'/View/Media/Site/logo.jpg';
         if (file_exists($imagePath)) {
-            $pdf->Image($imagePath, 15, 10, 40, 20);
+            $pdf->Image($imagePath, 15, 14, 20, 20);
         } else {
             $pdf->Cell(0, 10, 'Logo no disponible', 0, 1, 'C');
         }
@@ -281,7 +281,7 @@ class ABMCompra {
         $pdf->SetFont('helvetica', 'B', 10);
         $pdf->Cell(0, 6, 'Información del Cliente:', 0, 1);
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->Cell(0, 6, 'Nombre: '.$usuario->getUsnombre(), 0, 1);
+        $pdf->Cell(0, 6, 'Usuario: '.$usuario->getUsnombre(), 0, 1);
         $pdf->Cell(0, 6, 'Email: '.$usuario->getUsmail(), 0, 1);
         $pdf->Ln(10);
 
@@ -290,7 +290,7 @@ class ABMCompra {
         $pdf->Cell(0, 6, 'Detalles de la Factura:', 0, 1);
         $pdf->SetFont('helvetica', '', 10);
         $pdf->Cell(30, 6, 'Fecha:', 0, 0);
-        $pdf->Cell(50, 6, date('Y-m-d'), 0, 1);
+        $pdf->Cell(50, 6, date('Y-m-d H:i:s'), 0, 1);
         $pdf->Ln(10);
 
         // **Tabla de productos/servicios**
@@ -365,18 +365,8 @@ class ABMCompra {
             ];
             array_push($resultado, $comp);
         }
-
         return $resultado;
     }
-
-
-
-
-
-
-
-
-
 
     /**
      * Busca compras en la BD
