@@ -49,14 +49,10 @@ if ($sesion->validar()) { //Si ya tiene una sesion, redirige a Catalogo
                 e.preventDefault();
                 $('#errorMessage').text('').removeClass('d-block').addClass('d-none');
                 $('#successMessage').text('').removeClass('d-block').addClass('d-none');
-                pass = $('#password').val()
-                console.log(pass)
-                passMD5  = md5(pass)
-                console.log(passMD5)
                 const formData = {
                     usnombre: $('#user').val(),
                     usmail: $('#email').val(),
-                    uspass: passMD5,
+                    uspass: md5($('#password').val()),
                     idrol: 3 //Crea Cliente por este medio, los demas roles los crea un admin
                 };
                 $.ajax({
