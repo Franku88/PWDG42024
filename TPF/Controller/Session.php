@@ -195,6 +195,18 @@ class Session {
     }
 
     /**
+     * Inicia sesion si es posible con los datos ingresados en $param
+     * @param array $param ['usnombre', 'uspass'] uspass(md5)
+     */
+    public function iniciarSesion($param) {
+        $exito = isset($param['usnombre']) && isset($param['uspass']);
+        if ($exito) { //Verifica que parametros esten definidos
+            $exito = $this->iniciar($param['usnombre'], $param['uspass']);
+        }
+        return $exito;
+    }
+
+    /**
      * Cierra la sesión actual.
      */
     public function cerrar() {

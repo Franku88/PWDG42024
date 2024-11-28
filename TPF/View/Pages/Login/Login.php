@@ -25,9 +25,10 @@ if ($sesion->validar()) { //Si ya tiene una sesion, redirige a Catalogo
     $(document).ready(function() {
         $('#loginForm').on('submit', function(e) {
             e.preventDefault();
+
             const formData = {
-                user: $('#user').val(),
-                password: $('#password').val()
+                usnombre: $('#user').val(),
+                uspass: md5($('#password').val())
             };
 
             const messageContainer = $('#messageContainer');
