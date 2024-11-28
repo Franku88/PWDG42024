@@ -66,6 +66,30 @@ Class ABMProducto
         return $resp;
     }
 
+    /**
+     * Lista productos con su informacion necesaria para ser mostrados en Catalogo.
+     * Retorna un array de productos (en forma de array) que cumplan $param
+     * @param array $param ['idproducto', 'proprecio', 'pronombre', 'prodetalle', 'procantstock', 'deshabilitado', 'idvideoyt']
+     */
+    public function listarProductos($param = null) {
+        $respuesta = [];
+        $productos = (new ABMProducto())->buscar($param); //Recupera productos
+        foreach($productos as $producto) {
+            if ($producto->getProdeshabilitado() == null) { //Convierte en forma de array los que estan habilitados
+                $prod['icon'] = BASE_URL."/View/Media/Product/".$producto->getIdproducto()."/icon.png";
+                $prod['idproducto'] = $producto->getIdproducto();
+                $prod['pronombre'] = $producto->getPronombre();
+                $prod['prodetalle'] = $producto->getProdetalle();
+                $prod['procantstock'] = $producto->getProcantstock();
+                $prod['proprecio'] = $producto->getProprecio();
+                $prod['prodeshabilitado'] = $producto->getProdeshabilitado();
+                $prod['idvideoyt'] = $producto->getIdvideoyt();
+                array_push($respuesta, $prod);
+            }
+        }
+        return $respuesta;
+    }
+
     public function buscar($param = null) {
         $where = " true ";
         if ($param != null) {

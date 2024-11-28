@@ -19,7 +19,6 @@ $esCliente = $sesion->esCliente();
         $.ajax({
             url: 'Action/ListarProductos.php', // Ruta al script PHP que genera los datos
             method: 'POST',
-            data: 'todo',
             dataType: 'json',
             success: function(response) {
                 //console.log(response);
