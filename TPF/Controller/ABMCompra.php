@@ -164,10 +164,10 @@ class ABMCompra {
                                     $mailer->addStringAttachment($pdfOutput, 'factura.pdf');
                                     break;
                                 case 3:
-                                    $mensajeCompra = '¡Tu pedido ha sido despachado! Esperamos disfrutes tu compra.';
+                                    $mensajeCompra = '¡Tu pedido ha sido despachado! Esperamos que disfrutes tu compra.';
                                     break;
                                 case 4:
-                                    $mensajeCompra = 'Tu pedido ha sido cancelado. Si fuiste tu, posiblemente el vendedor lo canceló por falta de stock.';
+                                    $mensajeCompra = 'Tu pedido ha sido cancelado. Si no fuiste tu, posiblemente el vendedor lo canceló por falta de stock.';
                                     break;
                                 default:
                                     $mensajeCompra = 'No tenemos idea como esto sucedió (Se esta cambiando tu compra a un estadotipo que no existe)';
