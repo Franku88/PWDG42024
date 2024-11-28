@@ -5,7 +5,7 @@ include STRUCTURE_PATH . '/HeadSafe.php';
 
 <div class="d-flex justify-content-center align-items-start gap-3">
     <!-- Tabla de Productos -->
-    <div class="mt-5" style="max-width: 100%; padding: 20px; width:900px;">
+    <div class="mt-5" style="max-width: 100%; padding: 20px; width:1200px;">
         <h1 class="text-center">Mis Compras</h1>
         <table class="table table-bordered table-striped" id="comprasPersonalesTable" style="width: 100%;">
             <thead class="thead-dark">
@@ -14,8 +14,7 @@ include STRUCTURE_PATH . '/HeadSafe.php';
                     <th>Productos</th>
                     <th>Total</th>
                     <th>Estado</th>
-
-
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +23,6 @@ include STRUCTURE_PATH . '/HeadSafe.php';
         </table>
     </div>
 </div>
-
 <script>
     $(document).ready(function() {
         listarComprasPersonales();
@@ -53,27 +51,36 @@ include STRUCTURE_PATH . '/HeadSafe.php';
 
                     tableContent += `
                         <tr>
-                            <td class="${estadoClass}">${compra.cofecha}</td>
-                            <td class="${estadoClass}">
+                            <td>${compra.cofecha}</td>
+                            <td>
                     `;
 
-                    // Agregamos los productos dentro de la celda
                     $.each(compra.items, function(index, item) {
                         tableContent += `${item.pronombre} x ${item.cicantidad}<br>`;
                     });
-                    // sumamos los precios de cada item y los agregamos al total
+
                     let total = 0;
                     $.each(compra.items, function(index, item) {
                         total += item.proprecio * item.cicantidad;
                     });
-                    tableContent += `
-                            </td>
-                            <td class="${estadoClass}">$${total}</td>
-                    `;
 
                     tableContent += `
                             </td>
+                            <td>$${total.toFixed(2)}</td>
                             <td class="${estadoClass}">${compra.estado}</td>
+                            <td>
+                    `;
+
+                    if (compra.estado == 'Aceptada') {
+                        tableContent += `
+                                <button class="btn btn-danger btn-sm" onclick="cancelarCompra(${compra.idcompraestado})">Cancelar</button>
+                        `;
+                    } else {
+                        tableContent += `-`; 
+                    }
+
+                    tableContent += `
+                            </td>
                         </tr>
                     `;
                 });
@@ -85,7 +92,27 @@ include STRUCTURE_PATH . '/HeadSafe.php';
             }
         });
     }
+
+    function cancelarCompra(idcompraestado) {
+        if (confirm('¿Estás seguro de que deseas cancelar esta compra?')) {
+            $.ajax({
+                url: 'Action/CancelarCompra.php',
+                method: 'POST',
+                data: {
+                    idcompraestado: idcompraestado,
+                    idnuevoestadotipo: 4 // Cancelada
+                },
+                success: function(response) {
+                    listarComprasPersonales();
+                },
+                error: function() {
+                    alert('Error al intentar cancelar la compra.');
+                }
+            });
+        }
+    }
 </script>
+
 
 
 <?php include STRUCTURE_PATH . '/Foot.php'; ?>

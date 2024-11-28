@@ -344,7 +344,7 @@ class ABMCompra {
         $abmCompraEstado = new ABMCompraEstado();
         $abmCompraItem = new ABMCompraItem();
         foreach ($compras as $compra) {
-            $compraEstados = $abmCompraEstado->buscar(['objCompra'=>$compra , 'cefechafin'=> 'null'])[0];
+            $compraEstado = $abmCompraEstado->buscar(['objCompra'=>$compra , 'cefechafin'=> 'null'])[0];
             $itemsCompra = $abmCompraItem->buscar(['compra' => $compra]);
             $items = [];
             foreach ($itemsCompra as $item) {
@@ -360,7 +360,8 @@ class ABMCompra {
                 'idcompra' => $compra->getIdcompra(),
                 'cofecha' => $compra->getCofecha(),
                 'items' => $items,
-                'estado' => $compraEstados->getObjCompraEstadoTipo()->getCetdescripcion()
+                'estado' => $compraEstado->getObjCompraEstadoTipo()->getCetdescripcion(),
+                'idcompraestado' => $compraEstado->getIdcompraestado()
             ];
             array_push($resultado, $comp);
         }
